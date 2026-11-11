@@ -1,11 +1,8 @@
 "use strict";
 
 const config = window.WEDDING_CONFIG;
-// GitHub Pages 사용자 사이트의 하위 경로에서 사진을 불러옵니다.
-// config.js에는 "images/파일명.jpg" 형식으로 입력하면 됩니다.
-const WEDDING_PAGE_BASE = new URL("/wedding-invitation/", window.location.origin);
-const resolvePhotoUrl = (path) => new URL(path, WEDDING_PAGE_BASE).href;
 const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 const create = (tag, className, text) => {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -14,66 +11,175 @@ const create = (tag, className, text) => {
 };
 const put = (selector, value) => { $(selector).textContent = value ?? ""; };
 
-function weddingDateParts(isoDate) {
-  const [year, month, day] = (isoDate || "2027-04-17").split("-").map(Number);
+// 현재 페이지(/wedding-invitation/)를 기준으로 사진을 로드합니다.
+// config.js의 사진 경로 예시: "images/LSH_0459.jpg" -> /wedding-invitation/images/LSH_0459.jpg
+const pageBase = new URL("./", window.location.href);
+const resolvePhotoUrl = (path) => new URL(path, pageBase).href;
+
+const translations = {
+  ko: {
+    skip: "본문으로 바로 가기", navigation: "청첩장 메뉴", languageSelection: "언어 선택",
+    navInvitation: "초대", navCouple: "신랑·신부", navDate: "날짜", navGallery: "사진",
+    navDirections: "오시는 길", navAccounts: "마음 전하기",
+    mainPhotoAria: "메인 사진 영역", mainPhotoCaption: "메인 사진을 넣을 자리",
+    heroMessage: "함께하는 첫날, 소중한 분들을 초대합니다.",
+    scrollAria: "초대 문구로 이동", scrollText: "SCROLL TO EXPLORE",
+    invitationHeading: "초대합니다", coupleHeading: "신랑 · 신부 소개",
+    coupleDescription: "서로의 하루를 함께 채워갈 두 사람을 소개합니다.",
+    groomRole: "GROOM · 신랑", brideRole: "BRIDE · 신부",
+    scheduleHeading: "결혼식 날짜", calendarAria: "결혼식 달력",
+    weekday0: "일", weekday1: "월", weekday2: "화", weekday3: "수", weekday4: "목", weekday5: "금", weekday6: "토",
+    galleryHeading: "웨딩 갤러리", galleryDescription: "우리의 소중한 순간을 담았습니다.",
+    galleryAria: "웨딩 사진 12장", galleryNote: "사진을 누르면 크게 볼 수 있습니다.",
+    galleryPlaceholder: "사진을 추가해 주세요", directionsHeading: "오시는 길",
+    mapAria: "지도 영역", mapPlaceholder: "지도를 넣거나 외부 지도 링크를 연결할 자리",
+    mapLinksAria: "지도 앱에서 보기", transitTitle: "지하철 / 대중교통", parkingTitle: "주차 안내",
+    accountsHeading: "마음 전하는 곳", accountsDescription: "함께 축하해 주시는 마음만으로도 큰 기쁨입니다.",
+    photoDialogAria: "웨딩 사진 크게 보기", closePhoto: "사진 닫기", prevPhoto: "← 이전", nextPhoto: "다음 →",
+    prevPhotoAria: "이전 사진", nextPhotoAria: "다음 사진",
+    missingTime: "예식 시간 추후 안내", missingAddress: "예식장 상세 주소를 입력해 주세요.",
+    missingMapAddress: "주소를 등록하면 네이버지도·카카오맵 버튼이 표시됩니다.",
+    naverMap: "네이버지도", kakaoMap: "카카오맵",
+    groomSide: "신랑 측", brideSide: "신부 측",
+    copyAccount: "계좌번호 복사", missingAccount: "계좌 정보를 입력하면 이곳에 표시됩니다.",
+    copied: "계좌번호를 복사했습니다.", copyFailed: "복사에 실패했습니다. 계좌번호를 직접 선택해 주세요.",
+    today: "오늘, 저희 결혼합니다!", past: "함께해 주셔서 감사합니다.",
+    photoAlt: (n) => `웨딩 사진 ${n}`,
+    photoZoom: (n) => `웨딩 사진 ${n} 크게 보기`,
+    heroAlt: (g, b) => `${g}과 ${b}의 메인 웨딩 사진`,
+    weddingDay: (m, d) => `${m}월 ${d}일, 결혼식 날`,
+    countdown: (days) => `결혼식까지 D-${days}`,
+    signature: (g, b) => `${g} · ${b} 올림`,
+    documentTitle: (g, b) => `${g} ♥ ${b} | 모바일 청첩장`,
+    metaDescription: "소중한 분들을 결혼식에 초대합니다.",
+  },
+  ja: {
+    skip: "本文へ移動", navigation: "招待状メニュー", languageSelection: "言語を選択",
+    navInvitation: "ご挨拶", navCouple: "新郎・新婦", navDate: "日時", navGallery: "写真",
+    navDirections: "アクセス", navAccounts: "お祝いのお気持ち",
+    mainPhotoAria: "メイン写真", mainPhotoCaption: "メイン写真を入れる場所",
+    heroMessage: "新たな一歩を踏み出す私たちを、どうぞ見守ってください。",
+    scrollAria: "ご挨拶へ移動", scrollText: "SCROLL TO EXPLORE",
+    invitationHeading: "ご招待のご挨拶", coupleHeading: "新郎・新婦のご紹介",
+    coupleDescription: "これからの日々をともに歩む二人をご紹介します。",
+    groomRole: "GROOM · 新郎", brideRole: "BRIDE · 新婦",
+    scheduleHeading: "挙式日時", calendarAria: "挙式日のカレンダー",
+    weekday0: "日", weekday1: "月", weekday2: "火", weekday3: "水", weekday4: "木", weekday5: "金", weekday6: "土",
+    galleryHeading: "ウェディングギャラリー", galleryDescription: "私たちの大切な瞬間を集めました。",
+    galleryAria: "ウェディング写真12枚", galleryNote: "写真をタップすると拡大できます。",
+    galleryPlaceholder: "写真を追加してください", directionsHeading: "会場へのアクセス",
+    mapAria: "地図エリア", mapPlaceholder: "地図または外部地図リンクを追加する場所",
+    mapLinksAria: "地図アプリで見る", transitTitle: "電車・公共交通機関", parkingTitle: "駐車場のご案内",
+    accountsHeading: "お祝いのお気持ち", accountsDescription: "お祝いのお気持ちだけでも、私たちにとって大きな喜びです。",
+    photoDialogAria: "ウェディング写真を拡大表示", closePhoto: "写真を閉じる", prevPhoto: "← 前へ", nextPhoto: "次へ →",
+    prevPhotoAria: "前の写真", nextPhotoAria: "次の写真",
+    missingTime: "挙式時間は後日ご案内します", missingAddress: "会場の住所をご入力ください。",
+    missingMapAddress: "住所を登録すると、NAVERマップ・Kakaoマップへのリンクが表示されます。",
+    naverMap: "NAVERマップ", kakaoMap: "Kakaoマップ",
+    groomSide: "新郎側", brideSide: "新婦側",
+    copyAccount: "口座番号をコピー", missingAccount: "口座情報を入力すると、ここに表示されます。",
+    copied: "口座番号をコピーしました。", copyFailed: "コピーできませんでした。口座番号を直接選択してください。",
+    today: "本日、結婚式を迎えます！", past: "お祝いしていただき、ありがとうございました。",
+    photoAlt: (n) => `ウェディング写真 ${n}`,
+    photoZoom: (n) => `ウェディング写真 ${n} を拡大`,
+    heroAlt: (g, b) => `${g}と${b}のメインウェディング写真`,
+    weddingDay: (m, d) => `${m}月${d}日、挙式日`,
+    countdown: (days) => `結婚式まであと${days}日`,
+    signature: (g, b) => `${g} · ${b} より`,
+    documentTitle: (g, b) => `${g} ♥ ${b} | 結婚式のご案内`,
+    metaDescription: "私たちの結婚式にご招待いたします。",
+  }
+};
+
+let currentLang = "ko";
+const t = (key) => translations[currentLang][key];
+const localized = (obj, key) => {
+  const japanese = obj && obj[`${key}Ja`];
+  return currentLang === "ja" && japanese != null && japanese !== "" ? japanese : (obj?.[key] ?? "");
+};
+
+function weddingDateParts() {
+  const [year, month, day] = (config.wedding.date || "2027-04-17").split("-").map(Number);
   const date = new Date(year, month - 1, day);
   return { year, month, day, date };
 }
-
-function initContent() {
-  const { groom, bride, wedding, invitation } = config;
-  const { date } = weddingDateParts(wedding.date);
-  const dateKorean = new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric", month: "long", day: "numeric", weekday: "long"
-  }).format(date);
-  const dateHero = `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, "0")}. ${String(date.getDate()).padStart(2, "0")}. ${["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][date.getDay()]}`;
-
-  put("#heroTitle", "");
-  $("#heroTitle").append(
-    document.createTextNode(`${groom.name} `),
-    create("span", "amp", "&"),
-    document.createTextNode(` ${bride.name}`)
-  );
-  put("#heroDate", dateHero);
-  put("#heroVenue", wedding.venue);
-  put("#invitationText", invitation.join("\n"));
-  put("#invitationSignature", `${groom.name} · ${bride.name} 올림`);
-  put("#groomName", groom.name);
-  put("#groomIntro", groom.intro);
-  put("#brideName", bride.name);
-  put("#brideIntro", bride.intro);
-  put("#scheduleDate", dateKorean);
-  put("#scheduleDetail", [wedding.time || "예식 시간 추후 안내", wedding.venue].join("  ·  "));
-  put("#venueName", wedding.venue);
-  put("#venueAddress", wedding.address || "예식장 상세 주소를 입력해 주세요.");
-  put("#transitInfo", wedding.transit);
-  put("#parkingInfo", wedding.parking);
-  put("#footerNames", `${groom.name} & ${bride.name}`);
-  document.title = `${groom.name} ♥ ${bride.name} | 모바일 청첩장`;
-
-  if (config.mainPhoto) {
-    const photo = $("#heroPhoto");
-    const img = create("img", "hero-image");
-    img.src = resolvePhotoUrl(config.mainPhoto);
-    img.alt = `${groom.name}과 ${bride.name}의 메인 웨딩 사진`;
-    img.style.display = "none";
-    photo.append(img); // DOM에 넣어 비동기 이미지 로딩을 안정적으로 유지합니다.
-    img.addEventListener("load", () => {
-      img.style.display = "";
-      photo.replaceChildren(img);
-    }, { once: true });
-    img.addEventListener("error", () => img.remove(), { once: true });
-  }
+function getNames() {
+  return [localized(config.groom, "name"), localized(config.bride, "name")];
 }
 
-function initCalendar() {
-  const { year, month, day, date } = weddingDateParts(config.wedding.date);
-  put("#calendarMonth", `${year}년 ${month}월`);
-  const calendar = $("#calendarDays");
-  const startDay = new Date(year, month - 1, 1).getDay();
-  const lastDay = new Date(year, month, 0).getDate();
+function renderStaticText() {
+  $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  $$('[data-i18n-aria]').forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+  const [groomName, brideName] = getNames();
+  document.title = t("documentTitle")(groomName, brideName);
+  $('meta[name="description"]').setAttribute("content", t("metaDescription"));
+  document.documentElement.lang = currentLang;
+  $$('[data-lang]').forEach((button) => {
+    const active = button.dataset.lang === currentLang;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
 
-  for (let i = 0; i < startDay; i++) {
+function renderContent() {
+  const { year, month, day, date } = weddingDateParts();
+  const [groomName, brideName] = getNames();
+  const venue = localized(config.wedding, "venue");
+  const weekdays = currentLang === "ja" ? ["日", "月", "火", "水", "木", "金", "土"] : ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const heroDate = currentLang === "ja"
+    ? `${year}. ${String(month).padStart(2,"0")}. ${String(day).padStart(2,"0")}.（${weekdays[date.getDay()]}）`
+    : `${year}. ${String(month).padStart(2,"0")}. ${String(day).padStart(2,"0")}. ${weekdays[date.getDay()]}`;
+  $("#heroTitle").replaceChildren(
+    document.createTextNode(`${groomName} `),
+    create("span", "amp", "&"),
+    document.createTextNode(` ${brideName}`)
+  );
+  put("#heroDate", heroDate);
+  put("#heroVenue", venue);
+  const invite = currentLang === "ja" && Array.isArray(config.invitationJa) ? config.invitationJa : config.invitation;
+  put("#invitationText", (invite || []).join("\n"));
+  put("#invitationSignature", t("signature")(groomName, brideName));
+  put("#groomName", groomName);
+  put("#groomIntro", localized(config.groom, "intro"));
+  put("#brideName", brideName);
+  put("#brideIntro", localized(config.bride, "intro"));
+  const dateLabel = currentLang === "ja"
+    ? `${year}年${month}月${day}日（${["日", "月", "火", "水", "木", "金", "土"][date.getDay()]}）`
+    : new Intl.DateTimeFormat("ko-KR", { year:"numeric",month:"long",day:"numeric",weekday:"long" }).format(date);
+  put("#scheduleDate", dateLabel);
+  put("#scheduleDetail", `${config.wedding.time || t("missingTime")}  ·  ${venue}`);
+  put("#venueName", venue);
+  put("#venueAddress", localized(config.wedding, "address") || (config.wedding.address || t("missingAddress")));
+  put("#transitInfo", localized(config.wedding, "transit"));
+  put("#parkingInfo", localized(config.wedding, "parking"));
+  put("#footerNames", `${groomName} & ${brideName}`);
+  const mainImage = $("#heroPhoto img");
+  if (mainImage) mainImage.alt = t("heroAlt")(groomName, brideName);
+}
+
+function initHeroPhoto() {
+  if (!config.mainPhoto) return;
+  const photo = $("#heroPhoto");
+  const img = create("img", "hero-image");
+  img.alt = t("heroAlt")(...getNames());
+  img.style.display = "none";
+  photo.append(img);
+  img.addEventListener("load", () => {
+    img.style.display = "";
+    photo.replaceChildren(img);
+  }, { once: true });
+  img.addEventListener("error", () => img.remove(), { once: true });
+  img.src = resolvePhotoUrl(config.mainPhoto);
+}
+
+function renderCalendar() {
+  const { year, month, day } = weddingDateParts();
+  put("#calendarMonth", currentLang === "ja" ? `${year}年${month}月` : `${year}년 ${month}월`);
+  const calendar = $("#calendarDays");
+  calendar.replaceChildren();
+  const firstWeekday = new Date(year, month - 1, 1).getDay();
+  const lastDay = new Date(year, month, 0).getDate();
+  for (let i = 0; i < firstWeekday; i++) {
     const empty = create("span", "calendar-blank");
     empty.setAttribute("aria-hidden", "true");
     calendar.append(empty);
@@ -81,86 +187,89 @@ function initCalendar() {
   for (let n = 1; n <= lastDay; n++) {
     const cell = create("span", n === day ? "calendar-day is-wedding" : "calendar-day", String(n));
     if (n === day) {
-      cell.setAttribute("aria-label", `${month}월 ${day}일, 결혼식 날`);
+      cell.setAttribute("aria-label", t("weddingDay")(month, day));
       cell.setAttribute("aria-current", "date");
     }
     calendar.append(cell);
   }
-
-  // 한국 시간 기준으로 오늘 날짜와 결혼식 날짜를 비교합니다.
+  // 한국과 일본의 시간대는 모두 UTC+9입니다.
   const dateParts = new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
   }).formatToParts(new Date());
   const getPart = (type) => Number(dateParts.find((p) => p.type === type).value);
-  const y = getPart("year"), m = getPart("month"), d = getPart("day");
-  const days = Math.round((Date.UTC(year, month - 1, day) - Date.UTC(y, m - 1, d)) / 86400000);
-  put("#dday", days > 0 ? `결혼식까지 D-${days}` : days === 0 ? "오늘, 저희 결혼합니다!" : "함께해 주셔서 감사합니다.");
+  const days = Math.round((Date.UTC(year, month - 1, day) - Date.UTC(getPart("year"), getPart("month") - 1, getPart("day"))) / 86400000);
+  put("#dday", days > 0 ? t("countdown")(days) : days === 0 ? t("today") : t("past"));
 }
 
 const validGallery = [];
 let selectedPhoto = 0;
 let previousFocus = null;
 
+function refreshGalleryLabels() {
+  $$(".gallery-button").forEach((button) => {
+    const n = Number(button.dataset.photoNumber);
+    button.setAttribute("aria-label", t("photoZoom")(n));
+    const image = button.querySelector("img");
+    if (image) image.alt = t("photoAlt")(n);
+  });
+  if (validGallery.length && $("#photoDialog").open) showSelectedPhoto();
+}
+function showSelectedPhoto() {
+  const image = validGallery[selectedPhoto];
+  if (!image) return;
+  $("#dialogImage").src = image.src;
+  $("#dialogImage").alt = t("photoAlt")(image.number);
+  put("#photoCount", `${selectedPhoto + 1} / ${validGallery.length}`);
+  $("#prevPhoto").disabled = validGallery.length < 2;
+  $("#nextPhoto").disabled = validGallery.length < 2;
+}
 function openGallery(index) {
+  if (index < 0 || !validGallery.length) return;
   selectedPhoto = index;
   previousFocus = document.activeElement;
   showSelectedPhoto();
   $("#photoDialog").showModal();
   document.body.classList.add("dialog-open");
 }
-
-function showSelectedPhoto() {
-  const image = validGallery[selectedPhoto];
-  $("#dialogImage").src = image.src;
-  $("#dialogImage").alt = `웨딩 사진 ${image.number}`;
-  put("#photoCount", `${selectedPhoto + 1} / ${validGallery.length}`);
-  $("#prevPhoto").disabled = validGallery.length < 2;
-  $("#nextPhoto").disabled = validGallery.length < 2;
-}
-
-function closeGallery() {
-  $("#photoDialog").close();
-}
-
+function closeGallery() { $("#photoDialog").close(); }
 function initGallery() {
   const grid = $("#galleryGrid");
   const paths = Array.isArray(config.gallery) ? config.gallery.slice(0, 12) : [];
   while (paths.length < 12) paths.push("");
-
   paths.forEach((src, i) => {
-    const no = String(i + 1).padStart(2, "0");
+    const number = i + 1;
     const tile = create("div", "gallery-tile photo-placeholder");
-    const label = create("span", "gallery-placeholder-label", `PHOTO ${no}`);
-    const caption = create("span", "gallery-placeholder-caption", "사진을 추가해 주세요");
-    tile.append(label, caption);
+    tile.append(create("span", "gallery-placeholder-label", `PHOTO ${String(number).padStart(2,"0")}`));
+    const caption = create("span", "gallery-placeholder-caption", t("galleryPlaceholder"));
+    caption.dataset.i18n = "galleryPlaceholder";
+    tile.append(caption);
     grid.append(tile);
-
     if (!src) return;
     const photoUrl = resolvePhotoUrl(src);
     const button = create("button", "gallery-button");
     button.type = "button";
-    button.setAttribute("aria-label", `웨딩 사진 ${i + 1} 크게 보기`);
+    button.dataset.photoNumber = String(number);
+    button.setAttribute("aria-label", t("photoZoom")(number));
     button.style.opacity = "0";
     button.style.position = "absolute";
     button.style.inset = "0";
     button.style.pointerEvents = "none";
     const img = create("img", "gallery-image");
-    img.alt = `웨딩 갤러리 사진 ${i + 1}`;
+    img.alt = t("photoAlt")(number);
     img.loading = "lazy";
     button.append(img);
-    tile.append(button); // lazy 이미지는 DOM에 있어야 정상 로드됩니다.
+    tile.append(button);
     img.addEventListener("load", () => {
-      validGallery.push({ src: photoUrl, number: i + 1 });
+      validGallery.push({ src: photoUrl, number });
       validGallery.sort((a, b) => a.number - b.number);
       button.removeAttribute("style");
       tile.replaceChildren(button);
       tile.classList.remove("photo-placeholder");
     }, { once: true });
     img.addEventListener("error", () => button.remove(), { once: true });
-    button.addEventListener("click", () => openGallery(validGallery.findIndex((photo) => photo.number === i + 1)));
+    button.addEventListener("click", () => openGallery(validGallery.findIndex((photo) => photo.number === number)));
     img.src = photoUrl;
   });
-
   $("#closeDialog").addEventListener("click", closeGallery);
   $("#prevPhoto").addEventListener("click", () => {
     selectedPhoto = (selectedPhoto + validGallery.length - 1) % validGallery.length;
@@ -175,7 +284,7 @@ function initGallery() {
   });
   $("#photoDialog").addEventListener("close", () => {
     document.body.classList.remove("dialog-open");
-    if (previousFocus) previousFocus.focus();
+    if (previousFocus && previousFocus.isConnected) previousFocus.focus();
   });
   document.addEventListener("keydown", (event) => {
     if (!$("#photoDialog").open) return;
@@ -184,25 +293,25 @@ function initGallery() {
   });
 }
 
-function initDirections() {
+function renderDirections() {
   const { venue, address } = config.wedding;
   const container = $("#mapLinks");
-  // 주소가 입력된 경우에만 실제 지도 검색 링크를 보여줍니다.
-  if (!address.trim()) {
-    container.append(create("p", "map-hint", "주소를 등록하면 네이버지도·카카오맵 버튼이 표시됩니다."));
+  container.replaceChildren();
+  if (!address || !address.trim()) {
+    container.append(create("p", "map-hint", t("missingMapAddress")));
     return;
   }
+  // 검색 정확도를 위해 지도 검색어는 실제 한국어 주소를 유지합니다.
   const query = encodeURIComponent(`${venue} ${address}`);
-  const links = [
-    { label: "네이버지도", url: `https://map.naver.com/p/search/${query}` },
-    { label: "카카오맵", url: `https://map.kakao.com/link/search/${query}` },
-  ];
-  links.forEach(({ label, url }) => {
-    const a = create("a", "outline-button", label);
-    a.href = url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    container.append(a);
+  [
+    { label: t("naverMap"), url: `https://map.naver.com/p/search/${query}` },
+    { label: t("kakaoMap"), url: `https://map.kakao.com/link/search/${query}` },
+  ].forEach(({ label, url }) => {
+    const anchor = create("a", "outline-button", label);
+    anchor.href = url;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    container.append(anchor);
   });
 }
 
@@ -214,43 +323,63 @@ function toast(message) {
   clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => box.classList.remove("show"), 2200);
 }
-
 async function copyText(value) {
   try {
     await navigator.clipboard.writeText(value);
-    toast("계좌번호를 복사했습니다.");
+    toast(t("copied"));
   } catch (_) {
-    toast("복사에 실패했습니다. 계좌번호를 직접 선택해 주세요.");
+    toast(t("copyFailed"));
   }
 }
-
-function initAccounts() {
+function renderAccounts() {
   const container = $("#accountGroups");
-  (config.accounts || []).forEach(({ label, bank, holder, number }) => {
+  const opened = [...container.querySelectorAll(".account-details")].map((detail) => detail.open);
+  container.replaceChildren();
+  (config.accounts || []).forEach((account, i) => {
+    const { bank, holder, number } = account;
     const details = create("details", "account-details");
-    const summary = create("summary", "account-summary", label);
+    details.open = Boolean(opened[i]);
+    const summary = create("summary", "account-summary", localized(account, "label") || (i === 0 ? t("groomSide") : t("brideSide")));
     const content = create("div", "account-content");
     if (bank && holder && number) {
-      content.append(create("p", "bank-name", `${bank} · ${holder}`));
+      content.append(create("p", "bank-name", `${localized(account, "bank")} · ${localized(account, "holder")}`));
       content.append(create("p", "account-number", number));
-      const copy = create("button", "outline-button copy-button", "계좌번호 복사");
+      const copy = create("button", "outline-button copy-button", t("copyAccount"));
       copy.type = "button";
       copy.addEventListener("click", () => copyText(number));
       content.append(copy);
     } else {
-      content.append(create("p", "account-empty", "계좌 정보를 입력하면 이곳에 표시됩니다."));
+      content.append(create("p", "account-empty", t("missingAccount")));
     }
     details.append(summary, content);
     container.append(details);
   });
 }
 
+function setLanguage(nextLang) {
+  currentLang = nextLang === "ja" ? "ja" : "ko";
+  try { localStorage.setItem("wedding-invitation-language", currentLang); } catch (_) { /* 저장 불가 환경 */ }
+  renderStaticText();
+  renderContent();
+  renderCalendar();
+  renderDirections();
+  renderAccounts();
+  refreshGalleryLabels();
+  $("#toast").classList.remove("show");
+}
+
 if (config) {
-  initContent();
-  initCalendar();
+  try {
+    const queryLang = new URLSearchParams(window.location.search).get("lang");
+    const storedLang = localStorage.getItem("wedding-invitation-language");
+    currentLang = queryLang === "ja" || queryLang === "ko" ? queryLang : storedLang === "ja" ? "ja" : "ko";
+  } catch (_) { currentLang = "ko"; }
   initGallery();
-  initDirections();
-  initAccounts();
+  initHeroPhoto();
+  setLanguage(currentLang);
+  $$(".language-button").forEach((button) => {
+    button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  });
 } else {
-  console.error("config.js를 확인해 주세요.");
+  console.error("config.js 파일을 확인해 주세요.");
 }

@@ -14,19 +14,27 @@
     <script src="/wedding-invitation/app.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">본문으로 바로 가기</a>
+    <a class="skip-link" href="#main" data-i18n="skip">본문으로 바로 가기</a>
 
     <header class="site-header">
       <div class="header-inner">
         <a class="site-brand" href="#top">OUR WEDDING</a>
-        <nav class="site-nav" aria-label="청첩장 메뉴">
-          <a href="#invitation">초대</a>
-          <a href="#couple">신랑·신부</a>
-          <a href="#schedule">날짜</a>
-          <a href="#gallery">사진</a>
-          <a href="#directions">오시는 길</a>
-          <a href="#accounts">마음 전하기</a>
-        </nav>
+        <div class="header-tools">
+          <nav class="site-nav" aria-label="청첩장 메뉴" data-i18n-aria="navigation">
+            <a href="#invitation" data-i18n="navInvitation">초대</a>
+            <a href="#couple" data-i18n="navCouple">신랑·신부</a>
+            <a href="#schedule" data-i18n="navDate">날짜</a>
+            <a href="#gallery" data-i18n="navGallery">사진</a>
+            <a href="#directions" data-i18n="navDirections">오시는 길</a>
+            <a href="#accounts" data-i18n="navAccounts">마음 전하기</a>
+          </nav>
+          <!-- 오른쪽 상단 언어 선택: JavaScript에서 모든 섹션에 반영 -->
+          <div class="language-switch" role="group" aria-label="언어 선택" data-i18n-aria="languageSelection">
+            <button class="language-button is-active" id="langKo" type="button" data-lang="ko" aria-pressed="true">한국어</button>
+            <span class="language-divider" aria-hidden="true">/</span>
+            <button class="language-button" id="langJa" type="button" data-lang="ja" aria-pressed="false">日本語</button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -34,21 +42,21 @@
       <!-- 01. 메인 화면 -->
       <section id="top" class="hero" aria-labelledby="heroTitle">
         <div class="hero-eyebrow">WE ARE GETTING MARRIED</div>
-        <h1 id="heroTitle" class="hero-names">신랑 이름 <span class="amp">&amp;</span> 신부 이름</h1>
+        <h1 id="heroTitle" class="hero-names">이종찬 <span class="amp">&amp;</span> 나메타 치히로</h1>
         <p class="hero-date" id="heroDate">2027. 04. 17. SAT</p>
-        <div id="heroPhoto" class="hero-photo photo-placeholder" aria-label="메인 사진 영역">
+        <div id="heroPhoto" class="hero-photo photo-placeholder" aria-label="메인 사진 영역" data-i18n-aria="mainPhotoAria">
           <span class="placeholder-kicker">MAIN PHOTO</span>
-          <span class="placeholder-caption">메인 사진을 넣을 자리</span>
+          <span class="placeholder-caption" data-i18n="mainPhotoCaption">메인 사진을 넣을 자리</span>
         </div>
         <p class="hero-venue" id="heroVenue">라플레이스</p>
-        <p class="hero-message">함께하는 첫날, 소중한 분들을 초대합니다.</p>
-        <a class="scroll-hint" href="#invitation" aria-label="초대 문구로 이동">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
+        <p class="hero-message" data-i18n="heroMessage">함께하는 첫날, 소중한 분들을 초대합니다.</p>
+        <a class="scroll-hint" href="#invitation" aria-label="초대 문구로 이동" data-i18n-aria="scrollAria"><span data-i18n="scrollText">SCROLL TO EXPLORE</span> <span aria-hidden="true">↓</span></a>
       </section>
 
       <!-- 02. 초대 문구 -->
       <section id="invitation" class="section invitation" aria-labelledby="invitationHeading">
         <p class="section-overline">INVITATION</p>
-        <h2 id="invitationHeading" class="section-title">초대합니다</h2>
+        <h2 id="invitationHeading" class="section-title" data-i18n="invitationHeading">초대합니다</h2>
         <div class="small-rule" aria-hidden="true"></div>
         <p class="invitation-text" id="invitationText"></p>
         <p class="invitation-signature" id="invitationSignature"></p>
@@ -57,19 +65,19 @@
       <!-- 03. 신랑·신부 소개 -->
       <section id="couple" class="section couple" aria-labelledby="coupleHeading">
         <p class="section-overline">OUR STORY</p>
-        <h2 id="coupleHeading" class="section-title">신랑 · 신부 소개</h2>
-        <p class="section-description">서로의 하루를 함께 채워갈 두 사람을 소개합니다.</p>
+        <h2 id="coupleHeading" class="section-title" data-i18n="coupleHeading">신랑 · 신부 소개</h2>
+        <p class="section-description" data-i18n="coupleDescription">서로의 하루를 함께 채워갈 두 사람을 소개합니다.</p>
         <div class="couple-grid">
           <article class="person-card">
             <div class="person-avatar" aria-hidden="true">G</div>
-            <p class="person-role">GROOM · 신랑</p>
-            <h3 id="groomName" class="person-name">신랑 이름</h3>
+            <p class="person-role" data-i18n="groomRole">GROOM · 신랑</p>
+            <h3 id="groomName" class="person-name">이종찬</h3>
             <p id="groomIntro" class="person-intro"></p>
           </article>
           <article class="person-card">
             <div class="person-avatar" aria-hidden="true">B</div>
-            <p class="person-role">BRIDE · 신부</p>
-            <h3 id="brideName" class="person-name">신부 이름</h3>
+            <p class="person-role" data-i18n="brideRole">BRIDE · 신부</p>
+            <h3 id="brideName" class="person-name">나메타 치히로</h3>
             <p id="brideIntro" class="person-intro"></p>
           </article>
         </div>
@@ -78,13 +86,13 @@
       <!-- 04. 결혼식 날짜 -->
       <section id="schedule" class="section schedule" aria-labelledby="scheduleHeading">
         <p class="section-overline">THE WEDDING DAY</p>
-        <h2 id="scheduleHeading" class="section-title">결혼식 날짜</h2>
+        <h2 id="scheduleHeading" class="section-title" data-i18n="scheduleHeading">결혼식 날짜</h2>
         <p class="schedule-date" id="scheduleDate"></p>
         <p class="schedule-detail" id="scheduleDetail"></p>
-        <div class="calendar" aria-label="결혼식 달력">
+        <div class="calendar" aria-label="결혼식 달력" data-i18n-aria="calendarAria">
           <p class="calendar-month" id="calendarMonth"></p>
           <div class="calendar-weekdays" aria-hidden="true">
-            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+            <span data-i18n="weekday0">일</span><span data-i18n="weekday1">월</span><span data-i18n="weekday2">화</span><span data-i18n="weekday3">수</span><span data-i18n="weekday4">목</span><span data-i18n="weekday5">금</span><span data-i18n="weekday6">토</span>
           </div>
           <div id="calendarDays" class="calendar-days"></div>
         </div>
@@ -94,30 +102,30 @@
       <!-- 05. 웨딩 갤러리 (12장) -->
       <section id="gallery" class="section gallery" aria-labelledby="galleryHeading">
         <p class="section-overline">OUR MOMENTS</p>
-        <h2 id="galleryHeading" class="section-title">웨딩 갤러리</h2>
-        <p class="section-description">우리의 소중한 순간을 담았습니다.</p>
-        <div id="galleryGrid" class="gallery-grid" aria-label="웨딩 사진 12장"></div>
-        <p class="gallery-note">사진을 설정하면 클릭해서 크게 볼 수 있습니다.</p>
+        <h2 id="galleryHeading" class="section-title" data-i18n="galleryHeading">웨딩 갤러리</h2>
+        <p class="section-description" data-i18n="galleryDescription">우리의 소중한 순간을 담았습니다.</p>
+        <div id="galleryGrid" class="gallery-grid" aria-label="웨딩 사진 12장" data-i18n-aria="galleryAria"></div>
+        <p class="gallery-note" data-i18n="galleryNote">사진을 설정하면 클릭해서 크게 볼 수 있습니다.</p>
       </section>
 
       <!-- 06. 오시는 길 -->
       <section id="directions" class="section directions" aria-labelledby="directionsHeading">
         <p class="section-overline">LOCATION</p>
-        <h2 id="directionsHeading" class="section-title">오시는 길</h2>
+        <h2 id="directionsHeading" class="section-title" data-i18n="directionsHeading">오시는 길</h2>
         <h3 class="venue-name" id="venueName"></h3>
         <p class="venue-address" id="venueAddress"></p>
-        <div class="map-placeholder" aria-label="지도 영역">
+        <div class="map-placeholder" aria-label="지도 영역" data-i18n-aria="mapAria">
           <span aria-hidden="true" class="map-pin">⌖</span>
-          <span>지도를 넣거나 외부 지도 링크를 연결할 자리</span>
+          <span data-i18n="mapPlaceholder">지도를 넣거나 외부 지도 링크를 연결할 자리</span>
         </div>
-        <div id="mapLinks" class="map-actions" aria-label="지도 앱에서 보기"></div>
+        <div id="mapLinks" class="map-actions" aria-label="지도 앱에서 보기" data-i18n-aria="mapLinksAria"></div>
         <div class="transport-list">
           <div class="transport-item">
-            <h3>지하철 / 대중교통</h3>
+            <h3 data-i18n="transitTitle">지하철 / 대중교통</h3>
             <p id="transitInfo"></p>
           </div>
           <div class="transport-item">
-            <h3>주차 안내</h3>
+            <h3 data-i18n="parkingTitle">주차 안내</h3>
             <p id="parkingInfo"></p>
           </div>
         </div>
@@ -126,8 +134,8 @@
       <!-- 07. 마음 전하는 곳 -->
       <section id="accounts" class="section accounts" aria-labelledby="accountsHeading">
         <p class="section-overline">WITH GRATITUDE</p>
-        <h2 id="accountsHeading" class="section-title">마음 전하는 곳</h2>
-        <p class="section-description">함께 축하해 주시는 마음만으로도 큰 기쁨입니다.</p>
+        <h2 id="accountsHeading" class="section-title" data-i18n="accountsHeading">마음 전하는 곳</h2>
+        <p class="section-description" data-i18n="accountsDescription">함께 축하해 주시는 마음만으로도 큰 기쁨입니다.</p>
         <div id="accountGroups" class="account-groups"></div>
       </section>
     </main>
@@ -139,15 +147,15 @@
     </footer>
 
     <!-- 사진 등록 후 클릭하면 열리는 확대 보기 -->
-    <dialog id="photoDialog" class="photo-dialog" aria-label="웨딩 사진 크게 보기">
+    <dialog id="photoDialog" class="photo-dialog" aria-label="웨딩 사진 크게 보기" data-i18n-aria="photoDialogAria">
       <div class="dialog-toolbar">
         <span id="photoCount"></span>
-        <button type="button" id="closeDialog" class="dialog-close" aria-label="사진 닫기">✕</button>
+        <button type="button" id="closeDialog" class="dialog-close" aria-label="사진 닫기" data-i18n-aria="closePhoto">✕</button>
       </div>
       <div class="dialog-image-wrap"><img id="dialogImage" alt="확대된 웨딩 사진" /></div>
       <div class="dialog-nav">
-        <button type="button" id="prevPhoto" aria-label="이전 사진">← 이전</button>
-        <button type="button" id="nextPhoto" aria-label="다음 사진">다음 →</button>
+        <button type="button" id="prevPhoto" aria-label="이전 사진" data-i18n="prevPhoto" data-i18n-aria="prevPhotoAria">← 이전</button>
+        <button type="button" id="nextPhoto" aria-label="다음 사진" data-i18n="nextPhoto" data-i18n-aria="nextPhotoAria">다음 →</button>
       </div>
     </dialog>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
