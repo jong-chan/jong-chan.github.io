@@ -1,6 +1,10 @@
 "use strict";
 
 const config = window.WEDDING_CONFIG;
+// GitHub Pages 사용자 사이트의 하위 경로에서 사진을 불러옵니다.
+// config.js에는 "images/파일명.jpg" 형식으로 입력하면 됩니다.
+const WEDDING_PAGE_BASE = new URL("/wedding-invitation/", window.location.origin);
+const resolvePhotoUrl = (path) => new URL(path, WEDDING_PAGE_BASE).href;
 const $ = (selector) => document.querySelector(selector);
 const create = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -50,7 +54,7 @@ function initContent() {
   if (config.mainPhoto) {
     const photo = $("#heroPhoto");
     const img = create("img", "hero-image");
-    img.src = config.mainPhoto;
+    img.src = resolvePhotoUrl(config.mainPhoto);
     img.alt = `${groom.name}과 ${bride.name}의 메인 웨딩 사진`;
     img.style.display = "none";
     photo.append(img); // DOM에 넣어 비동기 이미지 로딩을 안정적으로 유지합니다.
@@ -132,6 +136,7 @@ function initGallery() {
     grid.append(tile);
 
     if (!src) return;
+    const photoUrl = resolvePhotoUrl(src);
     const button = create("button", "gallery-button");
     button.type = "button";
     button.setAttribute("aria-label", `웨딩 사진 ${i + 1} 크게 보기`);
@@ -145,7 +150,7 @@ function initGallery() {
     button.append(img);
     tile.append(button); // lazy 이미지는 DOM에 있어야 정상 로드됩니다.
     img.addEventListener("load", () => {
-      validGallery.push({ src, number: i + 1 });
+      validGallery.push({ src: photoUrl, number: i + 1 });
       validGallery.sort((a, b) => a.number - b.number);
       button.removeAttribute("style");
       tile.replaceChildren(button);
@@ -153,7 +158,7 @@ function initGallery() {
     }, { once: true });
     img.addEventListener("error", () => button.remove(), { once: true });
     button.addEventListener("click", () => openGallery(validGallery.findIndex((photo) => photo.number === i + 1)));
-    img.src = src;
+    img.src = photoUrl;
   });
 
   $("#closeDialog").addEventListener("click", closeGallery);
