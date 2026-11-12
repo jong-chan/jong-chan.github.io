@@ -3,13 +3,14 @@
  * 색상, 폰트, 간격은 아래 :root 변수만 바꿔도 전체 분위기가 달라집니다.
  */
 :root {
-  --page-bg: #f8f7f4;
-  --surface: #ffffff;
-  --text: #2b2b29;
-  --muted: #77766f;
-  --line: #e5e2dc;
-  --accent: #928a79;
-  --soft: #eeece6;
+  --page-bg: #fff1f5;
+  --surface: #fffcfd;
+  --text: #482b38;
+  --muted: #755366;
+  --line: #f0d5e0;
+  --accent: #ad456e;
+  --soft: #fbe2ec;
+  --section-bg: #fff5f8;
   --content-width: 720px;
   --radius: 10px;
   --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans JP", "Malgun Gothic", sans-serif;
@@ -25,7 +26,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .skip-link { position: absolute; z-index: 100; left: 14px; top: -80px; background: var(--surface); padding: 10px 16px; }
 .skip-link:focus { top: 14px; }
 
-.site-header { position: sticky; top: 0; z-index: 15; background: rgba(248,247,244,.94); border-bottom: 1px solid var(--line); backdrop-filter: blur(10px); }
+.site-header { position: sticky; top: 0; z-index: 15; background: rgba(255,241,245,.94); border-bottom: 1px solid var(--line); backdrop-filter: blur(10px); }
 .header-inner { max-width: 960px; margin: 0 auto; padding: 11px 22px; display: flex; align-items: center; gap: 26px; justify-content: space-between; }
 .site-brand { font-size: 11px; font-weight: 750; letter-spacing: .19em; white-space: nowrap; }
 /* 메뉴를 제거한 상단 바: 로고와 한국어/일본어 전환만 유지 */
@@ -33,11 +34,11 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .language-switch { display: inline-flex; align-items: center; flex-shrink: 0; gap: 5px; padding: 3px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); white-space: nowrap; }
 .language-button { border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer; font-size: 11px; line-height: 1.5; padding: 5px 7px; white-space: nowrap; }
 .language-button.is-active { color: var(--text); font-weight: 700; background: var(--soft); }
-.language-divider { color: #c6c1b7; font-size: 10px; user-select: none; }
+.language-divider { color: #d5a5b8; font-size: 10px; user-select: none; }
 html[lang="ja"] body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; }
 
 
-main { max-width: var(--content-width); margin: 0 auto; background: var(--surface); box-shadow: 0 4px 32px rgba(45,40,33,.025); }
+main { max-width: var(--content-width); margin: 0 auto; background: var(--surface); box-shadow: 0 4px 32px rgba(112,42,72,.04); }
 .section { padding: 100px 56px; text-align: center; border-top: 1px solid var(--line); }
 .section-overline { margin: 0 0 14px; font-size: 11px; font-weight: 650; letter-spacing: .24em; color: var(--accent); }
 .section-title { margin: 0; font-size: 25px; letter-spacing: -.025em; font-weight: 580; }
@@ -64,7 +65,7 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   pointer-events: none;
   font: normal clamp(17px, 3.15vw, 32px)/1.25 Georgia, "Times New Roman", serif;
   letter-spacing: .13em;
-  color: #37312d;
+  color: #593044;
   text-shadow: 0 1px 9px rgba(255,255,255,.45);
   animation: heroTitleAppear 1.6s ease-out both;
 }
@@ -96,7 +97,7 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   100% { top: 109%; transform: translate3d(var(--drift),0,0) rotate(390deg) scale(var(--scale)); opacity: 0; }
 }
 
-.photo-placeholder { background: linear-gradient(135deg, #f2f0eb, #e8e5de); border: 1px solid #dfdcd5; color: #99948c; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
+.photo-placeholder { background: linear-gradient(135deg, var(--section-bg), var(--soft)); border: 1px solid var(--line); color: var(--muted); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
 .placeholder-kicker { font-size: 14px; letter-spacing: .2em; }
 .placeholder-caption { font-size: 12px; }
 .hero-venue { margin: 32px 0 0; font-size: 16px; font-weight: 600; }
@@ -104,7 +105,7 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .scroll-hint { font-size: 10px; letter-spacing: .12em; color: var(--accent); }
 .scroll-hint span { display: block; font-size: 17px; margin-top: 2px; }
 
-.invitation { background: #fcfbf9; }
+.invitation { background: var(--section-bg); }
 .invitation-text { margin: 0 auto; white-space: pre-line; font-size: 15px; line-height: 2.4; word-break: keep-all; }
 .invitation-signature { margin: 36px 0 0; font-size: 13px; color: var(--muted); }
 
@@ -115,14 +116,14 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .person-name { margin: 5px 0 10px; font-size: 19px; font-weight: 600; }
 .person-intro { min-height: 45px; margin: 0; font-size: 12px; line-height: 1.8; color: var(--muted); word-break: keep-all; }
 
-.schedule { background: #fcfbf9; }
+.schedule { background: var(--section-bg); }
 .schedule-date { margin: 24px 0 3px; font-size: 20px; font-weight: 600; }
 .schedule-detail { margin: 0; font-size: 13px; color: var(--muted); }
 .calendar { max-width: 360px; margin: 40px auto 0; border: 1px solid var(--line); background: var(--surface); padding: 29px 27px 31px; border-radius: var(--radius); }
 .calendar-month { margin: 0 0 26px; font-size: 16px; font-weight: 630; }
 .calendar-weekdays, .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px 3px; }
 .calendar-weekdays { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
-.calendar-weekdays span:first-child { color: #bd7e75; }
+.calendar-weekdays span:first-child { color: var(--accent); }
 .calendar-days { font-size: 13px; }
 .calendar-day, .calendar-blank { display: grid; place-items: center; width: 35px; height: 35px; margin: auto; }
 .calendar-day.is-wedding { border-radius: 50%; background: var(--accent); color: white; font-weight: 700; }
@@ -137,10 +138,10 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .gallery-button:hover .gallery-image { transform: scale(1.04); }
 .gallery-note { margin: 20px 0 0; font-size: 11px; color: var(--muted); }
 
-.directions { background: #fcfbf9; }
+.directions { background: var(--section-bg); }
 .venue-name { font-size: 21px; font-weight: 650; margin: 28px 0 2px; }
 .venue-address { color: var(--muted); font-size: 13px; margin: 0 0 24px; }
-.map-placeholder { min-height: 190px; background: #ecebe7; border: 1px solid #e0ddd6; display: grid; place-content: center; gap: 4px; color: #89867f; font-size: 12px; padding: 20px; }
+.map-placeholder { min-height: 190px; background: var(--soft); border: 1px solid var(--line); display: grid; place-content: center; gap: 4px; color: var(--muted); font-size: 12px; padding: 20px; }
 .map-pin { font-size: 32px; line-height: 1; }
 .map-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 17px 0 38px; }
 .outline-button { display: inline-flex; align-items: center; justify-content: center; min-height: 39px; border: 1px solid var(--line); background: var(--surface); padding: 7px 17px; color: var(--text); font-size: 12px; border-radius: 6px; cursor: pointer; }
@@ -168,16 +169,16 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .site-footer .footer-credit { margin-top: 20px !important; font-size: 10px !important; letter-spacing: .08em; }
 
 .dialog-open { overflow: hidden; }
-.photo-dialog { border: none; padding: 0; width: min(90vw, 850px); max-height: 92vh; background: #191919; color: #fff; border-radius: 8px; }
-.photo-dialog::backdrop { background: rgba(0,0,0,.84); }
+.photo-dialog { border: none; padding: 0; width: min(90vw, 850px); max-height: 92vh; background: #2c1923; color: #fff; border-radius: 8px; }
+.photo-dialog::backdrop { background: rgba(35,15,26,.84); }
 .dialog-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; font-size: 12px; }
 .dialog-close { border: 0; color: #fff; background: none; cursor: pointer; font-size: 18px; }
 .dialog-image-wrap { display: flex; align-items: center; justify-content: center; min-height: 180px; max-height: 73vh; }
 .dialog-image-wrap img { display: block; max-width: 100%; max-height: 73vh; object-fit: contain; }
 .dialog-nav { display: flex; gap: 10px; justify-content: center; padding: 13px; }
-.dialog-nav button { border: 1px solid #656565; color: #fff; background: transparent; padding: 5px 22px; cursor: pointer; border-radius: 5px; font-size: 12px; }
+.dialog-nav button { border: 1px solid #936379; color: #fff; background: transparent; padding: 5px 22px; cursor: pointer; border-radius: 5px; font-size: 12px; }
 .dialog-nav button:disabled { opacity: .4; cursor: default; }
-.toast { position: fixed; z-index: 70; left: 50%; bottom: 28px; transform: translate(-50%, 8px); opacity: 0; pointer-events: none; transition: .2s; background: #30302e; color: white; padding: 10px 20px; border-radius: 8px; font-size: 12px; max-width: 85vw; text-align: center; }
+.toast { position: fixed; z-index: 70; left: 50%; bottom: 28px; transform: translate(-50%, 8px); opacity: 0; pointer-events: none; transition: .2s; background: #593044; color: white; padding: 10px 20px; border-radius: 8px; font-size: 12px; max-width: 85vw; text-align: center; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 740px) {
@@ -212,15 +213,15 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 }
 
 /* RSVP & sharing — 기존 청첩장과 동일한 간결한 톤 */
-.rsvp { background: #fcfbf9; }
+.rsvp { background: var(--section-bg); }
 .rsvp-description { max-width: 440px; margin: 18px auto 28px; word-break: keep-all; }
-.action-button { min-height: 47px; width: min(100%, 350px); border: 1px solid #877f70; border-radius: 6px; background: #817a6e; padding: 11px 18px; color: white; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer; transition: filter .2s; }
+.action-button { min-height: 47px; width: min(100%, 350px); border: 1px solid var(--accent); border-radius: 6px; background: var(--accent); padding: 11px 18px; color: white; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer; transition: filter .2s; }
 .action-button:hover { filter: brightness(.96); }
 .secondary-button { background: white; color: var(--text); border-color: var(--line); }
 .share-actions { max-width: 350px; margin: 32px auto 0; display: grid; gap: 11px; }
 .sharing { padding-top: 75px; }
 .rsvp-dialog { width: min(92vw, 440px); max-height: min(88vh, 760px); overflow-y: auto; padding: 27px 24px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: 0 12px 40px #0002; }
-.rsvp-dialog::backdrop { background: #27231f96; }
+.rsvp-dialog::backdrop { background: #482b3896; }
 .rsvp-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
 .rsvp-dialog-header h2 { font-size: 19px; margin: 0; }
 .rsvp-close { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 22px; }
@@ -251,18 +252,18 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   min-width: 104px;
   height: 42px;
   padding: 0 13px;
-  border: 1px solid rgba(120, 106, 88, 0.3);
+  border: 1px solid rgba(173, 69, 110, 0.3);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.95);
-  color: #5e554a;
-  box-shadow: 0 4px 18px rgba(55, 43, 29, .12);
+  color: var(--accent);
+  box-shadow: 0 4px 18px rgba(112, 42, 72, .12);
   backdrop-filter: blur(8px);
   font-size: 11px;
   letter-spacing: .04em;
   cursor: pointer;
 }
 .music-toggle[hidden] { display: none !important; }
-.music-toggle.is-playing { background: #817a6e; color: #fff; }
+.music-toggle.is-playing { background: var(--accent); color: #fff; }
 .music-toggle-icon { font-family: Georgia, serif; font-size: 18px; line-height: 1; }
 .music-toggle:hover { filter: brightness(.96); }
 .music-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
