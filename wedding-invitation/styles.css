@@ -193,6 +193,7 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   main { box-shadow: none; }
   .section { padding: 80px 28px; }
   .hero { padding: 65px 28px 64px; }
+  html[lang="ja"] .hero-names { font-size: clamp(16px, 5.3vw, 27px); white-space: nowrap; }
   .hero-photo { aspect-ratio: 2 / 3; }
   .hero-photo-title { font-size: clamp(16px, 4.4vw, 27px); letter-spacing: .09em; }
 }

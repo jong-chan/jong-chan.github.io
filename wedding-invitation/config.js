@@ -26,8 +26,8 @@ window.WEDDING_CONFIG = {
     address: "서울 강남구 테헤란로 424 대치타워 B1F",
     addressJa: "",        // 일본어 주소 (선택)
     naverMapUrl: "https://naver.me/GlJIgkbO", // 예식장의 네이버지도 공유 링크
-    transit: "대중교통 이용 방법을 입력해 주세요.",
-    transitJa: "公共交通機関でのアクセスをご入力ください。",
+    transit: "2호선·수인분당선 선릉역 1번 출구에서 도보 3분 (약 306m)",
+    transitJa: "地下鉄2号線・水仁・盆唐線「宣陵（ソンルン）駅」1番出口より徒歩3分（約306m）",
     parking: "주차 정보를 입력해 주세요.",
     parkingJa: "駐車場のご案内をご入力ください。",
   },
