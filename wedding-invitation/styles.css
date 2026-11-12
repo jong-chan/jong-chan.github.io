@@ -124,6 +124,12 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 .calendar-days { font-size: 13px; }
 .calendar-day, .calendar-blank { display: grid; place-items: center; width: 100%; max-width: 35px; height: 35px; margin: auto; }
 .calendar-day.is-wedding { border-radius: 50%; background: var(--accent); color: white; font-weight: 700; }
+.wedding-countdown { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px; max-width: 360px; margin: 30px auto 0; }
+.wedding-countdown[hidden] { display: none; }
+.countdown-unit { min-width: 0; padding: 14px 4px 11px; background: var(--section-bg); border: 1px solid var(--line); border-radius: 9px; color: var(--accent); }
+.countdown-value { display: block; font: 28px/1.2 Georgia, serif; font-variant-numeric: tabular-nums; }
+.countdown-label { display: block; margin-top: 6px; font-size: 10px; }
+.countdown-separator { color: var(--muted); font-size: 16px; }
 .dday { margin: 27px 0 0; color: var(--accent); font-weight: 650; font-size: 13px; }
 
 .gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }

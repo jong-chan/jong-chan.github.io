@@ -43,6 +43,7 @@ const translations = {
     groomSide: "신랑 측", brideSide: "신부 측",
     copyAccount: "계좌번호 복사", missingAccount: "계좌 정보는 추후 안내드리겠습니다.",
     copied: "계좌번호를 복사했습니다.", copyFailed: "복사에 실패했습니다. 계좌번호를 직접 선택해 주세요.",
+    countdownAria: "예식까지 남은 시간", countdownDays: "일", countdownHours: "시간", countdownMinutes: "분", countdownSeconds: "초",
     today: "오늘, 저희 결혼합니다!", past: "함께해 주셔서 감사합니다.",
     photoAlt: (n) => `웨딩 사진 ${n}`,
     photoZoom: (n) => `웨딩 사진 ${n} 크게 보기`,
@@ -96,6 +97,7 @@ const translations = {
     groomSide: "新郎側", brideSide: "新婦側",
     copyAccount: "口座番号をコピー", missingAccount: "口座情報は後日ご案内します。",
     copied: "口座番号をコピーしました。", copyFailed: "コピーできませんでした。口座番号を直接選択してください。",
+    countdownAria: "挙式までの残り時間", countdownDays: "日", countdownHours: "時間", countdownMinutes: "分", countdownSeconds: "秒",
     today: "本日、結婚式を迎えます！", past: "お祝いしていただき、ありがとうございました。",
     photoAlt: (n) => `ウェディング写真 ${n}`,
     photoZoom: (n) => `ウェディング写真 ${n} を拡大`,
@@ -309,10 +311,34 @@ function renderCalendar() {
     }
     calendar.append(cell);
   }
+  renderCountdown();
+}
+
+function renderCountdown() {
+  // 방문자의 기기 시간대와 관계없이 예식은 한국 표준시(UTC+9)를 기준으로 합니다.
+  const target = Date.parse(`${config.wedding.date}T${config.wedding.time}:00+09:00`);
+  const countdown = $("#weddingCountdown");
+  countdown.hidden = !Number.isFinite(target);
+  if (countdown.hidden) { put("#dday", t("missingTime")); return; }
+  const now = Date.now();
+  const remaining = Math.max(0, Math.ceil((target - now) / 1000));
+  const values = {
+    Days: Math.floor(remaining / 86400),
+    Hours: Math.floor(remaining / 3600) % 24,
+    Minutes: Math.floor(remaining / 60) % 60,
+    Seconds: remaining % 60,
+  };
+  Object.entries(values).forEach(([unit, value]) => {
+    const element = $(`#countdown${unit}`);
+    const text = String(value).padStart(2, "0");
+    if (element.textContent !== text) element.textContent = text;
+  });
+  // 기존 D-day 문구는 한국/일본의 달력 날짜를 기준으로 매일 갱신합니다.
+  const { year, month, day } = weddingDateParts();
   // 한국과 일본의 시간대는 모두 UTC+9입니다.
   const dateParts = new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
-  }).formatToParts(new Date());
+  }).formatToParts(new Date(now));
   const getPart = (type) => Number(dateParts.find((p) => p.type === type).value);
   const days = Math.round((Date.UTC(year, month - 1, day) - Date.UTC(getPart("year"), getPart("month") - 1, getPart("day"))) / 86400000);
   put("#dday", days > 0 ? t("countdown")(days) : days === 0 ? t("today") : t("past"));
@@ -786,6 +812,10 @@ if (config) {
   initShare();
   initBackgroundMusic();
   setLanguage(currentLang);
+  setInterval(renderCountdown, 1000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) renderCountdown();
+  });
   $$(".language-button").forEach((button) => {
     button.addEventListener("click", () => setLanguage(button.dataset.lang));
   });

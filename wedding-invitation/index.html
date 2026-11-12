@@ -13,9 +13,9 @@
     <meta property="og:title" content="이종찬 ♥ 나메타 치히로 | 2027년 4월 17일" />
     <meta property="og:description" content="2027년 4월 17일 토요일 14:30, 라플레이스" />
     <meta property="og:image" content="https://jong-chan.github.io/wedding-invitation/images/LSH_1375.jpg" />
-    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=alternating-sections-20261112" />
-    <script src="/wedding-invitation/config.js?v=invitation-merged-20261112" defer></script>
-    <script src="/wedding-invitation/app.js?v=invitation-merged-20261112" defer></script>
+    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=live-countdown-20261112" />
+    <script src="/wedding-invitation/config.js?v=live-countdown-20261112" defer></script>
+    <script src="/wedding-invitation/app.js?v=live-countdown-20261112" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip">본문으로 바로 가기</a>
@@ -79,6 +79,15 @@
             <span data-i18n="weekday0">일</span><span data-i18n="weekday1">월</span><span data-i18n="weekday2">화</span><span data-i18n="weekday3">수</span><span data-i18n="weekday4">목</span><span data-i18n="weekday5">금</span><span data-i18n="weekday6">토</span>
           </div>
           <div id="calendarDays" class="calendar-days"></div>
+        </div>
+        <div id="weddingCountdown" class="wedding-countdown" role="group" aria-label="예식까지 남은 시간" data-i18n-aria="countdownAria">
+          <div class="countdown-unit"><span id="countdownDays" class="countdown-value">00</span><span class="countdown-label" data-i18n="countdownDays">일</span></div>
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <div class="countdown-unit"><span id="countdownHours" class="countdown-value">00</span><span class="countdown-label" data-i18n="countdownHours">시간</span></div>
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <div class="countdown-unit"><span id="countdownMinutes" class="countdown-value">00</span><span class="countdown-label" data-i18n="countdownMinutes">분</span></div>
+          <span class="countdown-separator" aria-hidden="true">:</span>
+          <div class="countdown-unit"><span id="countdownSeconds" class="countdown-value">00</span><span class="countdown-label" data-i18n="countdownSeconds">초</span></div>
         </div>
         <p class="dday" id="dday"></p>
       </section>
