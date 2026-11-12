@@ -107,14 +107,10 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 
 .invitation { background: var(--section-bg); }
 .invitation-text { margin: 0 auto; white-space: pre-line; font-size: 15px; line-height: 2.4; word-break: keep-all; }
-.invitation-signature { margin: 36px 0 0; font-size: 13px; color: var(--muted); }
-
-.couple-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.person-card { border: 1px solid var(--line); padding: 33px 18px 30px; border-radius: var(--radius); }
-.person-avatar { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 21px; background: var(--soft); border-radius: 50%; font-family: Georgia, serif; font-size: 25px; color: var(--accent); }
-.person-role { margin: 0; color: var(--accent); font-size: 10px; font-weight: 650; letter-spacing: .1em; }
-.person-name { margin: 5px 0 10px; font-size: 19px; font-weight: 600; }
-.person-intro { min-height: 45px; margin: 0; font-size: 12px; line-height: 1.8; color: var(--muted); word-break: keep-all; overflow-wrap: anywhere; }
+.invitation-family { display: grid; gap: 16px; max-width: 460px; margin: 56px auto 0; scroll-margin-top: 80px; }
+.family-person { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 12px; row-gap: 3px; margin: 0; }
+.family-intro { color: var(--muted); font-size: 13px; line-height: 1.9; word-break: keep-all; overflow-wrap: anywhere; }
+.family-name { color: var(--text); font-size: 15px; font-weight: 600; white-space: nowrap; }
 
 .schedule { background: var(--section-bg); }
 .schedule-date { margin: 24px 0 3px; font-size: 20px; font-weight: 600; }
@@ -202,9 +198,6 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   .hero { padding: 62px 24px 55px; }
   .section-title { font-size: 22px; }
   .invitation-text { font-size: 14px; }
-  .person-card { padding: 28px 12px; }
-  .person-avatar { width: 62px; height: 62px; }
-  .person-name { font-size: 17px; }
   .gallery-grid { gap: 6px; }
   .gallery-placeholder-label { font-size: 10px; }
   .gallery-placeholder-caption { font-size: 9px; }
@@ -274,4 +267,4 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .music-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* 일본어 문장은 작은 화면에서도 자연스럽게 줄바꿈합니다. */
-html[lang="ja"] :is(.invitation-text, .person-intro, .venue-map-card) { word-break: normal; }
+html[lang="ja"] :is(.invitation-text, .family-intro, .venue-map-card) { word-break: normal; }

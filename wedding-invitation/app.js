@@ -24,7 +24,7 @@ const translations = {
     mainPhotoAria: "메인 사진 영역", mainPhotoCaption: "메인 사진을 넣을 자리",
     heroMessage: "함께하는 첫날, 소중한 분들을 초대합니다.",
     scrollAria: "초대 문구로 이동", scrollText: "SCROLL TO EXPLORE",
-    invitationHeading: "초대합니다", coupleHeading: "신랑 · 신부 소개",
+    invitationHeading: "초대합니다", familyAria: "신랑·신부와 부모님",
     coupleDescription: "서로의 하루를 함께 채워갈 두 사람을 소개합니다.",
     groomRole: "GROOM · 신랑", brideRole: "BRIDE · 신부",
     scheduleHeading: "결혼식 날짜", calendarAria: "결혼식 달력",
@@ -77,7 +77,7 @@ const translations = {
     mainPhotoAria: "メイン写真", mainPhotoCaption: "メイン写真を入れる場所",
     heroMessage: "新たな一歩を踏み出す私たちを、どうぞ見守ってください。",
     scrollAria: "ご挨拶へ移動", scrollText: "SCROLL TO EXPLORE",
-    invitationHeading: "ご招待のご挨拶", coupleHeading: "新郎・新婦のご紹介",
+    invitationHeading: "ご招待のご挨拶", familyAria: "新郎・新婦とご家族",
     coupleDescription: "これからの日々をともに歩む二人をご紹介します。",
     groomRole: "GROOM · 新郎", brideRole: "BRIDE · 新婦",
     scheduleHeading: "挙式日時", calendarAria: "挙式日のカレンダー",
@@ -173,7 +173,6 @@ function renderContent() {
   put("#heroVenue", venue);
   const invite = currentLang === "ja" && Array.isArray(config.invitationJa) ? config.invitationJa : config.invitation;
   put("#invitationText", (invite || []).join("\n"));
-  put("#invitationSignature", t("signature")(groomName, brideName));
   put("#groomName", groomName);
   put("#groomIntro", localized(config.groom, "intro"));
   put("#brideName", brideName);

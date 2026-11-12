@@ -72,7 +72,7 @@ GitHub Pages 배포 상태와 게시 주소는 저장소의 **Settings → Pages
 ## 4. 디자인 바꾸기
 
 - 전체 색상 / 글꼴 / 폭: `styles.css` 맨 위의 `:root` 변수
-- 섹션별 배치: `styles.css`의 `.hero`, `.invitation`, `.couple`, `.schedule`, `.gallery`, `.directions`, `.accounts`
+- 섹션별 배치: `styles.css`의 `.hero`, `.invitation`(초대 문구·가족 소개), `.schedule`, `.gallery`, `.directions`, `.accounts`
 - 섹션의 마크업 구조: `index.html`
 
 외부 라이브러리나 이미지 CDN 없이 만들어 유지보수가 쉽습니다.
