@@ -28,10 +28,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .site-header { position: sticky; top: 0; z-index: 15; background: rgba(248,247,244,.94); border-bottom: 1px solid var(--line); backdrop-filter: blur(10px); }
 .header-inner { max-width: 960px; margin: 0 auto; padding: 11px 22px; display: flex; align-items: center; gap: 26px; justify-content: space-between; }
 .site-brand { font-size: 11px; font-weight: 750; letter-spacing: .19em; white-space: nowrap; }
-.site-nav { display: flex; gap: 20px; white-space: nowrap; font-size: 12px; color: var(--muted); overflow-x: auto; scrollbar-width: none; }
-.site-nav::-webkit-scrollbar { display: none; }
-.site-nav a:hover { color: var(--text); }
-/* 내비게이션의 가장 오른쪽에 위치한 한·일 언어 선택 버튼 */
+/* 메뉴를 제거한 상단 바: 로고와 한국어/일본어 전환만 유지 */
 .header-tools { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .language-switch { display: inline-flex; align-items: center; flex-shrink: 0; gap: 5px; padding: 3px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); white-space: nowrap; }
 .language-button { border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer; font-size: 11px; line-height: 1.5; padding: 5px 7px; white-space: nowrap; }
@@ -184,10 +181,9 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 740px) {
-  .header-inner { display: block; padding: 10px 16px 9px; }
-  .site-brand { display: block; width: max-content; padding: 0 4px 8px; }
-  .header-tools { width: 100%; gap: 10px; }
-  .site-nav { flex: 1; min-width: 0; gap: 18px; }
+  .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px; }
+  .site-brand { display: inline-block; width: auto; padding: 0; }
+  .header-tools { width: auto; flex-shrink: 0; }
   .language-switch { margin-left: auto; }
   main { box-shadow: none; }
   .section { padding: 80px 28px; }

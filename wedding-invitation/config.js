@@ -47,10 +47,10 @@ window.WEDDING_CONFIG = {
   // 원본 이미지는 변형하거나 GIF로 변환하지 않습니다.
   mainPhoto: "images/LSH_1375.jpg",
 
-  // 배경음악: 저작권 문제가 없는 MP3를 audio/wedding-bgm.mp3로 업로드한 뒤 enabled를 true로 변경
-  // 음악이 준비되기 전에는 버튼을 숨기며, 모바일 정책 때문에 버튼을 눌러야 재생됩니다.
+  // 배경음악: audio/wedding-bgm.mp3 사용. 버튼은 화면 오른쪽 하단에 표시됩니다.
+  // 모바일 정책상 자동재생이 아닌 버튼 터치로 음악이 시작됩니다.
   music: {
-    enabled: false,
+    enabled: true,
     src: "audio/wedding-bgm.mp3",
     volume: 0.35,
     loop: true,

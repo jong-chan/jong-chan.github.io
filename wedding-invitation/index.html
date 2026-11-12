@@ -24,15 +24,7 @@
       <div class="header-inner">
         <a class="site-brand" href="#top">OUR WEDDING</a>
         <div class="header-tools">
-          <nav class="site-nav" aria-label="청첩장 메뉴" data-i18n-aria="navigation">
-            <a href="#invitation" data-i18n="navInvitation">초대</a>
-            <a href="#couple" data-i18n="navCouple">신랑·신부</a>
-            <a href="#schedule" data-i18n="navDate">날짜</a>
-            <a href="#gallery" data-i18n="navGallery">사진</a>
-            <a href="#directions" data-i18n="navDirections">오시는 길</a>
-            <a href="#accounts" data-i18n="navAccounts">마음 전하기</a>
-          </nav>
-          <!-- 오른쪽 상단 언어 선택: JavaScript에서 모든 섹션에 반영 -->
+          <!-- 스크롤형 청첩장: 상단 메뉴 없이 언어 선택만 유지 -->
           <div class="language-switch" role="group" aria-label="언어 선택" data-i18n-aria="languageSelection">
             <button class="language-button is-active" id="langKo" type="button" data-lang="ko" aria-pressed="true">한국어</button>
             <span class="language-divider" aria-hidden="true">/</span>
@@ -220,7 +212,7 @@
         <p class="rsvp-disclaimer" data-i18n="rsvpAfterNotice">응답 내용을 신랑 또는 신부에게 보내야 접수됩니다.</p>
       </div>
     </dialog>
-    <!-- 배경음악은 음악 파일이 설정된 경우에만 버튼이 표시됩니다. -->
+    <!-- 음악은 하객이 오른쪽 아래 버튼을 눌러 재생/정지합니다. -->
     <audio id="weddingBgm" preload="none" loop></audio>
     <button id="musicToggle" class="music-toggle" type="button" aria-pressed="false"
             aria-label="배경음악 재생" hidden>
