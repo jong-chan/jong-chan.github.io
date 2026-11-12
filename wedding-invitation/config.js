@@ -34,7 +34,7 @@ window.WEDDING_CONFIG = {
   // 카카오 앱의 공개 JavaScript 키만 입력합니다. REST API/Admin 키는 사용하지 않습니다.
   // 카카오맵 사용 설정을 켜고 웹 도메인에 https://jong-chan.github.io 등록이 필요합니다.
   maps: {
-    kakaoJavascriptKey: "fbd498c84036c961fe7efa8d2d61404c",
+    kakaoJavascriptKey: "79081e4d779eec48d8bd41f82725477c",
     streetAddress: "서울 강남구 테헤란로 424",
   },
   invitation: [
