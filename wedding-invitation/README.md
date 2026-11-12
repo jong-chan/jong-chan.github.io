@@ -82,7 +82,8 @@ GitHub Pages 배포 상태와 게시 주소는 저장소의 **Settings → Pages
 - 지도 버튼은 한국어·일본어 모두 카카오맵 / 네이버지도 / 구글지도 순서입니다.
 - `wedding.naverMapUrl`은 예식장의 네이버지도 공유 링크입니다.
 - 일본어 화면은 예식장 이름과 도로명주소로 검색한 Google 지도를 iframe으로 표시합니다. `hl=ja`로 일본어를 요청하며 별도 Google API 키를 사용하지 않습니다. 실제 검색 결과와 위치는 게시 후 확인하세요.
-- 한국어 화면은 NAVER Cloud Maps의 Web Dynamic Map을 사용합니다. `config.js`의 `maps.naverKeyId`에 **공개 Key ID**를 입력해야 합니다. Client Secret은 입력하지 않습니다.
-- NAVER Cloud Maps 앱에서 Web Dynamic Map과 Geocoding을 활성화하고, Web 서비스 URL에 `https://jong-chan.github.io`를 등록하세요. 로컬에서 실제 SDK를 검증하려면 사용 중인 로컬 서비스 URL도 등록해야 합니다.
-- `maps.streetAddress`는 층수·건물명을 제외한 도로명주소입니다. 네이버 Geocoding이 반환한 좌표에 예식장 마커를 표시합니다.
-- 네이버 키가 없거나 지도 로딩이 실패하면 안내 문구와 외부 지도 버튼을 제공합니다. 한국어 네이버 지도 표시를 완료하려면 실제 키와 등록 도메인에서 검증해야 합니다.
+- 한국어 화면은 Kakao Maps JavaScript API를 사용합니다. `config.js`의 `maps.kakaoJavascriptKey`에 카카오 앱의 **공개 JavaScript 키**를 입력하세요. REST API 키·Admin 키·Client Secret은 입력하지 않습니다.
+- 카카오 개발자 콘솔의 카카오맵 사용 설정을 켜고, 웹 도메인에 `https://jong-chan.github.io`를 등록하세요. 로컬에서 실제 SDK를 검증하려면 사용 중인 로컬 도메인도 등록해야 합니다.
+- `maps.streetAddress`는 층수·건물명을 제외한 도로명주소입니다. Kakao Geocoder가 반환한 좌표에 예식장 마커를 표시합니다.
+- 키가 없거나 지도 로딩이 실패하면 안내 문구와 외부 지도 버튼을 제공합니다. 실제 지도 표시를 완료하려면 JavaScript 키와 등록 도메인에서 검증해야 합니다.
+- 언어를 여러 번 전환해도 이미 만든 카카오 지도를 재사용하며, 뒤늦게 도착한 주소 검색 결과가 일본어 구글 지도를 덮어쓰지 않습니다.

@@ -411,13 +411,13 @@ function initGallery() {
 }
 
 let mapRenderVersion = 0;
-let naverSdkPromise;
-let naverMapInstance;
+let kakaoMapsSdkPromise;
+let kakaoMapView;
 
-function loadNaverMaps(keyId) {
-  if (window.naver?.maps?.Service) return Promise.resolve(window.naver.maps);
-  if (naverSdkPromise) return naverSdkPromise;
-  naverSdkPromise = new Promise((resolve, reject) => {
+function loadKakaoMaps(appkey) {
+  if (window.kakao?.maps?.services?.Geocoder) return Promise.resolve(window.kakao.maps);
+  if (kakaoMapsSdkPromise) return kakaoMapsSdkPromise;
+  kakaoMapsSdkPromise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
     let timer;
     let settled = false;
@@ -425,25 +425,25 @@ function loadNaverMaps(keyId) {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      delete window.initWeddingNaverMaps;
-      delete window.navermap_authFailure;
       if (error) { script.remove(); reject(error); }
-      else resolve(window.naver.maps);
+      else resolve(window.kakao.maps);
     };
-    window.initWeddingNaverMaps = () => {
-      if (window.naver?.maps?.Service) finish();
-      else finish(new Error("Naver Maps geocoder unavailable"));
+    script.onload = () => {
+      if (!window.kakao?.maps?.load) { finish(new Error("Kakao Maps SDK unavailable")); return; }
+      window.kakao.maps.load(() => {
+        if (window.kakao.maps.services?.Geocoder) finish();
+        else finish(new Error("Kakao Maps geocoder unavailable"));
+      });
     };
-    window.navermap_authFailure = () => finish(new Error("Naver Maps authorization failed"));
-    script.onerror = () => finish(new Error("Naver Maps SDK failed to load"));
-    const url = new URL("https://oapi.map.naver.com/openapi/v3/maps.js");
-    url.search = new URLSearchParams({ ncpKeyId: keyId, submodules: "geocoder", callback: "initWeddingNaverMaps" });
+    script.onerror = () => finish(new Error("Kakao Maps SDK failed to load"));
+    const url = new URL("https://dapi.kakao.com/v2/maps/sdk.js");
+    url.search = new URLSearchParams({ appkey, libraries: "services", autoload: "false" });
     script.src = url.href;
     script.async = true;
-    timer = setTimeout(() => finish(new Error("Naver Maps SDK timed out")), 15000);
+    timer = setTimeout(() => finish(new Error("Kakao Maps SDK timed out")), 15000);
     document.head.append(script);
-  }).catch((error) => { naverSdkPromise = undefined; throw error; });
-  return naverSdkPromise;
+  }).catch((error) => { kakaoMapsSdkPromise = undefined; throw error; });
+  return kakaoMapsSdkPromise;
 }
 
 function showMapMessage(provider, message) {
@@ -459,7 +459,6 @@ function showMapMessage(provider, message) {
 async function renderVenueMap() {
   const version = ++mapRenderVersion;
   const container = $("#venueMap");
-  if (naverMapInstance) { naverMapInstance.destroy(); naverMapInstance = undefined; }
   if (currentLang === "ja") {
     const iframe = create("iframe", "venue-map-frame");
     iframe.title = "会場のGoogleマップ";
@@ -475,18 +474,24 @@ async function renderVenueMap() {
     container.replaceChildren(iframe);
     return;
   }
-  const key = config.maps?.naverKeyId?.trim();
-  if (!key) { showMapMessage("NAVER MAP", t("mapUnavailable")); return; }
-  showMapMessage("NAVER MAP", t("mapLoading"));
+  if (kakaoMapView) {
+    container.replaceChildren(kakaoMapView.canvas);
+    kakaoMapView.map.relayout();
+    kakaoMapView.map.setCenter(kakaoMapView.position);
+    return;
+  }
+  const key = config.maps?.kakaoJavascriptKey?.trim();
+  if (!key) { showMapMessage("KAKAO MAP", t("mapUnavailable")); return; }
+  showMapMessage("KAKAO MAP", t("mapLoading"));
   try {
-    const maps = await loadNaverMaps(key);
+    const maps = await loadKakaoMaps(key);
     if (version !== mapRenderVersion) return;
     const location = await new Promise((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error("Geocoding timed out")), 15000);
-      maps.Service.geocode({ query: config.maps?.streetAddress || config.wedding.address }, (status, response) => {
+      new maps.services.Geocoder().addressSearch(config.maps?.streetAddress || config.wedding.address, (results, status) => {
         clearTimeout(timer);
-        const address = response?.v2?.addresses?.[0];
-        if (status !== maps.Service.Status.OK || !address) reject(new Error("Venue address not found"));
+        const address = results?.[0];
+        if (status !== maps.services.Status.OK || !address) reject(new Error("Venue address not found"));
         else resolve({ lat: Number(address.y), lng: Number(address.x) });
       });
     });
@@ -495,10 +500,12 @@ async function renderVenueMap() {
     const canvas = create("div", "venue-map-canvas");
     container.replaceChildren(canvas);
     const position = new maps.LatLng(location.lat, location.lng);
-    naverMapInstance = new maps.Map(canvas, { center: position, zoom: 17, scrollWheel: false, zoomControl: true });
-    new maps.Marker({ position, map: naverMapInstance, title: config.wedding.venue });
+    const map = new maps.Map(canvas, { center: position, level: 3, scrollwheel: false });
+    new maps.Marker({ position, map, title: config.wedding.venue });
+    map.addControl(new maps.ZoomControl(), maps.ControlPosition.RIGHT);
+    kakaoMapView = { canvas, map, position };
   } catch (_) {
-    if (version === mapRenderVersion) showMapMessage("NAVER MAP", t("mapUnavailable"));
+    if (version === mapRenderVersion) showMapMessage("KAKAO MAP", t("mapUnavailable"));
   }
 }
 
