@@ -23,8 +23,9 @@ window.WEDDING_CONFIG = {
     time: "14:30",       // 한국어·일본어 모두 같은 예식 시간 표시
     venue: "라플레이스",
     venueJa: "ラプレイス",
-    address: "",          // 예식장 상세 주소를 입력해 주세요.
+    address: "서울 강남구 테헤란로 424 대치타워 B1F",
     addressJa: "",        // 일본어 주소 (선택)
+    naverMapUrl: "https://naver.me/GlJIgkbO", // 예식장의 네이버지도 공유 링크
     transit: "대중교통 이용 방법을 입력해 주세요.",
     transitJa: "公共交通機関でのアクセスをご入力ください。",
     parking: "주차 정보를 입력해 주세요.",
