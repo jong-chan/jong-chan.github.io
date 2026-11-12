@@ -52,9 +52,9 @@ window.WEDDING_CONFIG = {
     "大切な一日を皆さまと迎えられましたら幸いです。",
   ],
 
-  // 메인 사진: 꽃잎 애니메이션과 함께 원본 LSH_0001.png를 사용합니다.
-  // 원본 이미지는 변형하거나 GIF로 변환하지 않습니다.
-  mainPhoto: "images/LSH_0001.png",
+  // 메인 사진: 꽃잎 애니메이션과 함께 고품질 JPEG LSH_0001.jpg를 사용합니다.
+  // 사진의 구도와 픽셀 크기를 유지하고 웹용으로 가볍게 압축했습니다.
+  mainPhoto: "images/LSH_0001.jpg",
 
   // 배경음악: audio/wedding-bgm.mp3 사용. 버튼은 화면 오른쪽 하단에 표시됩니다.
   // 모바일 정책상 자동재생이 아닌 버튼 터치로 음악이 시작됩니다.
@@ -75,13 +75,13 @@ window.WEDDING_CONFIG = {
   // 웨딩 갤러리 12칸 중 업로드된 7장을 먼저 연결했습니다.
   // 추후 사진 5장을 더 올리면 빈 문자열을 해당 경로로 변경하세요.
   gallery: [
-    "images/LSH_0459.jpg", // 01
-    "images/LSH_0794.jpg", // 02
-    "images/LSH_0853.jpg", // 03
-    "images/LSH_1331.jpg", // 04
-    "images/LSH_1375.jpg", // 05
-    "images/LSH_1765.jpg", // 06
-    "images/LSH_2092.jpg", // 07
+    "images/LSH_0459.jpg?v=optimized-20261112", // 01
+    "images/LSH_0794.jpg?v=optimized-20261112", // 02
+    "images/LSH_0853.jpg?v=optimized-20261112", // 03
+    "images/LSH_1331.jpg?v=optimized-20261112", // 04
+    "images/LSH_1375.jpg?v=optimized-20261112", // 05
+    "images/LSH_1765.jpg?v=optimized-20261112", // 06
+    "images/LSH_2092.jpg?v=optimized-20261112", // 07
     "", // 08 추가 예정
     "", // 09 추가 예정
     "", // 10 추가 예정
