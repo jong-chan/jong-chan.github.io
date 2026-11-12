@@ -52,8 +52,53 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .hero-names { margin: 14px 0 3px; font-size: clamp(27px, 4vw, 39px); font-weight: 580; letter-spacing: -.055em; line-height: 1.5; }
 .hero-names .amp { color: var(--accent); font-size: .7em; font-weight: 400; padding: 0 5px; }
 .hero-date { margin: 0 0 36px; letter-spacing: .19em; font-size: 12px; font-weight: 580; color: var(--muted); }
-.hero-photo { width: 100%; aspect-ratio: 5 / 4; }
-.hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* 원본 인물 사진의 세로 비율을 그대로 사용하여 크롭/왜곡 없이 표시 */
+.hero-photo { position: relative; isolation: isolate; overflow: hidden; width: 100%; aspect-ratio: 2 / 3; }
+.hero-image { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* 사진과 분리된 문구 레이어: 사진 파일을 다시 편집하거나 압축하지 않습니다. */
+.hero-photo-title {
+  position: absolute;
+  z-index: 2;
+  top: 13%;
+  left: 4%;
+  width: 92%;
+  text-align: center;
+  pointer-events: none;
+  font: normal clamp(17px, 3.15vw, 32px)/1.25 Georgia, "Times New Roman", serif;
+  letter-spacing: .13em;
+  color: #37312d;
+  text-shadow: 0 1px 9px rgba(255,255,255,.45);
+  animation: heroTitleAppear 1.6s ease-out both;
+}
+@keyframes heroTitleAppear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 꽃잎은 절대 위치의 투명 레이어 안에서만 이동: 인물과 배경은 정지 */
+.flower-petals { position: absolute; z-index: 3; inset: 0; overflow: hidden; pointer-events: none; }
+.flower-petal {
+  position: absolute;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  left: var(--x);
+  top: -9%;
+  color: var(--tint);
+  opacity: 0;
+  will-change: transform, top, opacity;
+  animation: petalDrift var(--duration) linear var(--delay) infinite both;
+}
+.flower-petal svg { display: block; overflow: visible; filter: drop-shadow(0 1px 1px rgba(125,70,80,.08)); }
+@keyframes petalDrift {
+  0% { top: -9%; transform: translate3d(0,0,0) rotate(-20deg) scale(var(--scale)); opacity: 0; }
+  8% { opacity: .68; }
+  45% { transform: translate3d(var(--sway),0,0) rotate(165deg) scale(var(--scale)); }
+  85% { opacity: .62; }
+  100% { top: 109%; transform: translate3d(var(--drift),0,0) rotate(390deg) scale(var(--scale)); opacity: 0; }
+}
+
 .photo-placeholder { background: linear-gradient(135deg, #f2f0eb, #e8e5de); border: 1px solid #dfdcd5; color: #99948c; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
 .placeholder-kicker { font-size: 14px; letter-spacing: .2em; }
 .placeholder-caption { font-size: 12px; }
@@ -147,7 +192,8 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   main { box-shadow: none; }
   .section { padding: 80px 28px; }
   .hero { padding: 65px 28px 64px; }
-  .hero-photo { aspect-ratio: 4 / 5; }
+  .hero-photo { aspect-ratio: 2 / 3; }
+  .hero-photo-title { font-size: clamp(16px, 4.4vw, 27px); letter-spacing: .09em; }
 }
 @media (max-width: 430px) {
   .section { padding: 72px 24px; }
@@ -163,6 +209,8 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   .calendar { padding: 26px 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .flower-petals { display: none; }
+  .hero-photo-title { animation: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }

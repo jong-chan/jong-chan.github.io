@@ -157,18 +157,100 @@ function renderContent() {
   if (mainImage) mainImage.alt = t("heroAlt")(groomName, brideName);
 }
 
+// 사진은 건드리지 않고 사진 위의 독립된 레이어만 애니메이션 처리합니다.
+// SVG는 코드에서 생성하며 외부 라이브러리나 GIF 이미지를 사용하지 않습니다.
+function makePetalSvg(isFlower) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", isFlower ? "0 0 40 40" : "0 0 28 34");
+  svg.setAttribute("width", "100%");
+  svg.setAttribute("height", "100%");
+  svg.setAttribute("aria-hidden", "true");
+  if (isFlower) {
+    // 작고 은은한 다섯 잎 벚꽃 모양
+    const group = document.createElementNS(svg.namespaceURI, "g");
+    for (let i = 0; i < 5; i++) {
+      const petal = document.createElementNS(svg.namespaceURI, "path");
+      petal.setAttribute("d", "M20 19 C13 15 12 7 18 4 C21 2 26 5 25 10 C25 14 22 17 20 19 Z");
+      petal.setAttribute("transform", `rotate(${i * 72} 20 20)`);
+      petal.setAttribute("fill", i % 2 ? "#f7d9dc" : "#ffe9e5");
+      petal.setAttribute("stroke", "#f2c9cd");
+      petal.setAttribute("stroke-width", ".65");
+      group.append(petal);
+    }
+    const center = document.createElementNS(svg.namespaceURI, "circle");
+    center.setAttribute("cx", "20");
+    center.setAttribute("cy", "19");
+    center.setAttribute("r", "2.5");
+    center.setAttribute("fill", "#ead1a6");
+    svg.append(group, center);
+  } else {
+    const petal = document.createElementNS(svg.namespaceURI, "path");
+    petal.setAttribute("d", "M14 2 C23 3 28 11 25 20 C23 27 16 30 13 33 C11 27 4 24 3 17 C2 9 7 2 14 2 Z");
+    petal.setAttribute("fill", "currentColor");
+    petal.setAttribute("stroke", "#e7c4c8");
+    petal.setAttribute("stroke-width", ".8");
+    const vein = document.createElementNS(svg.namespaceURI, "path");
+    vein.setAttribute("d", "M13 29 Q17 18 14 6");
+    vein.setAttribute("fill", "none");
+    vein.setAttribute("stroke", "#dbaab1");
+    vein.setAttribute("stroke-width", ".6");
+    vein.setAttribute("opacity", ".55");
+    svg.append(petal, vein);
+  }
+  return svg;
+}
+
+function addHeroDecoration(photo) {
+  const options = config.heroDecoration || {};
+  if (options.title) {
+    const title = create("div", "hero-photo-title", options.title);
+    title.setAttribute("aria-hidden", "true");
+    photo.append(title);
+  }
+  if (options.petals === false || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const layer = create("div", "flower-petals");
+  layer.setAttribute("aria-hidden", "true");
+  const count = Math.min(Math.max(Number(options.petalCount) || 18, 1), 32);
+  const colors = ["#ffe7e5", "#f8d2d8", "#fff0e9", "#f3dadd", "#fce4e9"];
+
+  for (let i = 0; i < count; i++) {
+    const isFlower = i % 6 === 0;
+    const petal = create("span", "flower-petal");
+    petal.append(makePetalSvg(isFlower));
+    // 위치·속도·크기를 다르게 하여 자연스럽게 바람에 날리는 듯한 효과
+    const x = (i * 37 + 11) % 98;
+    const scale = (0.72 + (i % 5) * .11);
+    const xDrift = (i % 2 ? 1 : -1) * (40 + (i % 5) * 23);
+    const size = isFlower ? 21 + i % 5 : 13 + i % 8;
+    petal.style.setProperty("--x", `${x}%`);
+    petal.style.setProperty("--size", `${size}px`);
+    petal.style.setProperty("--scale", `${scale}`);
+    petal.style.setProperty("--drift", `${xDrift}px`);
+    petal.style.setProperty("--sway", `${-xDrift * .34}px`);
+    petal.style.setProperty("--duration", `${6.5 + (i * 7 % 9) * .6}s`);
+    petal.style.setProperty("--delay", `${-(i * 1.93) % 11}s`);
+    petal.style.setProperty("--tint", colors[i % colors.length]);
+    layer.append(petal);
+  }
+  photo.append(layer);
+}
+
 function initHeroPhoto() {
   if (!config.mainPhoto) return;
   const photo = $("#heroPhoto");
   const img = create("img", "hero-image");
   img.alt = t("heroAlt")(...getNames());
-  img.style.display = "none";
-  photo.append(img);
+  img.decoding = "async";
   img.addEventListener("load", () => {
-    img.style.display = "";
+    photo.classList.remove("photo-placeholder");
+    // 이미지 엘리먼트 자체는 고정하고, 별도 타이틀/꽃잎 레이어만 추가합니다.
     photo.replaceChildren(img);
+    addHeroDecoration(photo);
   }, { once: true });
-  img.addEventListener("error", () => img.remove(), { once: true });
+  img.addEventListener("error", () => {
+    console.warn("메인 사진 경로를 확인해 주세요:", config.mainPhoto);
+  }, { once: true });
   img.src = resolvePhotoUrl(config.mainPhoto);
 }
 
