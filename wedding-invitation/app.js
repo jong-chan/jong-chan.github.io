@@ -415,7 +415,7 @@ let kakaoMapsSdkPromise;
 let kakaoMapView;
 
 function loadKakaoMaps(appkey) {
-  if (window.kakao?.maps?.services?.Geocoder) return Promise.resolve(window.kakao.maps);
+  if (window.kakao?.maps?.Map && window.kakao.maps.services?.Geocoder) return Promise.resolve(window.kakao.maps);
   if (kakaoMapsSdkPromise) return kakaoMapsSdkPromise;
   kakaoMapsSdkPromise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -483,20 +483,23 @@ async function renderVenueMap() {
   const key = config.maps?.kakaoJavascriptKey?.trim();
   if (!key) { showMapMessage("KAKAO MAP", t("mapUnavailable")); return; }
   showMapMessage("KAKAO MAP", t("mapLoading"));
+  let stage = "SDK loading";
   try {
     const maps = await loadKakaoMaps(key);
     if (version !== mapRenderVersion) return;
+    stage = "address search";
     const location = await new Promise((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error("Geocoding timed out")), 15000);
       new maps.services.Geocoder().addressSearch(config.maps?.streetAddress || config.wedding.address, (results, status) => {
         clearTimeout(timer);
         const address = results?.[0];
-        if (status !== maps.services.Status.OK || !address) reject(new Error("Venue address not found"));
+        if (status !== maps.services.Status.OK || !address) reject(new Error(`Venue address search failed: ${status}`));
         else resolve({ lat: Number(address.y), lng: Number(address.x) });
       });
     });
     if (version !== mapRenderVersion) return;
     if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng)) throw new Error("Invalid map location");
+    stage = "map rendering";
     const canvas = create("div", "venue-map-canvas");
     container.replaceChildren(canvas);
     const position = new maps.LatLng(location.lat, location.lng);
@@ -504,8 +507,11 @@ async function renderVenueMap() {
     new maps.Marker({ position, map, title: config.wedding.venue });
     map.addControl(new maps.ZoomControl(), maps.ControlPosition.RIGHT);
     kakaoMapView = { canvas, map, position };
-  } catch (_) {
-    if (version === mapRenderVersion) showMapMessage("KAKAO MAP", t("mapUnavailable"));
+  } catch (error) {
+    if (version === mapRenderVersion) {
+      console.warn(`[Wedding map] ${stage}:`, error);
+      showMapMessage("KAKAO MAP", t("mapUnavailable"));
+    }
   }
 }
 
