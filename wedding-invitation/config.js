@@ -9,14 +9,14 @@ window.WEDDING_CONFIG = {
   groom: {
     name: "이종찬",
     nameJa: "イ・ジョンチャン",
-    intro: "신랑을 소개하는 짧은 문구를 입력해 주세요.",
-    introJa: "新郎の紹介文を入力してください。",
+    intro: "이소민·김미순의 아들",
+    introJa: "イ・ソミンとキム・ミスンの息子",
   },
   bride: {
     name: "나메타 치히로",
     nameJa: "ナメタ・チヒロ",
-    intro: "신부를 소개하는 짧은 문구를 입력해 주세요.",
-    introJa: "新婦の紹介文を入力してください。",
+    intro: "나메타 켄지·나메타 히로코의 외동딸",
+    introJa: "ナメタ・ケンジとナメタ・ヒロコの一人娘",
   },
   wedding: {
     date: "2027-04-17", // YYYY-MM-DD
@@ -102,9 +102,10 @@ window.WEDDING_CONFIG = {
     kakaoJavascriptKey: "",
   },
 
+  // side로 구분합니다. 한국어는 groom, 일본어는 bride만 표시합니다.
   // 계좌 정보를 넣으면 '복사' 버튼이 활성화됩니다.
   accounts: [
-    { label: "신랑 측", labelJa: "新郎側", bank: "", holder: "", number: "" },
-    { label: "신부 측", labelJa: "新婦側", bank: "", holder: "", number: "" },
+    { side: "groom", label: "신랑 측", labelJa: "新郎側", bank: "하나은행", holder: "이종찬", number: "715-910207-71407" },
+    { side: "bride", label: "신부 측", labelJa: "新婦側", bank: "", holder: "", number: "" },
   ],
 };

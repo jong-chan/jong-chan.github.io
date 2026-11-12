@@ -41,7 +41,7 @@ const translations = {
     missingTime: "예식 시간 추후 안내", missingAddress: "예식장 상세 주소를 입력해 주세요.",
     kakaoMap: "카카오맵", naverMap: "네이버지도", googleMap: "구글지도",
     groomSide: "신랑 측", brideSide: "신부 측",
-    copyAccount: "계좌번호 복사", missingAccount: "계좌 정보를 입력하면 이곳에 표시됩니다.",
+    copyAccount: "계좌번호 복사", missingAccount: "계좌 정보는 추후 안내드리겠습니다.",
     copied: "계좌번호를 복사했습니다.", copyFailed: "복사에 실패했습니다. 계좌번호를 직접 선택해 주세요.",
     today: "오늘, 저희 결혼합니다!", past: "함께해 주셔서 감사합니다.",
     photoAlt: (n) => `웨딩 사진 ${n}`,
@@ -94,7 +94,7 @@ const translations = {
     missingTime: "挙式時間は後日ご案内します", missingAddress: "会場の住所をご入力ください。",
     kakaoMap: "Kakaoマップ", naverMap: "NAVERマップ", googleMap: "Googleマップ",
     groomSide: "新郎側", brideSide: "新婦側",
-    copyAccount: "口座番号をコピー", missingAccount: "口座情報を入力すると、ここに表示されます。",
+    copyAccount: "口座番号をコピー", missingAccount: "口座情報は後日ご案内します。",
     copied: "口座番号をコピーしました。", copyFailed: "コピーできませんでした。口座番号を直接選択してください。",
     today: "本日、結婚式を迎えます！", past: "お祝いしていただき、ありがとうございました。",
     photoAlt: (n) => `ウェディング写真 ${n}`,
@@ -559,13 +559,12 @@ async function copyText(value) {
 }
 function renderAccounts() {
   const container = $("#accountGroups");
-  const opened = [...container.querySelectorAll(".account-details")].map((detail) => detail.open);
+  const side = currentLang === "ja" ? "bride" : "groom";
   container.replaceChildren();
-  (config.accounts || []).forEach((account, i) => {
+  (config.accounts || []).filter((account) => account.side === side).forEach((account) => {
     const { bank, holder, number } = account;
     const details = create("details", "account-details");
-    details.open = Boolean(opened[i]);
-    const summary = create("summary", "account-summary", localized(account, "label") || (i === 0 ? t("groomSide") : t("brideSide")));
+    const summary = create("summary", "account-summary", localized(account, "label") || (side === "groom" ? t("groomSide") : t("brideSide")));
     const content = create("div", "account-content");
     if (bank && holder && number) {
       content.append(create("p", "bank-name", `${localized(account, "bank")} · ${localized(account, "holder")}`));
