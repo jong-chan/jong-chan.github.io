@@ -32,15 +32,14 @@ const translations = {
     galleryHeading: "웨딩 갤러리", galleryDescription: "우리의 소중한 순간을 담았습니다.",
     galleryAria: "웨딩 사진 12장", galleryNote: "사진을 누르면 크게 볼 수 있습니다.",
     galleryPlaceholder: "사진을 추가해 주세요", directionsHeading: "오시는 길",
-    mapAria: "네이버지도 위치 안내", mapCardTitle: "소중한 날, 이곳에서 만나요",
-    mapNotice: "아래 버튼을 누르면 네이버지도가 새 창에서 열립니다.",
+    mapAria: "예식장 지도", mapLoading: "지도를 불러오는 중입니다.",
+    mapUnavailable: "지도를 표시할 수 없습니다. 아래 지도 버튼에서 위치를 확인해 주세요.",
     mapLinksAria: "지도 앱에서 보기", transitTitle: "지하철 / 대중교통", parkingTitle: "주차 안내",
     accountsHeading: "마음 전하는 곳", accountsDescription: "함께 축하해 주시는 마음만으로도 큰 기쁨입니다.",
     photoDialogAria: "웨딩 사진 크게 보기", closePhoto: "사진 닫기", prevPhoto: "← 이전", nextPhoto: "다음 →",
     prevPhotoAria: "이전 사진", nextPhotoAria: "다음 사진",
     missingTime: "예식 시간 추후 안내", missingAddress: "예식장 상세 주소를 입력해 주세요.",
-    missingMapAddress: "주소를 등록하면 네이버지도 버튼이 표시됩니다.",
-    naverMap: "네이버지도에서 보기 ↗",
+    kakaoMap: "카카오맵", naverMap: "네이버지도", googleMap: "구글지도",
     groomSide: "신랑 측", brideSide: "신부 측",
     copyAccount: "계좌번호 복사", missingAccount: "계좌 정보를 입력하면 이곳에 표시됩니다.",
     copied: "계좌번호를 복사했습니다.", copyFailed: "복사에 실패했습니다. 계좌번호를 직접 선택해 주세요.",
@@ -86,15 +85,14 @@ const translations = {
     galleryHeading: "ウェディングギャラリー", galleryDescription: "私たちの大切な瞬間を集めました。",
     galleryAria: "ウェディング写真12枚", galleryNote: "写真をタップすると拡大できます。",
     galleryPlaceholder: "写真を追加してください", directionsHeading: "会場へのアクセス",
-    mapAria: "NAVERマップのアクセス案内", mapCardTitle: "大切な一日、この場所でお会いしましょう",
-    mapNotice: "下のボタンからNAVERマップが新しいウィンドウで開きます。",
+    mapAria: "会場の地図", mapLoading: "地図を読み込んでいます。",
+    mapUnavailable: "地図を表示できません。下の地図ボタンから会場をご確認ください。",
     mapLinksAria: "地図アプリで見る", transitTitle: "電車・公共交通機関", parkingTitle: "駐車場のご案内",
     accountsHeading: "お祝いのお気持ち", accountsDescription: "お祝いのお気持ちだけでも、私たちにとって大きな喜びです。",
     photoDialogAria: "ウェディング写真を拡大表示", closePhoto: "写真を閉じる", prevPhoto: "← 前へ", nextPhoto: "次へ →",
     prevPhotoAria: "前の写真", nextPhotoAria: "次の写真",
     missingTime: "挙式時間は後日ご案内します", missingAddress: "会場の住所をご入力ください。",
-    missingMapAddress: "住所を登録すると、NAVERマップへのリンクが表示されます。",
-    naverMap: "NAVERマップで見る ↗",
+    kakaoMap: "Kakaoマップ", naverMap: "NAVERマップ", googleMap: "Googleマップ",
     groomSide: "新郎側", brideSide: "新婦側",
     copyAccount: "口座番号をコピー", missingAccount: "口座情報を入力すると、ここに表示されます。",
     copied: "口座番号をコピーしました。", copyFailed: "コピーできませんでした。口座番号を直接選択してください。",
@@ -412,21 +410,117 @@ function initGallery() {
   });
 }
 
-function renderDirections() {
-  const { venue, address } = config.wedding;
-  const container = $("#mapLinks");
-  container.replaceChildren();
-  if (!address || !address.trim()) {
-    container.append(create("p", "map-hint", t("missingMapAddress")));
+let mapRenderVersion = 0;
+let naverSdkPromise;
+let naverMapInstance;
+
+function loadNaverMaps(keyId) {
+  if (window.naver?.maps?.Service) return Promise.resolve(window.naver.maps);
+  if (naverSdkPromise) return naverSdkPromise;
+  naverSdkPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    let timer;
+    let settled = false;
+    const finish = (error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      delete window.initWeddingNaverMaps;
+      delete window.navermap_authFailure;
+      if (error) { script.remove(); reject(error); }
+      else resolve(window.naver.maps);
+    };
+    window.initWeddingNaverMaps = () => {
+      if (window.naver?.maps?.Service) finish();
+      else finish(new Error("Naver Maps geocoder unavailable"));
+    };
+    window.navermap_authFailure = () => finish(new Error("Naver Maps authorization failed"));
+    script.onerror = () => finish(new Error("Naver Maps SDK failed to load"));
+    const url = new URL("https://oapi.map.naver.com/openapi/v3/maps.js");
+    url.search = new URLSearchParams({ ncpKeyId: keyId, submodules: "geocoder", callback: "initWeddingNaverMaps" });
+    script.src = url.href;
+    script.async = true;
+    timer = setTimeout(() => finish(new Error("Naver Maps SDK timed out")), 15000);
+    document.head.append(script);
+  }).catch((error) => { naverSdkPromise = undefined; throw error; });
+  return naverSdkPromise;
+}
+
+function showMapMessage(provider, message) {
+  const container = $("#venueMap");
+  const card = create("div", "venue-map-card");
+  card.append(create("span", "map-brand", provider));
+  const status = create("p", "map-status", message);
+  status.setAttribute("role", "status");
+  card.append(status);
+  container.replaceChildren(card);
+}
+
+async function renderVenueMap() {
+  const version = ++mapRenderVersion;
+  const container = $("#venueMap");
+  if (naverMapInstance) { naverMapInstance.destroy(); naverMapInstance = undefined; }
+  if (currentLang === "ja") {
+    const iframe = create("iframe", "venue-map-frame");
+    iframe.title = "会場のGoogleマップ";
+    const url = new URL("https://www.google.com/maps");
+    url.search = new URLSearchParams({
+      q: `${config.wedding.venue} ${config.maps?.streetAddress || config.wedding.address}`,
+      output: "embed", hl: "ja", z: "17"
+    });
+    iframe.src = url.href;
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    iframe.allowFullscreen = true;
+    container.replaceChildren(iframe);
     return;
   }
-  // 검색 정확도를 위해 지도 검색어는 실제 한국어 주소를 유지합니다.
+  const key = config.maps?.naverKeyId?.trim();
+  if (!key) { showMapMessage("NAVER MAP", t("mapUnavailable")); return; }
+  showMapMessage("NAVER MAP", t("mapLoading"));
+  try {
+    const maps = await loadNaverMaps(key);
+    if (version !== mapRenderVersion) return;
+    const location = await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("Geocoding timed out")), 15000);
+      maps.Service.geocode({ query: config.maps?.streetAddress || config.wedding.address }, (status, response) => {
+        clearTimeout(timer);
+        const address = response?.v2?.addresses?.[0];
+        if (status !== maps.Service.Status.OK || !address) reject(new Error("Venue address not found"));
+        else resolve({ lat: Number(address.y), lng: Number(address.x) });
+      });
+    });
+    if (version !== mapRenderVersion) return;
+    if (!Number.isFinite(location.lat) || !Number.isFinite(location.lng)) throw new Error("Invalid map location");
+    const canvas = create("div", "venue-map-canvas");
+    container.replaceChildren(canvas);
+    const position = new maps.LatLng(location.lat, location.lng);
+    naverMapInstance = new maps.Map(canvas, { center: position, zoom: 17, scrollWheel: false, zoomControl: true });
+    new maps.Marker({ position, map: naverMapInstance, title: config.wedding.venue });
+  } catch (_) {
+    if (version === mapRenderVersion) showMapMessage("NAVER MAP", t("mapUnavailable"));
+  }
+}
+
+function renderDirections() {
+  const { venue, address } = config.wedding;
   const query = encodeURIComponent(`${venue} ${address}`);
-  const anchor = create("a", "outline-button naver-map-button", t("naverMap"));
-  anchor.href = config.wedding.naverMapUrl || `https://map.naver.com/p/search/${query}`;
-  anchor.target = "_blank";
-  anchor.rel = "noopener noreferrer";
-  container.append(anchor);
+  const googleUrl = new URL("https://www.google.com/maps/search/");
+  googleUrl.search = new URLSearchParams({ api: "1", query: `${venue} ${address}`, hl: currentLang === "ja" ? "ja" : "ko" });
+  const container = $("#mapLinks");
+  container.replaceChildren();
+  [
+    { label: t("kakaoMap"), url: `https://map.kakao.com/link/search/${query}` },
+    { label: t("naverMap"), url: config.wedding.naverMapUrl || `https://map.naver.com/p/search/${query}` },
+    { label: t("googleMap"), url: googleUrl.href },
+  ].forEach(({ label, url }) => {
+    const anchor = create("a", "outline-button map-app-button", label);
+    anchor.href = url;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    container.append(anchor);
+  });
+  renderVenueMap();
 }
 
 let toastTimeout;
