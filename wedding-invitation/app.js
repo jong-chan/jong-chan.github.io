@@ -481,7 +481,11 @@ async function renderVenueMap() {
     return;
   }
   const key = config.maps?.kakaoJavascriptKey?.trim();
-  if (!key) { showMapMessage("KAKAO MAP", t("mapUnavailable")); return; }
+  if (!key) {
+    console.warn("[Wedding map] configuration: Kakao JavaScript key is missing");
+    showMapMessage("KAKAO MAP", t("mapUnavailable"));
+    return;
+  }
   showMapMessage("KAKAO MAP", t("mapLoading"));
   let stage = "SDK loading";
   try {
