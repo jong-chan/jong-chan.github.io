@@ -34,7 +34,7 @@ const translations = {
     galleryPlaceholder: "사진을 추가해 주세요", directionsHeading: "오시는 길",
     mapAria: "예식장 지도", mapLoading: "지도를 불러오는 중입니다.",
     mapUnavailable: "지도를 표시할 수 없습니다. 아래 지도 버튼에서 위치를 확인해 주세요.",
-    mapLinksAria: "지도 앱에서 보기", transitTitle: "지하철 / 대중교통", parkingTitle: "주차 안내",
+    mapLinksAria: "지도 앱에서 보기", transitTitle: "지하철 안내", busTitle: "버스 안내", parkingTitle: "주차 안내",
     accountsHeading: "마음 전하는 곳", accountsDescription: "함께 축하해 주시는 마음만으로도 큰 기쁨입니다.",
     photoDialogAria: "웨딩 사진 크게 보기", closePhoto: "사진 닫기", prevPhoto: "← 이전", nextPhoto: "다음 →",
     prevPhotoAria: "이전 사진", nextPhotoAria: "다음 사진",
@@ -87,7 +87,7 @@ const translations = {
     galleryPlaceholder: "写真を追加してください", directionsHeading: "会場へのアクセス",
     mapAria: "会場の地図", mapLoading: "地図を読み込んでいます。",
     mapUnavailable: "地図を表示できません。下の地図ボタンから会場をご確認ください。",
-    mapLinksAria: "地図アプリで見る", transitTitle: "電車・公共交通機関", parkingTitle: "駐車場のご案内",
+    mapLinksAria: "地図アプリで見る", transitTitle: "地下鉄のご案内", busTitle: "バスのご案内", parkingTitle: "駐車場のご案内",
     accountsHeading: "お祝いのお気持ち", accountsDescription: "お祝いのお気持ちだけでも、私たちにとって大きな喜びです。",
     photoDialogAria: "ウェディング写真を拡大表示", closePhoto: "写真を閉じる", prevPhoto: "← 前へ", nextPhoto: "次へ →",
     prevPhotoAria: "前の写真", nextPhotoAria: "次の写真",
@@ -186,6 +186,7 @@ function renderContent() {
   put("#venueName", venue);
   put("#venueAddress", localized(config.wedding, "address") || (config.wedding.address || t("missingAddress")));
   put("#transitInfo", localized(config.wedding, "transit"));
+  put("#busInfo", localized(config.wedding, "bus"));
   put("#parkingInfo", localized(config.wedding, "parking"));
   put("#footerNames", `${groomName} & ${brideName}`);
   const mainImage = $("#heroPhoto img");

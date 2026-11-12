@@ -154,7 +154,7 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .transport-list { text-align: left; border-top: 1px solid var(--line); }
 .transport-item { padding: 19px 4px; border-bottom: 1px solid var(--line); }
 .transport-item h3 { margin: 0 0 4px; font-size: 13px; font-weight: 650; }
-.transport-item p { margin: 0; color: var(--muted); font-size: 12px; }
+.transport-item p { margin: 0; color: var(--muted); font-size: 12px; white-space: pre-line; overflow-wrap: anywhere; }
 
 .account-groups { margin: 35px auto 0; max-width: 440px; text-align: left; }
 .account-details { border: 1px solid var(--line); border-radius: 6px; margin-bottom: 10px; }
