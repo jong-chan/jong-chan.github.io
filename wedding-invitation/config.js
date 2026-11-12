@@ -89,10 +89,10 @@ window.WEDDING_CONFIG = {
     "", // 12 추가 예정
   ],
 
-  // 참석 여부 자동 접수는 아직 연결되지 않았습니다.
-  // Google Forms 등 외부 응답 폼 URL을 준비하면 formUrl에 입력하세요.
+  // 선택한 언어에 맞는 Google Forms 응답 페이지를 새 창으로 엽니다.
   rsvp: {
-    formUrl: "",
+    formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfXNVUeCvHf5uf1Dg3iNni4QwYsxlCX2dAyCzos6f4nr7p78g/viewform?usp=header",
+    formUrlJa: "https://docs.google.com/forms/d/e/1FAIpQLSdTDDiWq9cIWDA3AghPkGiyp549XorwT5RjdKwzEhocWybZXQ/viewform?usp=header",
   },
 
   // 카카오톡 직접 공유를 사용하려면 Kakao Developers 앱의 JavaScript 키를 입력하고

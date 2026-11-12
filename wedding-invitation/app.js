@@ -704,7 +704,7 @@ function buildRsvpMessage() {
 function initRsvp() {
   const dialog = $("#rsvpDialog");
   $("#openRsvp").addEventListener("click", () => {
-    const formUrl = (config.rsvp?.formUrl || "").trim();
+    const formUrl = localized(config.rsvp, "formUrl").trim();
     if (formUrl && /^https:\/\//i.test(formUrl)) {
       window.open(formUrl, "_blank", "noopener,noreferrer");
     } else {
