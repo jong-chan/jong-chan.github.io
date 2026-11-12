@@ -241,3 +241,32 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .rsvp-result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
 .rsvp-result-actions .action-button { width: 100%; font-size: 12px; padding: 10px 8px; }
 @media (max-width: 430px) { .rsvp-dialog { padding: 22px 17px; } }
+
+/* BGM toggle — 하객이 직접 재생/정지, 화면 오른쪽 아래 고정 */
+.music-toggle {
+  position: fixed;
+  z-index: 40;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  display: inline-flex;
+  gap: 7px;
+  justify-content: center;
+  align-items: center;
+  min-width: 104px;
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid rgba(120, 106, 88, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #5e554a;
+  box-shadow: 0 4px 18px rgba(55, 43, 29, .12);
+  backdrop-filter: blur(8px);
+  font-size: 11px;
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+.music-toggle[hidden] { display: none !important; }
+.music-toggle.is-playing { background: #817a6e; color: #fff; }
+.music-toggle-icon { font-family: Georgia, serif; font-size: 18px; line-height: 1; }
+.music-toggle:hover { filter: brightness(.96); }
+.music-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

@@ -220,6 +220,13 @@
         <p class="rsvp-disclaimer" data-i18n="rsvpAfterNotice">응답 내용을 신랑 또는 신부에게 보내야 접수됩니다.</p>
       </div>
     </dialog>
+    <!-- 배경음악은 음악 파일이 설정된 경우에만 버튼이 표시됩니다. -->
+    <audio id="weddingBgm" preload="none" loop></audio>
+    <button id="musicToggle" class="music-toggle" type="button" aria-pressed="false"
+            aria-label="배경음악 재생" hidden>
+      <span class="music-toggle-icon" aria-hidden="true">♫</span>
+      <span id="musicButtonText">BGM OFF</span>
+    </button>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </body>
 </html>

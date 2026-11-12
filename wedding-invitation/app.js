@@ -67,6 +67,8 @@ const translations = {
     shareText: "이종찬 ♥ 나메타 치히로 결혼합니다! 2027년 4월 17일(토) 오후 2시 30분, 라플레이스",
     linkCopied: "청첩장 주소를 복사했습니다.", shareHint: "공유 목록에서 카카오톡을 선택해 주세요.",
     shareUnavailable: "카카오톡 직접 공유 설정 전입니다. 링크를 복사해 전달해 주세요.",
+    musicPlay: "배경음악 재생", musicPause: "배경음악 일시정지",
+    musicError: "음악을 재생할 수 없습니다. 음악 파일과 브라우저 설정을 확인해 주세요.",
   },
   ja: {
     skip: "本文へ移動", navigation: "招待状メニュー", languageSelection: "言語を選択",
@@ -118,6 +120,8 @@ const translations = {
     shareText: "イ・ジョンチャン＆ナメタ・チヒロの結婚式にご招待します。2027年4月17日（土）14:30、ラプレイス",
     linkCopied: "招待状のリンクをコピーしました。", shareHint: "共有先からLINEを選んでください。",
     shareUnavailable: "共有できませんでした。リンクをコピーしてお送りください。",
+    musicPlay: "BGMを再生", musicPause: "BGMを一時停止",
+    musicError: "音楽を再生できません。音声ファイルやブラウザの設定をご確認ください。",
   }
 };
 
@@ -601,6 +605,53 @@ function initRsvp() {
   updateRsvpCount();
 }
 
+
+// 오디오 파일이 없는 상태에서는 버튼을 숨깁니다. 자동재생은 시도하지 않습니다.
+function updateMusicButton() {
+  const button = $("#musicToggle");
+  const audio = $("#weddingBgm");
+  if (!button || button.hidden) return;
+  const playing = !audio.paused && !audio.ended;
+  button.classList.toggle("is-playing", playing);
+  button.setAttribute("aria-pressed", String(playing));
+  button.setAttribute("aria-label", playing ? t("musicPause") : t("musicPlay"));
+  button.title = playing ? t("musicPause") : t("musicPlay");
+  put("#musicButtonText", playing ? "BGM ON" : "BGM OFF");
+}
+function initBackgroundMusic() {
+  const audioOptions = config.music || {};
+  if (!audioOptions.enabled || !audioOptions.src) return;
+  const audio = $("#weddingBgm");
+  const button = $("#musicToggle");
+  if (!audio || !button) return;
+  audio.src = resolvePhotoUrl(audioOptions.src);
+  audio.loop = audioOptions.loop !== false;
+  audio.volume = Math.min(1, Math.max(0, Number(audioOptions.volume ?? 0.35)));
+  button.hidden = false;
+  button.addEventListener("click", async () => {
+    if (!audio.paused) {
+      audio.pause();
+      updateMusicButton();
+      return;
+    }
+    try {
+      await audio.play(); // 사용자 터치 이벤트에서만 재생
+    } catch (_) {
+      toast(t("musicError"));
+    }
+    updateMusicButton();
+  });
+  audio.addEventListener("playing", updateMusicButton);
+  audio.addEventListener("pause", updateMusicButton);
+  audio.addEventListener("ended", updateMusicButton);
+  audio.addEventListener("error", () => {
+    if (!audio.paused) audio.pause();
+    updateMusicButton();
+    toast(t("musicError"));
+  });
+  updateMusicButton();
+}
+
 function setLanguage(nextLang) {
   currentLang = nextLang === "ja" ? "ja" : "ko";
   try { localStorage.setItem("wedding-invitation-language", currentLang); } catch (_) { /* 저장 불가 환경 */ }
@@ -613,6 +664,7 @@ function setLanguage(nextLang) {
   // 작성된 응답이 있다면 선택한 언어로 다시 만듭니다.
   if ($("#rsvpResult") && !$("#rsvpResult").hidden) $("#rsvpResultText").value = buildRsvpMessage();
   $("#toast").classList.remove("show");
+  updateMusicButton();
 }
 
 if (config) {
@@ -625,6 +677,7 @@ if (config) {
   initHeroPhoto();
   initRsvp();
   initShare();
+  initBackgroundMusic();
   setLanguage(currentLang);
   $$(".language-button").forEach((button) => {
     button.addEventListener("click", () => setLanguage(button.dataset.lang));

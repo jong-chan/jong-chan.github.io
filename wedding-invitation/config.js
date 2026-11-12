@@ -47,6 +47,15 @@ window.WEDDING_CONFIG = {
   // 원본 이미지는 변형하거나 GIF로 변환하지 않습니다.
   mainPhoto: "images/LSH_1375.jpg",
 
+  // 배경음악: 저작권 문제가 없는 MP3를 audio/wedding-bgm.mp3로 업로드한 뒤 enabled를 true로 변경
+  // 음악이 준비되기 전에는 버튼을 숨기며, 모바일 정책 때문에 버튼을 눌러야 재생됩니다.
+  music: {
+    enabled: false,
+    src: "audio/wedding-bgm.mp3",
+    volume: 0.35,
+    loop: true,
+  },
+
   // 메인 사진 위에 표시되는 타이틀과 꽃잎 효과 (HTML/CSS/JS 오버레이)
   heroDecoration: {
     title: "OUR WEDDING DAY",
