@@ -9,6 +9,10 @@
     <!-- GitHub Pages: jong-chan.github.io 저장소의 /wedding-invitation/ 경로 -->
     <link rel="canonical" href="https://jong-chan.github.io/wedding-invitation/" />
     <meta property="og:url" content="https://jong-chan.github.io/wedding-invitation/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="이종찬 ♥ 나메타 치히로 | 2027년 4월 17일" />
+    <meta property="og:description" content="2027년 4월 17일 토요일 14:30, 라플레이스" />
+    <meta property="og:image" content="https://jong-chan.github.io/wedding-invitation/images/LSH_1375.jpg" />
     <link rel="stylesheet" href="/wedding-invitation/styles.css" />
     <script src="/wedding-invitation/config.js" defer></script>
     <script src="/wedding-invitation/app.js" defer></script>
@@ -138,6 +142,24 @@
         <p class="section-description" data-i18n="accountsDescription">함께 축하해 주시는 마음만으로도 큰 기쁨입니다.</p>
         <div id="accountGroups" class="account-groups"></div>
       </section>
+
+      <!-- 08. 참석 여부 안내 및 전달 -->
+      <section id="rsvp" class="section rsvp" aria-labelledby="rsvpHeading">
+        <p class="section-overline">RSVP</p>
+        <h2 id="rsvpHeading" class="section-title" data-i18n="rsvpHeading">참석 여부</h2>
+        <p class="section-description rsvp-description" data-i18n="rsvpDescription">소중한 분들을 더욱 정성껏 모실 수 있도록 참석 여부를 알려주세요.</p>
+        <button type="button" class="action-button rsvp-open" id="openRsvp" data-i18n="rsvpOpen">참석 여부 전달하기</button>
+      </section>
+
+      <!-- 09. 공유하기 -->
+      <section id="sharing" class="section sharing" aria-label="청첩장 공유" data-i18n-aria="shareHeading">
+        <p class="section-overline">SHARE OUR DAY</p>
+        <h2 class="section-title" data-i18n="shareHeading">청첩장 공유하기</h2>
+        <div class="share-actions">
+          <button type="button" class="action-button messenger-share" id="shareMessenger" data-i18n="shareMessenger">카카오톡으로 전달하기</button>
+          <button type="button" class="action-button secondary-button" id="copyInvitationLink" data-i18n="copyInvitationLink">청첩장 링크 복사하기</button>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -156,6 +178,46 @@
       <div class="dialog-nav">
         <button type="button" id="prevPhoto" aria-label="이전 사진" data-i18n="prevPhoto" data-i18n-aria="prevPhotoAria">← 이전</button>
         <button type="button" id="nextPhoto" aria-label="다음 사진" data-i18n="nextPhoto" data-i18n-aria="nextPhotoAria">다음 →</button>
+      </div>
+    </dialog>
+    <!-- 응답은 브라우저에 저장되지 않습니다. 접수 링크 연결 전에는 복사/공유로 전달합니다. -->
+    <dialog id="rsvpDialog" class="rsvp-dialog" aria-labelledby="rsvpDialogHeading">
+      <div class="rsvp-dialog-header">
+        <h2 id="rsvpDialogHeading" data-i18n="rsvpDialogHeading">참석 여부 전달</h2>
+        <button type="button" id="closeRsvp" class="rsvp-close" aria-label="닫기" data-i18n-aria="closeRsvp">✕</button>
+      </div>
+      <form id="rsvpForm" class="rsvp-form">
+        <label for="rsvpName" data-i18n="rsvpName">성함</label>
+        <input id="rsvpName" name="name" autocomplete="name" maxlength="60" required data-i18n-placeholder="rsvpNamePlaceholder" placeholder="성함을 입력해 주세요" />
+        <label for="rsvpSide" data-i18n="rsvpSide">어느 쪽 하객이신가요?</label>
+        <select id="rsvpSide" name="side" required>
+          <option value="" data-i18n="rsvpSideSelect">선택해 주세요</option>
+          <option value="groom" data-i18n="groomSide">신랑 측</option>
+          <option value="bride" data-i18n="brideSide">신부 측</option>
+        </select>
+        <label for="rsvpAttendance" data-i18n="rsvpAttendance">참석 여부</label>
+        <select id="rsvpAttendance" name="attendance" required>
+          <option value="" data-i18n="rsvpSideSelect">선택해 주세요</option>
+          <option value="yes" data-i18n="rsvpYes">참석합니다</option>
+          <option value="no" data-i18n="rsvpNo">참석이 어렵습니다</option>
+        </select>
+        <div id="rsvpGuestCountField" class="rsvp-count-field" hidden>
+          <label for="rsvpGuestCount" data-i18n="rsvpGuestCount">참석 인원 (본인 포함)</label>
+          <input id="rsvpGuestCount" name="guests" type="number" min="1" max="20" value="1" />
+        </div>
+        <label for="rsvpNote" data-i18n="rsvpNote">전하실 말씀 (선택)</label>
+        <textarea id="rsvpNote" name="note" rows="3" maxlength="300" data-i18n-placeholder="rsvpNotePlaceholder" placeholder="메시지를 입력해 주세요"></textarea>
+        <p class="rsvp-disclaimer" data-i18n="rsvpDisclaimer">현재 응답 자동 접수는 연결되지 않았습니다. 작성한 내용을 복사하거나 메시지로 직접 보내야 전달됩니다.</p>
+        <button class="action-button" type="submit" id="makeRsvp" data-i18n="rsvpPrepare">응답 내용 만들기</button>
+      </form>
+      <div id="rsvpResult" class="rsvp-result" hidden>
+        <label for="rsvpResultText" data-i18n="rsvpResultLabel">작성된 참석 응답</label>
+        <textarea id="rsvpResultText" readonly rows="7"></textarea>
+        <div class="rsvp-result-actions">
+          <button type="button" class="action-button" id="copyRsvp" data-i18n="rsvpCopy">응답 내용 복사</button>
+          <button type="button" class="action-button secondary-button" id="shareRsvp" data-i18n="rsvpShare">메시지로 보내기</button>
+        </div>
+        <p class="rsvp-disclaimer" data-i18n="rsvpAfterNotice">응답 내용을 신랑 또는 신부에게 보내야 접수됩니다.</p>
       </div>
     </dialog>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

@@ -52,53 +52,8 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 .hero-names { margin: 14px 0 3px; font-size: clamp(27px, 4vw, 39px); font-weight: 580; letter-spacing: -.055em; line-height: 1.5; }
 .hero-names .amp { color: var(--accent); font-size: .7em; font-weight: 400; padding: 0 5px; }
 .hero-date { margin: 0 0 36px; letter-spacing: .19em; font-size: 12px; font-weight: 580; color: var(--muted); }
-/* 원본 인물 사진의 세로 비율을 그대로 사용하여 크롭/왜곡 없이 표시 */
-.hero-photo { position: relative; isolation: isolate; overflow: hidden; width: 100%; aspect-ratio: 2 / 3; }
-.hero-image { width: 100%; height: 100%; object-fit: contain; display: block; }
-
-/* 사진과 분리된 문구 레이어: 사진 파일을 다시 편집하거나 압축하지 않습니다. */
-.hero-photo-title {
-  position: absolute;
-  z-index: 2;
-  top: 13%;
-  left: 4%;
-  width: 92%;
-  text-align: center;
-  pointer-events: none;
-  font: normal clamp(17px, 3.15vw, 32px)/1.25 Georgia, "Times New Roman", serif;
-  letter-spacing: .13em;
-  color: #37312d;
-  text-shadow: 0 1px 9px rgba(255,255,255,.45);
-  animation: heroTitleAppear 1.6s ease-out both;
-}
-@keyframes heroTitleAppear {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 꽃잎은 절대 위치의 투명 레이어 안에서만 이동: 인물과 배경은 정지 */
-.flower-petals { position: absolute; z-index: 3; inset: 0; overflow: hidden; pointer-events: none; }
-.flower-petal {
-  position: absolute;
-  display: block;
-  width: var(--size);
-  height: var(--size);
-  left: var(--x);
-  top: -9%;
-  color: var(--tint);
-  opacity: 0;
-  will-change: transform, top, opacity;
-  animation: petalDrift var(--duration) linear var(--delay) infinite both;
-}
-.flower-petal svg { display: block; overflow: visible; filter: drop-shadow(0 1px 1px rgba(125,70,80,.08)); }
-@keyframes petalDrift {
-  0% { top: -9%; transform: translate3d(0,0,0) rotate(-20deg) scale(var(--scale)); opacity: 0; }
-  8% { opacity: .68; }
-  45% { transform: translate3d(var(--sway),0,0) rotate(165deg) scale(var(--scale)); }
-  85% { opacity: .62; }
-  100% { top: 109%; transform: translate3d(var(--drift),0,0) rotate(390deg) scale(var(--scale)); opacity: 0; }
-}
-
+.hero-photo { width: 100%; aspect-ratio: 5 / 4; }
+.hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo-placeholder { background: linear-gradient(135deg, #f2f0eb, #e8e5de); border: 1px solid #dfdcd5; color: #99948c; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
 .placeholder-kicker { font-size: 14px; letter-spacing: .2em; }
 .placeholder-caption { font-size: 12px; }
@@ -192,8 +147,7 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   main { box-shadow: none; }
   .section { padding: 80px 28px; }
   .hero { padding: 65px 28px 64px; }
-  .hero-photo { aspect-ratio: 2 / 3; }
-  .hero-photo-title { font-size: clamp(16px, 4.4vw, 27px); letter-spacing: .09em; }
+  .hero-photo { aspect-ratio: 4 / 5; }
 }
 @media (max-width: 430px) {
   .section { padding: 72px 24px; }
@@ -209,8 +163,33 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
   .calendar { padding: 26px 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .flower-petals { display: none; }
-  .hero-photo-title { animation: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
+
+/* RSVP & sharing — 기존 청첩장과 동일한 간결한 톤 */
+.rsvp { background: #fcfbf9; }
+.rsvp-description { max-width: 440px; margin: 18px auto 28px; word-break: keep-all; }
+.action-button { min-height: 47px; width: min(100%, 350px); border: 1px solid #877f70; border-radius: 6px; background: #817a6e; padding: 11px 18px; color: white; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer; transition: filter .2s; }
+.action-button:hover { filter: brightness(.96); }
+.secondary-button { background: white; color: var(--text); border-color: var(--line); }
+.share-actions { max-width: 350px; margin: 32px auto 0; display: grid; gap: 11px; }
+.sharing { padding-top: 75px; }
+.rsvp-dialog { width: min(92vw, 440px); max-height: min(88vh, 760px); overflow-y: auto; padding: 27px 24px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: 0 12px 40px #0002; }
+.rsvp-dialog::backdrop { background: #27231f96; }
+.rsvp-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.rsvp-dialog-header h2 { font-size: 19px; margin: 0; }
+.rsvp-close { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 22px; }
+.rsvp-form { display: grid; gap: 9px; }
+.rsvp-form label, .rsvp-result label { font-size: 12px; font-weight: 600; margin-top: 7px; }
+.rsvp-form input, .rsvp-form select, .rsvp-form textarea, .rsvp-result textarea { display: block; width: 100%; border: 1px solid var(--line); border-radius: 6px; background: white; padding: 11px 12px; font: inherit; font-size: 13px; color: var(--text); }
+.rsvp-form textarea, .rsvp-result textarea { resize: vertical; }
+.rsvp-count-field { display: grid; gap: 9px; }
+.rsvp-count-field[hidden], .rsvp-result[hidden] { display: none !important; }
+.rsvp-disclaimer { margin: 12px 0 13px; font-size: 11px; color: var(--muted); line-height: 1.7; word-break: keep-all; }
+.rsvp-form .action-button { width: 100%; margin-top: 3px; }
+.rsvp-result { padding-top: 20px; margin-top: 21px; border-top: 1px solid var(--line); }
+.rsvp-result textarea { margin-top: 7px; }
+.rsvp-result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.rsvp-result-actions .action-button { width: 100%; font-size: 12px; padding: 10px 8px; }
+@media (max-width: 430px) { .rsvp-dialog { padding: 22px 17px; } }

@@ -52,6 +52,21 @@ const translations = {
     signature: (g, b) => `${g} · ${b} 올림`,
     documentTitle: (g, b) => `${g} ♥ ${b} | 모바일 청첩장`,
     metaDescription: "소중한 분들을 결혼식에 초대합니다.",
+    rsvpHeading: "참석 여부", rsvpDescription: "소중한 분들을 더욱 정성껏 모실 수 있도록 참석 여부를 알려주세요.",
+    rsvpOpen: "참석 여부 전달하기", rsvpDialogHeading: "참석 여부 전달", closeRsvp: "닫기",
+    rsvpName: "성함", rsvpNamePlaceholder: "성함을 입력해 주세요", rsvpSide: "어느 쪽 하객이신가요?",
+    rsvpSideSelect: "선택해 주세요", rsvpAttendance: "참석 여부", rsvpYes: "참석합니다", rsvpNo: "참석이 어렵습니다",
+    rsvpGuestCount: "참석 인원 (본인 포함)", rsvpNote: "전하실 말씀 (선택)", rsvpNotePlaceholder: "메시지를 입력해 주세요",
+    rsvpDisclaimer: "현재 응답 자동 접수는 연결되지 않았습니다. 작성한 내용을 복사하거나 메시지로 직접 보내야 전달됩니다.",
+    rsvpPrepare: "응답 내용 만들기", rsvpResultLabel: "작성된 참석 응답", rsvpCopy: "응답 내용 복사",
+    rsvpShare: "메시지로 보내기", rsvpAfterNotice: "응답 내용을 신랑 또는 신부에게 보내야 접수됩니다.",
+    rsvpCopied: "응답 내용을 복사했습니다. 신랑 또는 신부에게 보내 주세요.",
+    rsvpPrepared: "응답이 작성되었습니다. 복사하거나 공유해 주세요.",
+    rsvpResultTitle: "[결혼식 참석 여부]", rsvpResultName: "성함", rsvpResultSide: "하객 구분", rsvpResultAttendance: "참석 여부", rsvpResultGuests: "참석 인원", rsvpResultNote: "전하실 말씀",
+    shareHeading: "청첩장 공유하기", shareMessenger: "카카오톡으로 전달하기", copyInvitationLink: "청첩장 링크 복사하기",
+    shareText: "이종찬 ♥ 나메타 치히로 결혼합니다! 2027년 4월 17일(토) 오후 2시 30분, 라플레이스",
+    linkCopied: "청첩장 주소를 복사했습니다.", shareHint: "공유 목록에서 카카오톡을 선택해 주세요.",
+    shareUnavailable: "카카오톡 직접 공유 설정 전입니다. 링크를 복사해 전달해 주세요.",
   },
   ja: {
     skip: "本文へ移動", navigation: "招待状メニュー", languageSelection: "言語を選択",
@@ -88,6 +103,21 @@ const translations = {
     signature: (g, b) => `${g} · ${b} より`,
     documentTitle: (g, b) => `${g} ♥ ${b} | 結婚式のご案内`,
     metaDescription: "私たちの結婚式にご招待いたします。",
+    rsvpHeading: "ご出欠の確認", rsvpDescription: "皆さまを心を込めてお迎えするため、ご出欠をお知らせください。",
+    rsvpOpen: "出欠を連絡する", rsvpDialogHeading: "出欠のご連絡", closeRsvp: "閉じる",
+    rsvpName: "お名前", rsvpNamePlaceholder: "お名前をご入力ください", rsvpSide: "新郎・新婦どちらのご招待ですか？",
+    rsvpSideSelect: "選択してください", rsvpAttendance: "ご出欠", rsvpYes: "出席します", rsvpNo: "欠席します",
+    rsvpGuestCount: "出席人数（ご本人を含む）", rsvpNote: "メッセージ（任意）", rsvpNotePlaceholder: "メッセージをご入力ください",
+    rsvpDisclaimer: "現時点では回答の自動受付は未設定です。内容をコピーするか、メッセージで直接お送りください。",
+    rsvpPrepare: "回答内容を作成する", rsvpResultLabel: "作成した出欠のご連絡", rsvpCopy: "回答をコピー",
+    rsvpShare: "メッセージで送る", rsvpAfterNotice: "新郎または新婦へ送信して初めて受付となります。",
+    rsvpCopied: "回答をコピーしました。新郎または新婦へお送りください。",
+    rsvpPrepared: "回答を作成しました。コピーまたは共有してください。",
+    rsvpResultTitle: "【結婚式のご出欠】", rsvpResultName: "お名前", rsvpResultSide: "ご招待側", rsvpResultAttendance: "ご出欠", rsvpResultGuests: "出席人数", rsvpResultNote: "メッセージ",
+    shareHeading: "招待状をシェア", shareMessenger: "LINEで送る", copyInvitationLink: "招待状のリンクをコピー",
+    shareText: "イ・ジョンチャン＆ナメタ・チヒロの結婚式にご招待します。2027年4月17日（土）14:30、ラプレイス",
+    linkCopied: "招待状のリンクをコピーしました。", shareHint: "共有先からLINEを選んでください。",
+    shareUnavailable: "共有できませんでした。リンクをコピーしてお送りください。",
   }
 };
 
@@ -110,6 +140,7 @@ function getNames() {
 function renderStaticText() {
   $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
   $$('[data-i18n-aria]').forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+  $$('[data-i18n-placeholder]').forEach((el) => { el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder)); });
   const [groomName, brideName] = getNames();
   document.title = t("documentTitle")(groomName, brideName);
   $('meta[name="description"]').setAttribute("content", t("metaDescription"));
@@ -157,100 +188,18 @@ function renderContent() {
   if (mainImage) mainImage.alt = t("heroAlt")(groomName, brideName);
 }
 
-// 사진은 건드리지 않고 사진 위의 독립된 레이어만 애니메이션 처리합니다.
-// SVG는 코드에서 생성하며 외부 라이브러리나 GIF 이미지를 사용하지 않습니다.
-function makePetalSvg(isFlower) {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", isFlower ? "0 0 40 40" : "0 0 28 34");
-  svg.setAttribute("width", "100%");
-  svg.setAttribute("height", "100%");
-  svg.setAttribute("aria-hidden", "true");
-  if (isFlower) {
-    // 작고 은은한 다섯 잎 벚꽃 모양
-    const group = document.createElementNS(svg.namespaceURI, "g");
-    for (let i = 0; i < 5; i++) {
-      const petal = document.createElementNS(svg.namespaceURI, "path");
-      petal.setAttribute("d", "M20 19 C13 15 12 7 18 4 C21 2 26 5 25 10 C25 14 22 17 20 19 Z");
-      petal.setAttribute("transform", `rotate(${i * 72} 20 20)`);
-      petal.setAttribute("fill", i % 2 ? "#f7d9dc" : "#ffe9e5");
-      petal.setAttribute("stroke", "#f2c9cd");
-      petal.setAttribute("stroke-width", ".65");
-      group.append(petal);
-    }
-    const center = document.createElementNS(svg.namespaceURI, "circle");
-    center.setAttribute("cx", "20");
-    center.setAttribute("cy", "19");
-    center.setAttribute("r", "2.5");
-    center.setAttribute("fill", "#ead1a6");
-    svg.append(group, center);
-  } else {
-    const petal = document.createElementNS(svg.namespaceURI, "path");
-    petal.setAttribute("d", "M14 2 C23 3 28 11 25 20 C23 27 16 30 13 33 C11 27 4 24 3 17 C2 9 7 2 14 2 Z");
-    petal.setAttribute("fill", "currentColor");
-    petal.setAttribute("stroke", "#e7c4c8");
-    petal.setAttribute("stroke-width", ".8");
-    const vein = document.createElementNS(svg.namespaceURI, "path");
-    vein.setAttribute("d", "M13 29 Q17 18 14 6");
-    vein.setAttribute("fill", "none");
-    vein.setAttribute("stroke", "#dbaab1");
-    vein.setAttribute("stroke-width", ".6");
-    vein.setAttribute("opacity", ".55");
-    svg.append(petal, vein);
-  }
-  return svg;
-}
-
-function addHeroDecoration(photo) {
-  const options = config.heroDecoration || {};
-  if (options.title) {
-    const title = create("div", "hero-photo-title", options.title);
-    title.setAttribute("aria-hidden", "true");
-    photo.append(title);
-  }
-  if (options.petals === false || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const layer = create("div", "flower-petals");
-  layer.setAttribute("aria-hidden", "true");
-  const count = Math.min(Math.max(Number(options.petalCount) || 18, 1), 32);
-  const colors = ["#ffe7e5", "#f8d2d8", "#fff0e9", "#f3dadd", "#fce4e9"];
-
-  for (let i = 0; i < count; i++) {
-    const isFlower = i % 6 === 0;
-    const petal = create("span", "flower-petal");
-    petal.append(makePetalSvg(isFlower));
-    // 위치·속도·크기를 다르게 하여 자연스럽게 바람에 날리는 듯한 효과
-    const x = (i * 37 + 11) % 98;
-    const scale = (0.72 + (i % 5) * .11);
-    const xDrift = (i % 2 ? 1 : -1) * (40 + (i % 5) * 23);
-    const size = isFlower ? 21 + i % 5 : 13 + i % 8;
-    petal.style.setProperty("--x", `${x}%`);
-    petal.style.setProperty("--size", `${size}px`);
-    petal.style.setProperty("--scale", `${scale}`);
-    petal.style.setProperty("--drift", `${xDrift}px`);
-    petal.style.setProperty("--sway", `${-xDrift * .34}px`);
-    petal.style.setProperty("--duration", `${6.5 + (i * 7 % 9) * .6}s`);
-    petal.style.setProperty("--delay", `${-(i * 1.93) % 11}s`);
-    petal.style.setProperty("--tint", colors[i % colors.length]);
-    layer.append(petal);
-  }
-  photo.append(layer);
-}
-
 function initHeroPhoto() {
   if (!config.mainPhoto) return;
   const photo = $("#heroPhoto");
   const img = create("img", "hero-image");
   img.alt = t("heroAlt")(...getNames());
-  img.decoding = "async";
+  img.style.display = "none";
+  photo.append(img);
   img.addEventListener("load", () => {
-    photo.classList.remove("photo-placeholder");
-    // 이미지 엘리먼트 자체는 고정하고, 별도 타이틀/꽃잎 레이어만 추가합니다.
+    img.style.display = "";
     photo.replaceChildren(img);
-    addHeroDecoration(photo);
   }, { once: true });
-  img.addEventListener("error", () => {
-    console.warn("메인 사진 경로를 확인해 주세요:", config.mainPhoto);
-  }, { once: true });
+  img.addEventListener("error", () => img.remove(), { once: true });
   img.src = resolvePhotoUrl(config.mainPhoto);
 }
 
@@ -438,6 +387,138 @@ function renderAccounts() {
   });
 }
 
+// 공개 청첩장 URL을 고정해 브라우저의 추적 파라미터나 해시가 공유되지 않도록 합니다.
+const invitationBaseUrl = "https://jong-chan.github.io/wedding-invitation/";
+const localizedInvitationUrl = () => currentLang === "ja" ? invitationBaseUrl + "?lang=ja" : invitationBaseUrl;
+
+async function copyPlainText(value) {
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (_) {
+    // 권한/브라우저에 따라 실패할 수 있으므로 사용자가 직접 선택할 수 있도록 반환합니다.
+    return false;
+  }
+}
+
+function initShare() {
+  $("#copyInvitationLink").addEventListener("click", async () => {
+    if (await copyPlainText(localizedInvitationUrl())) toast(t("linkCopied"));
+    else window.prompt(t("copyInvitationLink"), localizedInvitationUrl());
+  });
+  $("#shareMessenger").addEventListener("click", async () => {
+    const url = localizedInvitationUrl();
+    if (currentLang === "ja") {
+      // LINE Developers에서 안내하는 URL+문구 공유 링크.
+      const lineUrl = "https://social-plugins.line.me/lineit/share?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(t("shareText"));
+      window.open(lineUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+    const kakaoKey = (config.share?.kakaoJavascriptKey || "").trim();
+    if (kakaoKey) {
+      try {
+        await ensureKakaoSdk(kakaoKey);
+        window.Kakao.Share.sendDefault({
+          objectType: "text", text: t("shareText"),
+          link: { mobileWebUrl: url, webUrl: url }, buttonTitle: "청첩장 보기"
+        });
+        return;
+      } catch (error) { console.warn("Kakao sharing unavailable:", error); }
+    }
+    // 카카오 JavaScript 키 미설정 시 휴대전화의 공유 메뉴를 사용합니다.
+    // 이 메뉴에서 사용자가 카카오톡을 직접 선택할 수 있습니다.
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: document.title, text: t("shareText"), url });
+        return;
+      } catch (error) { if (error?.name === "AbortError") return; }
+    }
+    if (await copyPlainText(url)) toast(t("shareUnavailable"));
+    else window.prompt(t("copyInvitationLink"), url);
+  });
+}
+
+let kakaoSdkPromise;
+function ensureKakaoSdk(key) {
+  if (window.Kakao) {
+    if (!window.Kakao.isInitialized()) window.Kakao.init(key);
+    return Promise.resolve();
+  }
+  if (!kakaoSdkPromise) {
+    kakaoSdkPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://t1.kakaocdn.net/kakao_js_sdk/2.8.5/kakao.min.js";
+      script.crossOrigin = "anonymous";
+      script.onload = () => {
+        if (!window.Kakao) return reject(new Error("Kakao SDK unavailable"));
+        if (!window.Kakao.isInitialized()) window.Kakao.init(key);
+        resolve();
+      };
+      script.onerror = () => reject(new Error("Kakao SDK failed to load"));
+      document.head.append(script);
+    }).catch((error) => { kakaoSdkPromise = null; throw error; });
+  }
+  return kakaoSdkPromise;
+}
+
+function updateRsvpCount() {
+  const attending = $("#rsvpAttendance").value === "yes";
+  $("#rsvpGuestCountField").hidden = !attending;
+  $("#rsvpGuestCount").required = attending;
+}
+function buildRsvpMessage() {
+  const name = $("#rsvpName").value.trim();
+  const side = $("#rsvpSide").value;
+  const attend = $("#rsvpAttendance").value;
+  const num = Number($("#rsvpGuestCount").value) || 1;
+  const note = $("#rsvpNote").value.trim();
+  return [
+    t("rsvpResultTitle"),
+    `${t("rsvpResultName")}: ${name}`,
+    `${t("rsvpResultSide")}: ${side === "groom" ? t("groomSide") : t("brideSide")}`,
+    `${t("rsvpResultAttendance")}: ${attend === "yes" ? t("rsvpYes") : t("rsvpNo")}`,
+    ...(attend === "yes" ? [`${t("rsvpResultGuests")}: ${num}`] : []),
+    ...(note ? [`${t("rsvpResultNote")}: ${note}`] : []),
+    invitationBaseUrl
+  ].join("\n");
+}
+function initRsvp() {
+  const dialog = $("#rsvpDialog");
+  $("#openRsvp").addEventListener("click", () => {
+    const formUrl = (config.rsvp?.formUrl || "").trim();
+    if (formUrl && /^https:\/\//i.test(formUrl)) {
+      window.open(formUrl, "_blank", "noopener,noreferrer");
+    } else {
+      dialog.showModal();
+      $("#rsvpName").focus();
+    }
+  });
+  $("#closeRsvp").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  $("#rsvpAttendance").addEventListener("change", updateRsvpCount);
+  $("#rsvpForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    $("#rsvpResultText").value = buildRsvpMessage();
+    $("#rsvpResult").hidden = false;
+    $("#rsvpResult").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    toast(t("rsvpPrepared"));
+  });
+  $("#copyRsvp").addEventListener("click", async () => {
+    if (await copyPlainText($("#rsvpResultText").value)) toast(t("rsvpCopied"));
+    else { $("#rsvpResultText").focus(); $("#rsvpResultText").select(); }
+  });
+  $("#shareRsvp").addEventListener("click", async () => {
+    const text = $("#rsvpResultText").value;
+    if (navigator.share) {
+      try { await navigator.share({ text, title: t("rsvpDialogHeading") }); return; }
+      catch (error) { if (error?.name === "AbortError") return; }
+    }
+    if (await copyPlainText(text)) toast(t("rsvpCopied"));
+    else { $("#rsvpResultText").focus(); $("#rsvpResultText").select(); }
+  });
+  updateRsvpCount();
+}
+
 function setLanguage(nextLang) {
   currentLang = nextLang === "ja" ? "ja" : "ko";
   try { localStorage.setItem("wedding-invitation-language", currentLang); } catch (_) { /* 저장 불가 환경 */ }
@@ -447,6 +528,8 @@ function setLanguage(nextLang) {
   renderDirections();
   renderAccounts();
   refreshGalleryLabels();
+  // 작성된 응답이 있다면 선택한 언어로 다시 만듭니다.
+  if ($("#rsvpResult") && !$("#rsvpResult").hidden) $("#rsvpResultText").value = buildRsvpMessage();
   $("#toast").classList.remove("show");
 }
 
@@ -458,6 +541,8 @@ if (config) {
   } catch (_) { currentLang = "ko"; }
   initGallery();
   initHeroPhoto();
+  initRsvp();
+  initShare();
   setLanguage(currentLang);
   $$(".language-button").forEach((button) => {
     button.addEventListener("click", () => setLanguage(button.dataset.lang));

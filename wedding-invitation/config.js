@@ -43,17 +43,8 @@ window.WEDDING_CONFIG = {
     "大切な一日を皆さまと迎えられましたら幸いです。",
   ],
 
-  // 메인 사진: 사용자가 제공한 원본 사진과 같은 LSH_1375.jpg를 그대로 사용합니다.
-  // GIF나 보정 이미지를 사용하지 않으므로 원본 사진 화질을 유지합니다.
-  mainPhoto: "images/LSH_1375.jpg",
-
-  // 메인 사진 위에 별도 HTML 레이어로 표시되는 장식입니다.
-  // title을 빈 문자열로 하면 문구가 사라지고, petals: false로 하면 꽃잎이 사라집니다.
-  heroDecoration: {
-    title: "OUR WEDDING DAY",
-    petals: true,
-    petalCount: 18,
-  },
+  // 메인 사진: 현재는 LSH_1765.jpg 사용. 다른 사진을 원하면 파일명만 바꾸세요.
+  mainPhoto: "images/LSH_1765.jpg",
 
   // 웨딩 갤러리 12칸 중 업로드된 7장을 먼저 연결했습니다.
   // 추후 사진 5장을 더 올리면 빈 문자열을 해당 경로로 변경하세요.
@@ -71,6 +62,19 @@ window.WEDDING_CONFIG = {
     "", // 11 추가 예정
     "", // 12 추가 예정
   ],
+
+  // 참석 여부 자동 접수는 아직 연결되지 않았습니다.
+  // Google Forms 등 외부 응답 폼 URL을 준비하면 formUrl에 입력하세요.
+  rsvp: {
+    formUrl: "",
+  },
+
+  // 카카오톡 직접 공유를 사용하려면 Kakao Developers 앱의 JavaScript 키를 입력하고
+  // https://jong-chan.github.io 를 JavaScript SDK 도메인 및 제품 링크 웹 도메인에 등록하세요.
+  // 키가 없으면 기기의 공유 메뉴에서 카카오톡을 선택하도록 안내합니다.
+  share: {
+    kakaoJavascriptKey: "",
+  },
 
   // 계좌 정보를 넣으면 '복사' 버튼이 활성화됩니다.
   accounts: [
