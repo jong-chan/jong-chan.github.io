@@ -43,8 +43,16 @@ window.WEDDING_CONFIG = {
     "大切な一日を皆さまと迎えられましたら幸いです。",
   ],
 
-  // 메인 사진: 현재는 LSH_1765.jpg 사용. 다른 사진을 원하면 파일명만 바꾸세요.
-  mainPhoto: "images/LSH_1765.jpg",
+  // 메인 사진: 꽃잎 애니메이션과 함께 원본 LSH_1375.jpg를 사용합니다.
+  // 원본 이미지는 변형하거나 GIF로 변환하지 않습니다.
+  mainPhoto: "images/LSH_1375.jpg",
+
+  // 메인 사진 위에 표시되는 타이틀과 꽃잎 효과 (HTML/CSS/JS 오버레이)
+  heroDecoration: {
+    title: "OUR WEDDING DAY",
+    petals: true,
+    petalCount: 18,
+  },
 
   // 웨딩 갤러리 12칸 중 업로드된 7장을 먼저 연결했습니다.
   // 추후 사진 5장을 더 올리면 빈 문자열을 해당 경로로 변경하세요.
