@@ -95,7 +95,13 @@ window.WEDDING_CONFIG = {
     kakaoJavascriptKey: "",
   },
 
-  // side로 구분합니다. 한국어는 groom, 일본어는 bride만 표시합니다.
+  // 예식 당일부터 7일 동안 사용할 사진 업로드 페이지 주소를 입력하세요.
+  // 주소를 비워 두면 오픈 예정/준비 중 안내만 표시됩니다.
+  photoDrop: {
+    uploadUrl: "",
+  },
+
+  // 한국어는 groom만 표시하며, 일본어에서는 계좌 섹션을 숨깁니다.
   // 계좌 정보를 넣으면 '복사' 버튼이 활성화됩니다.
   accounts: [
     { side: "groom", label: "신랑 측", labelJa: "新郎側", bank: "하나은행", holder: "이종찬", number: "715-910207-71407" },
