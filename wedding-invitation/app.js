@@ -30,7 +30,7 @@ const translations = {
     scheduleHeading: "결혼식 날짜", calendarAria: "결혼식 달력",
     weekday0: "일", weekday1: "월", weekday2: "화", weekday3: "수", weekday4: "목", weekday5: "금", weekday6: "토",
     galleryHeading: "웨딩 갤러리", galleryDescription: "우리의 소중한 순간을 담았습니다.",
-    galleryAria: "웨딩 사진 12장", galleryNote: "사진을 누르면 크게 볼 수 있습니다.",
+    galleryAria: "웨딩 사진 슬라이드", galleryNote: "좌우로 넘겨 보세요. 사진을 누르면 크게 볼 수 있습니다.",
     galleryPlaceholder: "사진을 추가해 주세요", directionsHeading: "오시는 길",
     mapAria: "예식장 지도", mapLoading: "지도를 불러오는 중입니다.",
     mapUnavailable: "지도를 표시할 수 없습니다. 아래 지도 버튼에서 위치를 확인해 주세요.",
@@ -84,7 +84,7 @@ const translations = {
     scheduleHeading: "挙式日時", calendarAria: "挙式日のカレンダー",
     weekday0: "日", weekday1: "月", weekday2: "火", weekday3: "水", weekday4: "木", weekday5: "金", weekday6: "土",
     galleryHeading: "ウェディングギャラリー", galleryDescription: "私たちの大切な瞬間を集めました。",
-    galleryAria: "ウェディング写真12枚", galleryNote: "写真をタップすると拡大できます。",
+    galleryAria: "ウェディング写真スライド", galleryNote: "左右にスワイプしてご覧ください。写真をタップすると拡大できます。",
     galleryPlaceholder: "写真を追加してください", directionsHeading: "会場へのアクセス",
     mapAria: "会場の地図", mapLoading: "地図を読み込んでいます。",
     mapUnavailable: "地図を表示できません。下の地図ボタンから会場をご確認ください。",
@@ -377,9 +377,51 @@ function openGallery(index) {
 function closeGallery() { $("#photoDialog").close(); }
 function initGallery() {
   const grid = $("#galleryGrid");
+  let activeSlide = 0;
+  const slides = () => [...grid.querySelectorAll(".gallery-tile")];
+  const updateControls = () => {
+    const count = slides().length;
+    if (!count && !grid.querySelector(".gallery-empty")) {
+      const message = create("p", "gallery-empty", t("galleryPlaceholder"));
+      message.dataset.i18n = "galleryPlaceholder";
+      grid.append(message);
+    }
+    if (count) grid.querySelector(".gallery-empty")?.remove();
+    activeSlide = Math.max(0, Math.min(activeSlide, count - 1));
+    put("#galleryPosition", `${count ? activeSlide + 1 : 0} / ${count}`);
+    $("#galleryPrev").disabled = count < 2 || activeSlide === 0;
+    $("#galleryNext").disabled = count < 2 || activeSlide === count - 1;
+  };
+  const goToSlide = (index) => {
+    activeSlide = Math.max(0, Math.min(index, slides().length - 1));
+    const slide = slides()[activeSlide];
+    if (slide) grid.scrollTo({
+      left: slide.offsetLeft,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
+    updateControls();
+  };
+  $("#galleryPrev").addEventListener("click", () => goToSlide(activeSlide - 1));
+  $("#galleryNext").addEventListener("click", () => goToSlide(activeSlide + 1));
+  grid.addEventListener("scroll", () => {
+    const items = slides();
+    if (!items.length) return;
+    activeSlide = items.reduce((nearest, slide, i) =>
+      Math.abs(slide.offsetLeft - grid.scrollLeft) < Math.abs(items[nearest].offsetLeft - grid.scrollLeft) ? i : nearest, 0);
+    updateControls();
+  }, { passive: true });
+  grid.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    goToSlide(event.key === "Home" ? 0 : event.key === "End" ? slides().length - 1 : activeSlide + (event.key === "ArrowRight" ? 1 : -1));
+  });
+  new ResizeObserver(() => {
+    const slide = slides()[activeSlide];
+    if (slide) grid.scrollTo({ left: slide.offsetLeft, behavior: "instant" });
+  }).observe(grid);
   const paths = Array.isArray(config.gallery) ? config.gallery.slice(0, 12) : [];
-  while (paths.length < 12) paths.push("");
   paths.forEach((src, i) => {
+    if (!src) return;
     const number = i + 1;
     const tile = create("div", "gallery-tile photo-placeholder");
     tile.append(create("span", "gallery-placeholder-label", `PHOTO ${String(number).padStart(2,"0")}`));
@@ -387,7 +429,6 @@ function initGallery() {
     caption.dataset.i18n = "galleryPlaceholder";
     tile.append(caption);
     grid.append(tile);
-    if (!src) return;
     const photoUrl = resolvePhotoUrl(src);
     const button = create("button", "gallery-button");
     button.type = "button";
@@ -409,10 +450,14 @@ function initGallery() {
       tile.replaceChildren(button);
       tile.classList.remove("photo-placeholder");
     }, { once: true });
-    img.addEventListener("error", () => button.remove(), { once: true });
+    img.addEventListener("error", () => {
+      tile.remove();
+      updateControls();
+    }, { once: true });
     button.addEventListener("click", () => openGallery(validGallery.findIndex((photo) => photo.number === number)));
     img.src = photoUrl;
   });
+  updateControls();
   $("#closeDialog").addEventListener("click", closeGallery);
   $("#prevPhoto").addEventListener("click", () => {
     selectedPhoto = (selectedPhoto + validGallery.length - 1) % validGallery.length;

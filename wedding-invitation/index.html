@@ -13,9 +13,9 @@
     <meta property="og:title" content="이종찬 ♥ 나메타 치히로 | 2027년 4월 17일" />
     <meta property="og:description" content="2027년 4월 17일 토요일 14:30, 라플레이스" />
     <meta property="og:image" content="https://jong-chan.github.io/wedding-invitation/images/LSH_0001.jpg" />
-    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=live-countdown-20261112-2" />
+    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=slide-gallery-20261114" />
     <script src="/wedding-invitation/config.js?v=optimized-images-20261112" defer></script>
-    <script src="/wedding-invitation/app.js?v=localized-google-forms-20261112" defer></script>
+    <script src="/wedding-invitation/app.js?v=slide-gallery-20261114" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip">본문으로 바로 가기</a>
@@ -92,13 +92,18 @@
         <p class="dday" id="dday"></p>
       </section>
 
-      <!-- 05. 웨딩 갤러리 (12장) -->
+      <!-- 05. 좌우 슬라이드 갤러리 -->
       <section id="gallery" class="section gallery" aria-labelledby="galleryHeading">
         <p class="section-overline">OUR MOMENTS</p>
         <h2 id="galleryHeading" class="section-title" data-i18n="galleryHeading">웨딩 갤러리</h2>
         <p class="section-description" data-i18n="galleryDescription">우리의 소중한 순간을 담았습니다.</p>
-        <div id="galleryGrid" class="gallery-grid" aria-label="웨딩 사진 12장" data-i18n-aria="galleryAria"></div>
-        <p class="gallery-note" data-i18n="galleryNote">사진을 설정하면 클릭해서 크게 볼 수 있습니다.</p>
+        <div id="galleryGrid" class="gallery-grid" tabindex="0" role="region" aria-label="웨딩 사진 슬라이드" data-i18n-aria="galleryAria"></div>
+        <div class="gallery-controls">
+          <button id="galleryPrev" class="gallery-arrow" type="button" aria-label="이전 사진" data-i18n-aria="prevPhotoAria">&#8592;</button>
+          <span id="galleryPosition" class="gallery-position" aria-live="polite" aria-atomic="true">0 / 0</span>
+          <button id="galleryNext" class="gallery-arrow" type="button" aria-label="다음 사진" data-i18n-aria="nextPhotoAria">&#8594;</button>
+        </div>
+        <p class="gallery-note" data-i18n="galleryNote">좌우로 넘겨 보세요. 사진을 누르면 크게 볼 수 있습니다.</p>
       </section>
 
       <!-- 06. 오시는 길 -->
