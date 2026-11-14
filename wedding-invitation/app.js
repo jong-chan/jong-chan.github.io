@@ -16,6 +16,38 @@ const put = (selector, value) => { $(selector).textContent = value ?? ""; };
 const pageBase = new URL("./", window.location.href);
 const resolvePhotoUrl = (path) => new URL(path, pageBase).href;
 
+async function initInvitationIntro() {
+  const intro = $(".invitation-intro");
+  if (!intro || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const pause = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  intro.classList.add("is-typing");
+  // 서체나 스크립트에 문제가 생겨도 시작 화면에 갇히지 않게 합니다.
+  const fallback = setTimeout(() => intro.classList.add("is-leaving"), 10000);
+  try {
+    await Promise.race([document.fonts.load('600 60px "Dancing Script"'), pause(2000)]);
+    for (const line of intro.querySelectorAll(".intro-message > span")) {
+      const text = line.firstChild;
+      if (!text) continue;
+      const box = line.getBoundingClientRect();
+      const range = document.createRange();
+      range.setStart(text, 0);
+      // 글자를 별도 요소로 쪼개지 않아 필기체의 연결 모양을 유지합니다.
+      for (let i = 1; i <= text.length; i++) {
+        range.setEnd(text, i);
+        const visible = range.getBoundingClientRect().right - box.left + 4;
+        line.style.clipPath = `inset(0 ${Math.max(0, 100 - visible / box.width * 100)}% 0 0)`;
+        await pause(100);
+      }
+      line.style.clipPath = "none";
+    }
+    await pause(450);
+  } finally {
+    clearTimeout(fallback);
+    intro.classList.add("is-leaving");
+  }
+}
+initInvitationIntro().catch(() => {});
+
 const translations = {
   ko: {
     skip: "본문으로 바로 가기", navigation: "청첩장 메뉴", languageSelection: "언어 선택",
@@ -605,13 +637,14 @@ function renderPhotoDrop() {
     const url = new URL(config.photoDrop?.uploadUrl || "");
     if (url.protocol === "https:") uploadUrl = url.href;
   } catch (_) { /* 업로드 주소가 준비되기 전에는 안내만 표시합니다. */ }
-  const ready = now >= opensAt && now < closesAt && Boolean(uploadUrl);
+  const testing = now < Date.parse(config.photoDrop?.testUntil || "");
+  const ready = (testing || (now >= opensAt && now < closesAt)) && Boolean(uploadUrl);
   const button = $("#photoDropUpload");
   button.textContent = t("photoDropUpload");
   const status = $("#photoDropStatus");
-  status.textContent = now < opensAt ? t("photoDropScheduled")(month, day)
+  status.textContent = ready ? "" : now < opensAt ? t("photoDropScheduled")(month, day)
     : now >= closesAt ? t("photoDropClosed")
-    : ready ? "" : t("photoDropPreparing");
+    : t("photoDropPreparing");
   status.hidden = !status.textContent;
   button.setAttribute("aria-disabled", String(!ready));
   if (ready) button.href = uploadUrl;

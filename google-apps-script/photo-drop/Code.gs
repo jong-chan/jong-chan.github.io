@@ -1,4 +1,5 @@
 const PHOTO_DROP = {
+  testUntil: '2026-11-15T22:15:00+09:00', // 한국 시간: 이 시각까지 시험 업로드 허용
   opensAt: '2027-04-17T00:00:00+09:00',
   closesAt: '2027-04-24T00:00:00+09:00',
   maxBytes: 10 * 1024 * 1024,
@@ -23,7 +24,8 @@ function doGet() {
 // 이름이나 이메일을 받지 않고 사진만 저장합니다. 파일 목록/Drive 주소는 공개하지 않습니다.
 function uploadPhoto(payload) {
   const now = Date.now();
-  if (now < Date.parse(PHOTO_DROP.opensAt) || now >= Date.parse(PHOTO_DROP.closesAt)) {
+  const testing = now < Date.parse(PHOTO_DROP.testUntil || '');
+  if (!testing && (now < Date.parse(PHOTO_DROP.opensAt) || now >= Date.parse(PHOTO_DROP.closesAt))) {
     throw new Error('사진은 4월 17일부터 7일 동안 업로드할 수 있습니다.');
   }
   if (!payload || typeof payload.base64 !== 'string' ||

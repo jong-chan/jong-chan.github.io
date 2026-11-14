@@ -98,6 +98,7 @@ window.WEDDING_CONFIG = {
   // 예식 당일부터 7일 동안 사용할 사진 업로드 페이지 주소를 입력하세요.
   // 주소를 비워 두면 오픈 예정/준비 중 안내만 표시됩니다.
   photoDrop: {
+    testUntil: "2026-11-15T22:15:00+09:00", // 임시 테스트 종료 후 자동으로 예식 일정 적용
     uploadUrl: "https://script.google.com/macros/s/AKfycbx7j0yb8ORtFrsvWlEP4iT6HB21DLSPi4gJBOqOWepAyFv-0tJEBw5hf3liGXxumvKz/exec",
   },
 

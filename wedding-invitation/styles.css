@@ -26,11 +26,14 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .skip-link { position: absolute; z-index: 100; left: 14px; top: -80px; background: var(--surface); padding: 10px 16px; }
 .skip-link:focus { top: 14px; }
 
-@font-face { font-family: "Yellowtail"; src: url("fonts/Yellowtail-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Dancing Script"; src: url("fonts/DancingScript.ttf") format("truetype"); font-weight: 400 700; font-style: normal; font-display: swap; }
 /* 이미지나 스크립트 로딩과 무관하게 끝나는 첫 화면 인트로 */
-.invitation-intro { position: fixed; z-index: 200; inset: 0; display: grid; place-items: center; background: #fff5f8; animation: introLeave .65s ease-in-out 1.8s forwards; }
-.intro-message { text-align: center; color: #e7828a; padding: 24px; font: 400 clamp(44px, 8.8vw, 76px)/1.25 "Yellowtail", cursive; animation: introAppear .9s ease-out both; }
-.intro-message > span { display: block; }
+.invitation-intro { position: fixed; z-index: 200; inset: 0; display: grid; place-items: center; background: #fff5f8; animation: introLeave .65s ease-in-out 5.5s forwards; }
+.intro-message { text-align: center; color: #e7828a; padding: 24px; font: 600 clamp(44px, 8.8vw, 76px)/1.4 "Dancing Script", cursive; }
+.intro-message > span { display: block; width: max-content; max-width: 100%; margin-inline: auto; padding-inline: .12em; clip-path: inset(0 100% 0 0); }
+.invitation-intro.is-typing { animation: none; }
+.invitation-intro.is-typing .intro-message > span { clip-path: inset(0 100% 0 0); }
+.invitation-intro.is-leaving { animation: introLeave .65s ease-in-out forwards; }
 .intro-opening { white-space: nowrap; }
 .intro-married { margin-top: 3px; }
 @keyframes introAppear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
