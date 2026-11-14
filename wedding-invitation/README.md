@@ -81,6 +81,8 @@ GitHub Pages 배포 상태와 게시 주소는 저장소의 **Settings → Pages
 
 참석 여부 위에 하객 사진 공유 안내가 표시됩니다. `config.js`의 `photoDrop.uploadUrl`에 실제 사진 업로드 페이지의 HTTPS 주소를 넣어 연결합니다. 사진 저장 서비스 자체는 이 정적 사이트에서 제공하지 않습니다.
 
+청첩장에는 사진 선택란 없이 안내와 이동 버튼만 표시합니다. 이름 없이 사진만 받는 Apps Script 소스 및 배포 방법은 [`google-apps-script/photo-drop`](../google-apps-script/photo-drop/README.md)에 있습니다.
+
 한국·일본 시간 기준 예식 당일 0시부터 7일간 링크가 활성화됩니다. 그 전에는 오픈 예정일, 그 후에는 마감 안내를 표시합니다. 주소가 비어 있으면 접수 기간에도 준비 중 상태를 유지합니다.
 
 ## 지도와 언어 전환

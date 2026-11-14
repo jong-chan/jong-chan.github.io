@@ -14,9 +14,9 @@
     <meta property="og:description" content="2027년 4월 17일 토요일 14:30, 라플레이스" />
     <meta property="og:image" content="https://jong-chan.github.io/wedding-invitation/images/LSH_0001.jpg" />
     <link rel="preload" href="/wedding-invitation/fonts/Yellowtail-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=photo-drop-20261114" />
-    <script src="/wedding-invitation/config.js?v=photo-drop-20261114" defer></script>
-    <script src="/wedding-invitation/app.js?v=photo-drop-20261114" defer></script>
+    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=simple-photo-drop-20261114" />
+    <script src="/wedding-invitation/config.js?v=simple-photo-drop-20261114" defer></script>
+    <script src="/wedding-invitation/app.js?v=simple-photo-drop-20261114" defer></script>
   </head>
   <body>
     <div class="invitation-intro" aria-hidden="true">
@@ -152,17 +152,11 @@
       </section>
 
       <section id="photoDrop" class="section photo-drop" aria-labelledby="photoDropHeading">
-        <p class="photo-drop-title">Guest Photo Drop</p>
-        <h2 id="photoDropHeading" class="photo-drop-heading" data-i18n="photoDropHeading">하객 포토 드롭</h2>
-        <div class="photo-drop-message">
-          <p data-i18n="photoDropInvitation">저희의 사진작가가 되어주세요 💗
-소중한 추억으로 간직하겠습니다.</p>
-          <p data-i18n="photoDropPeriod">예식 당일부터 7일 동안, 아래 버튼을 통해
-업로드해 주세요!</p>
-          <p data-i18n="photoDropGift">가장 멋진 사진을 남겨주신 5분께 커피 쿠폰을 쏩니다!</p>
-          <p data-i18n="photoDropThanks">많은 참여 부탁드려요. 감사합니다 :)</p>
-        </div>
-        <a id="photoDropUpload" class="photo-drop-upload" role="link" aria-disabled="true" target="_blank" rel="noopener noreferrer">4월 17일 오픈 예정</a>
+        <svg class="photo-drop-camera" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5 9.5 2.5h5L16 5h4a2 2 0 0 1 2 2v13H2V7a2 2 0 0 1 2-2Z"/><circle cx="12" cy="12" r="4"/></svg>
+        <h2 id="photoDropHeading" class="photo-drop-heading" data-i18n="photoDropHeading">하객 사진 업로드</h2>
+        <p class="photo-drop-message" data-i18n="photoDropInvitation">소중한 순간을 함께 나눠주세요 ♡</p>
+        <a id="photoDropUpload" class="photo-drop-upload" role="link" aria-disabled="true" aria-describedby="photoDropStatus" target="_blank" rel="noopener noreferrer" data-i18n="photoDropUpload">사진 업로드하기</a>
+        <p id="photoDropStatus" class="photo-drop-status" role="status">4월 17일 오픈 예정</p>
       </section>
 
       <!-- 08. 참석 여부 안내 및 전달 -->

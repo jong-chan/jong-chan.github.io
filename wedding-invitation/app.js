@@ -36,11 +36,8 @@ const translations = {
     mapUnavailable: "지도를 표시할 수 없습니다. 아래 지도 버튼에서 위치를 확인해 주세요.",
     mapLinksAria: "지도 앱에서 보기", transitTitle: "지하철 안내", busTitle: "버스 안내", parkingTitle: "주차 안내",
     accountsHeading: "마음 전하는 곳", accountsDescription: "함께 축하해 주시는 마음만으로도 큰 기쁨입니다.",
-    photoDropHeading: "하객 포토 드롭",
-    photoDropInvitation: "저희의 사진작가가 되어주세요 💗\n소중한 추억으로 간직하겠습니다.",
-    photoDropPeriod: "예식 당일부터 7일 동안, 아래 버튼을 통해\n업로드해 주세요!",
-    photoDropGift: "가장 멋진 사진을 남겨주신 5분께 커피 쿠폰을 쏩니다!",
-    photoDropThanks: "많은 참여 부탁드려요. 감사합니다 :)",
+    photoDropHeading: "하객 사진 업로드",
+    photoDropInvitation: "소중한 순간을 함께 나눠주세요 ♡",
     photoDropScheduled: (m, d) => `${m}월 ${d}일 오픈 예정`,
     photoDropUpload: "사진 업로드하기", photoDropPreparing: "사진 업로드 준비 중", photoDropClosed: "사진 업로드가 마감되었습니다",
     photoDialogAria: "웨딩 사진 크게 보기", closePhoto: "사진 닫기", prevPhoto: "← 이전", nextPhoto: "다음 →",
@@ -97,11 +94,8 @@ const translations = {
     mapUnavailable: "地図を表示できません。下の地図ボタンから会場をご確認ください。",
     mapLinksAria: "地図アプリで見る", transitTitle: "地下鉄のご案内", busTitle: "バスのご案内", parkingTitle: "駐車場のご案内",
     accountsHeading: "お祝いのお気持ち", accountsDescription: "お祝いのお気持ちだけでも、私たちにとって大きな喜びです。",
-    photoDropHeading: "ゲストフォトドロップ",
-    photoDropInvitation: "私たちのカメラマンになってください 💗\n大切な思い出として残したいと思います。",
-    photoDropPeriod: "挙式当日から7日間、下のボタンから\n写真をアップロードしてください！",
-    photoDropGift: "素敵な写真を撮ってくださった5名様にコーヒークーポンをプレゼント！",
-    photoDropThanks: "皆さまのご参加をお待ちしています。ありがとうございます :)",
+    photoDropHeading: "ゲスト写真アップロード",
+    photoDropInvitation: "大切な瞬間を一緒に分かち合ってください ♡",
     photoDropScheduled: (m, d) => `${m}月${d}日オープン予定`,
     photoDropUpload: "写真をアップロード", photoDropPreparing: "写真のアップロードを準備中", photoDropClosed: "写真の受付は終了しました",
     photoDialogAria: "ウェディング写真を拡大表示", closePhoto: "写真を閉じる", prevPhoto: "← 前へ", nextPhoto: "次へ →",
@@ -613,9 +607,12 @@ function renderPhotoDrop() {
   } catch (_) { /* 업로드 주소가 준비되기 전에는 안내만 표시합니다. */ }
   const ready = now >= opensAt && now < closesAt && Boolean(uploadUrl);
   const button = $("#photoDropUpload");
-  button.textContent = now < opensAt ? t("photoDropScheduled")(month, day)
+  button.textContent = t("photoDropUpload");
+  const status = $("#photoDropStatus");
+  status.textContent = now < opensAt ? t("photoDropScheduled")(month, day)
     : now >= closesAt ? t("photoDropClosed")
-    : ready ? t("photoDropUpload") : t("photoDropPreparing");
+    : ready ? "" : t("photoDropPreparing");
+  status.hidden = !status.textContent;
   button.setAttribute("aria-disabled", String(!ready));
   if (ready) button.href = uploadUrl;
   else button.removeAttribute("href");

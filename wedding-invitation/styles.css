@@ -196,13 +196,13 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 }
 
 /* RSVP & sharing — 기존 청첩장과 동일한 간결한 톤 */
-.section.photo-drop { background: #fdf6f7; font-family: "Noto Serif KR", "AppleMyungjo", "Batang", serif; }
-.photo-drop-title { margin: 0 0 6px; font: 400 30px/1.3 "Yellowtail", cursive; color: #e7828a; }
-.photo-drop-heading { margin: 0 0 28px; font-size: 20px; font-weight: 400; letter-spacing: .08em; }
-.photo-drop-message { color: #4c515a; font-size: 17px; line-height: 1.85; word-break: keep-all; }
-.photo-drop-message p { margin: 0 0 28px; white-space: pre-line; }
-.photo-drop-upload { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 50px; margin-top: 38px; padding: 10px 16px; border-radius: 9px; background: #d98085; color: #fff; font-size: 18px; text-align: center; }
+.section.photo-drop { background: #fdf6f7; }
+.photo-drop-camera { display: block; width: 30px; height: 30px; margin: 0 auto 20px; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linejoin: round; }
+.photo-drop-heading { margin: 0 0 20px; font-size: 22px; font-weight: 600; }
+.photo-drop-message { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; word-break: keep-all; }
+.photo-drop-upload { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 50px; margin-top: 32px; padding: 10px 16px; border-radius: 28px; background: #d98085; color: #fff; font-size: 16px; text-align: center; }
 .photo-drop-upload[aria-disabled="true"] { background: #f0f2f4; color: #a6afb9; cursor: default; }
+.photo-drop-status { margin: 12px 0 0; font-size: 12px; color: var(--muted); }
 .rsvp-description { max-width: 440px; margin: 18px auto 28px; word-break: keep-all; }
 .action-button { min-height: 47px; width: min(100%, 350px); border: 1px solid var(--accent); border-radius: 6px; background: var(--accent); padding: 11px 18px; color: white; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer; transition: filter .2s; }
 .action-button:hover { filter: brightness(.96); }
