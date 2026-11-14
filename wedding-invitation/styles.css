@@ -12,6 +12,7 @@
   --soft: #fbe2ec;
   --section-bg: #fff5f8;
   --content-width: 720px;
+  --section-heading-size: 11px;
   --radius: 10px;
   --font: "Gowun Batang", "AppleMyungjo", "Batang", serif;
 }
@@ -62,8 +63,8 @@ main { max-width: var(--content-width); margin: 0 auto; background: var(--surfac
 /* 섹션을 합치거나 추가해도 흰색과 핑크색이 순서대로 교차합니다. */
 main > section { background: var(--surface); }
 main > section:nth-of-type(even) { background: var(--section-bg); }
-.section-overline { margin: 0 0 14px; font-size: 11px; font-weight: 650; letter-spacing: .24em; color: var(--accent); }
-.section-title { margin: 0; font-size: 25px; letter-spacing: -.025em; font-weight: 580; }
+.section-overline { margin: 0 0 4px; font-size: var(--section-heading-size); line-height: 1.5; font-weight: 650; letter-spacing: .24em; color: var(--accent); }
+.section-title { margin: 0; font-size: var(--section-heading-size); line-height: 1.5; letter-spacing: -.025em; font-weight: 580; }
 .section-description { margin: 17px 0 34px; font-size: 13px; color: var(--muted); }
 .small-rule { width: 32px; height: 1px; background: var(--accent); margin: 26px auto; }
 
@@ -191,7 +192,6 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
 }
 @media (max-width: 430px) {
   .section { padding: 72px 24px; }
-  .section-title { font-size: 22px; }
   .invitation-text { font-size: 14px; }
   .gallery-placeholder-label { font-size: 10px; }
   .gallery-placeholder-caption { font-size: 9px; }
