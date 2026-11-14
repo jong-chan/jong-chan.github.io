@@ -603,11 +603,10 @@ function renderAccounts() {
   const container = $("#accountGroups");
   container.replaceChildren();
   if (currentLang === "ja") return;
-  const side = "groom";
-  (config.accounts || []).filter((account) => account.side === side).forEach((account) => {
+  (config.accounts || []).filter((account) => ["groom", "bride"].includes(account.side)).forEach((account) => {
     const { bank, holder, number } = account;
     const details = create("details", "account-details");
-    const summary = create("summary", "account-summary", `${localized(account, "label") || t("groomSide")} 계좌번호`);
+    const summary = create("summary", "account-summary", `${localized(account, "label") || t(account.side === "bride" ? "brideSide" : "groomSide")} 계좌번호`);
     const content = create("div", "account-content");
     if (bank && holder && number) {
       content.append(create("p", "account-holder", localized(account, "holder")));

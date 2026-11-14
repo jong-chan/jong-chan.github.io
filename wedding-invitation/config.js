@@ -16,7 +16,7 @@ window.WEDDING_CONFIG = {
     name: "나메타 치히로",
     nameJa: "行田ちひろ",
     intro: "나메타 켄지·나메타 히로코의 외동딸",
-    introJa: "行田憲二と行田寛子の一人娘",
+    introJa: "行田憲二・行田寛子の一人娘",
   },
   wedding: {
     date: "2027-04-17", // YYYY-MM-DD
@@ -114,10 +114,10 @@ window.WEDDING_CONFIG = {
     uploadUrl: "https://script.google.com/macros/s/AKfycbx7j0yb8ORtFrsvWlEP4iT6HB21DLSPi4gJBOqOWepAyFv-0tJEBw5hf3liGXxumvKz/exec",
   },
 
-  // 한국어는 groom만 표시하며, 일본어에서는 계좌 섹션을 숨깁니다.
+  // 한국어는 양측 계좌를 표시하며, 일본어에서는 계좌 섹션을 숨깁니다.
   // 계좌 정보를 넣으면 '복사' 버튼이 활성화됩니다.
   accounts: [
     { side: "groom", label: "신랑 측", labelJa: "新郎側", bank: "하나은행", holder: "이종찬", number: "715-910207-71407" },
-    { side: "bride", label: "신부 측", labelJa: "新婦側", bank: "", holder: "", number: "" },
+    { side: "bride", label: "신부 측", labelJa: "新婦側", bank: "국민은행", holder: "NAMETA CHIHIRO", number: "639002-01-724220" },
   ],
 };
