@@ -60,9 +60,9 @@ html[lang="ja"] { --font: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN"
 
 main { max-width: var(--content-width); margin: 0 auto; background: var(--surface); box-shadow: 0 4px 32px rgba(112,42,72,.04); }
 .section { padding: 100px 56px; text-align: center; border-top: 1px solid var(--line); }
-/* 섹션을 합치거나 추가해도 흰색과 핑크색이 순서대로 교차합니다. */
-main > section { background: var(--surface); }
-main > section:nth-of-type(even) { background: var(--section-bg); }
+/* 숨긴 섹션은 순서에서 제외해 각 언어에서 보이는 구역끼리 번갈아 표시합니다. */
+main > section { background: #fff; }
+main > section:nth-child(even of section:not([hidden])) { background: var(--section-bg); }
 .section-overline { margin: 0 0 4px; font-size: var(--section-heading-size); line-height: 1.5; font-weight: 650; letter-spacing: .24em; color: var(--accent); }
 .section-title { margin: 0; font-size: var(--section-heading-size); line-height: 1.5; letter-spacing: -.025em; font-weight: 580; }
 .section-description { margin: 17px 0 34px; font-size: 13px; color: var(--muted); }
@@ -204,7 +204,6 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
 }
 
 /* RSVP & sharing — 기존 청첩장과 동일한 간결한 톤 */
-.section.photo-drop { background: #fdf6f7; }
 .photo-drop-camera { display: block; width: 30px; height: 30px; margin: 0 auto 20px; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linejoin: round; }
 .photo-drop-heading { margin: 0 0 20px; font-size: 22px; font-weight: 600; }
 .photo-drop-message { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; word-break: keep-all; }
