@@ -159,7 +159,7 @@ const translations = {
     rsvpPrepared: "回答を作成しました。コピーまたは共有してください。",
     rsvpResultTitle: "【結婚式のご出欠】", rsvpResultName: "お名前", rsvpResultSide: "ご招待側", rsvpResultAttendance: "ご出欠", rsvpResultGuests: "出席人数", rsvpResultNote: "メッセージ",
     shareHeading: "招待状をシェア", shareMessenger: "LINEで送る", copyInvitationLink: "招待状のリンクをコピー",
-    shareText: "イ・ジョンチャン＆ナメタ・チヒロの結婚式にご招待します。2027年4月17日（土）14:30、ラプレイス",
+    shareText: "イ・ジョンチャン＆行田ちひろの結婚式にご招待します。2027年4月17日（土）14:30、La Place",
     linkCopied: "招待状のリンクをコピーしました。", shareHint: "共有先からLINEを選んでください。",
     shareUnavailable: "共有できませんでした。リンクをコピーしてお送りください。",
     musicPlay: "BGMを再生", musicPause: "BGMを一時停止",
