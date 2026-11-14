@@ -77,7 +77,7 @@ window.WEDDING_CONFIG = {
     loop: true,
   },
 
-  // 업로드된 사진 10장을 표시합니다. 최대 12장까지 등록할 수 있습니다.
+  // 업로드된 사진 11장을 표시합니다. 최대 12장까지 등록할 수 있습니다.
   gallery: [
     "images/LSH_0459.jpg?v=optimized-20261112", // 01
     "images/LSH_0794.jpg?v=optimized-20261112", // 02
@@ -89,7 +89,7 @@ window.WEDDING_CONFIG = {
     "images/LSH-0002.png", // 08
     "images/LSH-0003.png", // 09
     "images/LSH-0004.png", // 10
-    "", // 11 추가 예정
+    "images/LSH-0005.png", // 11
     "", // 12 추가 예정
   ],
 
