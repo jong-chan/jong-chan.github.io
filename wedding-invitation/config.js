@@ -98,7 +98,7 @@ window.WEDDING_CONFIG = {
   // 예식 당일부터 7일 동안 사용할 사진 업로드 페이지 주소를 입력하세요.
   // 주소를 비워 두면 오픈 예정/준비 중 안내만 표시됩니다.
   photoDrop: {
-    uploadUrl: "",
+    uploadUrl: "https://script.google.com/macros/s/AKfycbx7j0yb8ORtFrsvWlEP4iT6HB21DLSPi4gJBOqOWepAyFv-0tJEBw5hf3liGXxumvKz/exec",
   },
 
   // 한국어는 groom만 표시하며, 일본어에서는 계좌 섹션을 숨깁니다.
