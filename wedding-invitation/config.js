@@ -52,7 +52,7 @@ window.WEDDING_CONFIG = {
     "大切な一日を皆さまと迎えられましたら幸いです。",
   ],
 
-  // 메인 사진: 꽃잎 애니메이션과 함께 고품질 JPEG LSH_0001.jpg를 사용합니다.
+  // 메인 사진: 아치형 프레임과 하단 파도 장식으로 표시합니다.
   // 사진의 구도와 픽셀 크기를 유지하고 웹용으로 가볍게 압축했습니다.
   mainPhoto: "images/LSH_0001.jpg",
 
@@ -63,13 +63,6 @@ window.WEDDING_CONFIG = {
     src: "audio/wedding-bgm.mp3",
     volume: 0.35,
     loop: true,
-  },
-
-  // 메인 사진 위에 표시되는 타이틀과 꽃잎 효과 (HTML/CSS/JS 오버레이)
-  heroDecoration: {
-    title: "OUR WEDDING DAY",
-    petals: true,
-    petalCount: 18,
   },
 
   // 웨딩 갤러리 12칸 중 업로드된 7장을 먼저 연결했습니다.
