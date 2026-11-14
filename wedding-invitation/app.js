@@ -649,7 +649,10 @@ function renderPhotoDrop() {
   let uploadUrl = "";
   try {
     const url = new URL(config.photoDrop?.uploadUrl || "");
-    if (url.protocol === "https:") uploadUrl = url.href;
+    if (url.protocol === "https:") {
+      url.searchParams.set("lang", currentLang);
+      uploadUrl = url.href;
+    }
   } catch (_) { /* 업로드 주소가 준비되기 전에는 안내만 표시합니다. */ }
   const testing = now < Date.parse(config.photoDrop?.testUntil || "");
   const ready = (testing || (now >= opensAt && now < closesAt)) && Boolean(uploadUrl);
