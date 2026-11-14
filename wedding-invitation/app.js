@@ -389,11 +389,13 @@ function initGallery() {
     if (count) grid.querySelector(".gallery-empty")?.remove();
     activeSlide = Math.max(0, Math.min(activeSlide, count - 1));
     put("#galleryPosition", `${count ? activeSlide + 1 : 0} / ${count}`);
-    $("#galleryPrev").disabled = count < 2 || activeSlide === 0;
-    $("#galleryNext").disabled = count < 2 || activeSlide === count - 1;
+    $("#galleryPrev").disabled = count < 2;
+    $("#galleryNext").disabled = count < 2;
   };
   const goToSlide = (index) => {
-    activeSlide = Math.max(0, Math.min(index, slides().length - 1));
+    const count = slides().length;
+    if (!count) return;
+    activeSlide = ((index % count) + count) % count;
     const slide = slides()[activeSlide];
     if (slide) grid.scrollTo({
       left: slide.offsetLeft,
