@@ -561,13 +561,22 @@ function renderAccounts() {
   (config.accounts || []).filter((account) => account.side === side).forEach((account) => {
     const { bank, holder, number } = account;
     const details = create("details", "account-details");
-    const summary = create("summary", "account-summary", localized(account, "label") || (side === "groom" ? t("groomSide") : t("brideSide")));
+    const summary = create("summary", "account-summary", `${localized(account, "label") || t("groomSide")} 계좌번호`);
     const content = create("div", "account-content");
     if (bank && holder && number) {
-      content.append(create("p", "bank-name", `${localized(account, "bank")} · ${localized(account, "holder")}`));
-      content.append(create("p", "account-number", number));
+      content.append(create("p", "account-holder", localized(account, "holder")));
+      content.append(create("p", "account-number", `${localized(account, "bank")} ${number}`));
       const copy = create("button", "outline-button copy-button", t("copyAccount"));
       copy.type = "button";
+      const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      icon.setAttribute("viewBox", "0 0 24 24");
+      icon.setAttribute("class", "copy-icon");
+      icon.setAttribute("aria-hidden", "true");
+      icon.setAttribute("focusable", "false");
+      const path = document.createElementNS(icon.namespaceURI, "path");
+      path.setAttribute("d", "M8 7V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M4 7h10a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z");
+      icon.append(path);
+      copy.prepend(icon);
       copy.addEventListener("click", () => copyText(number));
       content.append(copy);
     } else {
