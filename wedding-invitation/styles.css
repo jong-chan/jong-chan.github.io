@@ -206,7 +206,7 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
 /* RSVP & sharing — 기존 청첩장과 동일한 간결한 톤 */
 .photo-drop-camera { display: block; width: 30px; height: 30px; margin: 0 auto 20px; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linejoin: round; }
 .photo-drop-heading { margin: 0 0 20px; font-size: 22px; font-weight: 600; }
-.photo-drop-message { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; word-break: keep-all; }
+.photo-drop-message { white-space: pre-line; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; word-break: keep-all; }
 .photo-drop-upload { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 50px; margin-top: 32px; padding: 10px 16px; border-radius: 28px; background: #d98085; color: #fff; font-size: 16px; text-align: center; }
 .photo-drop-upload[aria-disabled="true"] { background: #f0f2f4; color: #a6afb9; cursor: default; }
 .photo-drop-status { margin: 12px 0 0; font-size: 12px; color: var(--muted); }

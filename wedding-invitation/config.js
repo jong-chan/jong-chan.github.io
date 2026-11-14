@@ -16,7 +16,7 @@ window.WEDDING_CONFIG = {
     name: "나메타 치히로",
     nameJa: "行田ちひろ",
     intro: "나메타 켄지·나메타 히로코의 외동딸",
-    introJa: "行田憲二・行田寛子の一人娘",
+    introJa: "行田憲二と行田寛子の一人娘",
   },
   wedding: {
     date: "2027-04-17", // YYYY-MM-DD
@@ -26,7 +26,7 @@ window.WEDDING_CONFIG = {
     floor: "지하1층",
     floorJa: "地下1階",
     address: "서울 강남구 테헤란로 424 대치타워 B1F",
-    addressJa: "",        // 일본어 주소 (선택)
+    addressJa: "B1F, 424, Teheran-ro, Gangnam-gu, Seoul",
     naverMapUrl: "https://naver.me/GlJIgkbO", // 예식장의 네이버지도 공유 링크
     transit: "2호선·수인분당선 선릉역\n1번 출구에서 약 300m, 도보 3분",
     transitJa: "地下鉄2号線・水仁・盆唐線「宣陵（ソンルン）駅」\n1番出口から約300m、徒歩約3分",
