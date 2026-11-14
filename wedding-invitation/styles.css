@@ -57,9 +57,9 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 .hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero-waves { position: absolute; z-index: 1; left: 0; bottom: -1px; width: 100%; height: 13%; pointer-events: none; overflow: hidden; }
 .hero-wave { animation: waveDrift 12s ease-in-out infinite alternate; }
-.hero-wave-back { fill: var(--soft); fill-opacity: .65; }
-.hero-wave-middle { fill: var(--page-bg); fill-opacity: .85; animation-delay: -4s; animation-direction: alternate-reverse; }
-.hero-wave-front { fill: var(--surface); animation-delay: -8s; }
+.hero-wave-back { fill: #fff; fill-opacity: .65; }
+.hero-wave-middle { fill: #fff; fill-opacity: .85; animation-delay: -4s; animation-direction: alternate-reverse; }
+.hero-wave-front { fill: #fff; animation-delay: -8s; }
 @keyframes waveDrift { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
 
 .photo-placeholder { background: linear-gradient(135deg, var(--section-bg), var(--soft)); border: 1px solid var(--line); color: var(--muted); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }

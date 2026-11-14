@@ -346,6 +346,9 @@ function initGallery() {
     tile.append(caption);
     grid.append(tile);
     const photoUrl = resolvePhotoUrl(src);
+    // 확대 목록은 지연 로딩 상태와 관계없이 등록된 사진 전체를 사용합니다.
+    const photo = { src: photoUrl, number };
+    validGallery.push(photo);
     const button = create("button", "gallery-button");
     button.type = "button";
     button.dataset.photoNumber = String(number);
@@ -360,15 +363,21 @@ function initGallery() {
     button.append(img);
     tile.append(button);
     img.addEventListener("load", () => {
-      validGallery.push({ src: photoUrl, number });
-      validGallery.sort((a, b) => a.number - b.number);
       button.removeAttribute("style");
       tile.replaceChildren(button);
       tile.classList.remove("photo-placeholder");
     }, { once: true });
     img.addEventListener("error", () => {
+      const current = validGallery[selectedPhoto];
+      validGallery.splice(validGallery.indexOf(photo), 1);
+      const currentIndex = validGallery.indexOf(current);
+      selectedPhoto = currentIndex >= 0 ? currentIndex : Math.max(0, Math.min(selectedPhoto, validGallery.length - 1));
       tile.remove();
       updateControls();
+      if ($("#photoDialog").open) {
+        if (validGallery.length) showSelectedPhoto();
+        else closeGallery();
+      }
     }, { once: true });
     button.addEventListener("click", () => openGallery(validGallery.findIndex((photo) => photo.number === number)));
     img.src = photoUrl;
