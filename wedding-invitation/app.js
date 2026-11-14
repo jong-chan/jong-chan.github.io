@@ -202,12 +202,18 @@ function renderContent() {
   const { year, month, day, date } = weddingDateParts();
   const [groomName, brideName] = getNames();
   const venue = localized(config.wedding, "venue");
-  const weekdays = currentLang === "ja" ? ["日", "月", "火", "水", "木", "金", "土"] : ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const heroDate = currentLang === "ja"
-    ? `${year}. ${String(month).padStart(2,"0")}. ${String(day).padStart(2,"0")}.（${weekdays[date.getDay()]}）`
-    : `${year}. ${String(month).padStart(2,"0")}. ${String(day).padStart(2,"0")}. ${weekdays[date.getDay()]}`;
-  put("#heroDate", heroDate);
-  put("#heroVenue", venue);
+  const monthLabel = String(month).padStart(2, "0");
+  const dayLabel = String(day).padStart(2, "0");
+  put("#heroDate", `${monthLabel} · ${dayLabel}`);
+  $("#heroDate").setAttribute("aria-label", `${year}. ${monthLabel}. ${dayLabel}`);
+  put("#heroGroomName", groomName);
+  put("#heroBrideName", brideName);
+  const timeMatch = /^(\d{1,2}):(\d{2})$/.exec(config.wedding.time || "");
+  const clock = timeMatch
+    ? `${Number(timeMatch[1]) % 12 || 12}:${timeMatch[2]} ${Number(timeMatch[1]) >= 12 ? "PM" : "AM"}`
+    : t("missingTime");
+  put("#heroDateTime", `${year}. ${monthLabel}. ${dayLabel} ${clock}`);
+  put("#heroVenue", [venue, localized(config.wedding, "floor")].filter(Boolean).join(" "));
   const invite = currentLang === "ja" && Array.isArray(config.invitationJa) ? config.invitationJa : config.invitation;
   put("#invitationText", (invite || []).join("\n"));
   put("#groomName", groomName);

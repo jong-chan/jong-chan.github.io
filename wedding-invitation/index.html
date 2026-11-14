@@ -15,9 +15,9 @@
     <meta property="og:description" content="2027년 4월 17일 토요일 14:30, 라플레이스" />
     <meta property="og:image" content="https://jong-chan.github.io/wedding-invitation/images/LSH_0001.jpg" />
     <link rel="preload" href="/wedding-invitation/fonts/DancingScript.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=serif-ko-ja-20261114" />
-    <script src="/wedding-invitation/config.js?v=typed-intro-test-20261114" defer></script>
-    <script src="/wedding-invitation/app.js?v=typed-intro-test-20261114" defer></script>
+    <link rel="stylesheet" href="/wedding-invitation/styles.css?v=hero-invitation-20261114" />
+    <script src="/wedding-invitation/config.js?v=hero-invitation-20261114" defer></script>
+    <script src="/wedding-invitation/app.js?v=hero-invitation-20261114" defer></script>
   </head>
   <body>
     <div class="invitation-intro" aria-hidden="true">
@@ -45,8 +45,9 @@
     <main id="main">
       <!-- 01. 메인 화면 -->
       <section id="top" class="hero" aria-labelledby="heroDate">
-        <div class="hero-eyebrow">WE ARE GETTING MARRIED</div>
-        <h1 class="hero-date" id="heroDate">2027. 04. 17. SAT</h1>
+        <div class="hero-ornament" aria-hidden="true"></div>
+        <p class="hero-eyebrow">Wedding Invitation</p>
+        <h1 class="hero-date" id="heroDate">04 · 17</h1>
         <div class="hero-photo-frame">
           <div id="heroPhoto" class="hero-photo photo-placeholder" aria-label="메인 사진 영역" data-i18n-aria="mainPhotoAria">
             <span class="placeholder-kicker">MAIN PHOTO</span>
@@ -58,9 +59,11 @@
             <path class="hero-wave hero-wave-front" d="M-60 68 Q20 38 100 68 T260 68 T420 68 T580 68 T740 68 V110 H-60Z" />
           </svg>
         </div>
-        <p class="hero-venue" id="heroVenue">라플레이스</p>
-        <p class="hero-message" data-i18n="heroMessage">함께하는 첫날, 소중한 분들을 초대합니다.</p>
-        <a class="scroll-hint" href="#invitation" aria-label="초대 문구로 이동" data-i18n-aria="scrollAria"><span data-i18n="scrollText">SCROLL TO EXPLORE</span> <span aria-hidden="true">↓</span></a>
+        <div class="hero-details">
+          <p class="hero-couple"><span id="heroGroomName">이종찬</span><span class="hero-heart" aria-hidden="true">♡</span><span id="heroBrideName">나메타 치히로</span></p>
+          <p class="hero-datetime" id="heroDateTime">2027. 04. 17 2:30 PM</p>
+          <p class="hero-venue" id="heroVenue">라플레이스 지하1층</p>
+        </div>
       </section>
 
       <!-- 02. 초대 문구와 신랑·신부 소개 -->

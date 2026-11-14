@@ -67,13 +67,15 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 .section-description { margin: 17px 0 34px; font-size: 13px; color: var(--muted); }
 .small-rule { width: 32px; height: 1px; background: var(--accent); margin: 26px auto; }
 
-.hero { padding: 86px 64px 68px; text-align: center; }
-.hero-eyebrow { font-size: 11px; letter-spacing: .22em; color: var(--accent); font-weight: 650; }
-.hero-date { margin: 14px 0 36px; font-size: clamp(27px, 4vw, 39px); font-weight: 580; letter-spacing: -.035em; line-height: 1.5; color: var(--text); }
+.hero { padding: 0 0 52px; text-align: center; }
+.hero-ornament { position: relative; width: 1px; height: 72px; margin: 0 auto 28px; background: #e7828a; }
+.hero-ornament::after { content: ""; position: absolute; left: -3px; bottom: 0; width: 7px; height: 7px; background: #e7828a; transform: rotate(45deg); }
+.hero-eyebrow { margin: 0; font: 600 clamp(24px, 4vw, 30px)/1.4 "Dancing Script", cursive; color: #e7828a; }
+.hero-date { margin: 10px 0 28px; font: 400 clamp(52px, 10vw, 76px)/1.15 Georgia, serif; letter-spacing: .015em; color: #4c515a; }
 .hero-photo-frame { position: relative; isolation: isolate; }
 /* 사진의 세로 비율을 유지하고 윗부분을 반원 아치로 표시합니다. */
-.hero-photo { position: relative; overflow: hidden; width: 100%; aspect-ratio: 2 / 3; border-radius: 50% 50% 0 0 / 33.333% 33.333% 0 0; }
-.hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-photo { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 5; border-radius: 50% 50% 0 0 / 40% 40% 0 0; }
+.hero-image { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; transform: scale(1.12); transform-origin: center bottom; display: block; }
 .hero-waves { position: absolute; z-index: 1; left: 0; bottom: -1px; width: 100%; height: 13%; pointer-events: none; overflow: hidden; }
 .hero-wave { animation: waveDrift 12s ease-in-out infinite alternate; }
 .hero-wave-back { fill: #fff; fill-opacity: .65; }
@@ -84,10 +86,12 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 .photo-placeholder { background: linear-gradient(135deg, var(--section-bg), var(--soft)); border: 1px solid var(--line); color: var(--muted); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
 .placeholder-kicker { font-size: 14px; letter-spacing: .2em; }
 .placeholder-caption { font-size: 12px; }
-.hero-venue { margin: 32px 0 0; font-size: 16px; font-weight: 600; }
-.hero-message { font-size: 12px; color: var(--muted); margin: 5px 0 36px; }
-.scroll-hint { font-size: 10px; letter-spacing: .12em; color: var(--accent); }
-.scroll-hint span { display: block; font-size: 17px; margin-top: 2px; }
+.hero-details { padding: 28px 20px 0; color: #4c515a; }
+.hero-couple { display: flex; justify-content: center; align-items: baseline; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; font-size: clamp(20px, 5.5vw, 29px); line-height: 1.6; }
+.hero-couple > span { white-space: nowrap; }
+.hero-heart { font-size: .75em; }
+.hero-datetime, .hero-venue { margin: 0; font-size: clamp(16px, 4.4vw, 21px); line-height: 1.6; }
+html[lang="ja"] .hero-couple { font-size: clamp(16px, 4.2vw, 24px); gap: 8px; }
 
 .invitation-text { margin: 0 auto; white-space: pre-line; font-size: 15px; line-height: 2.4; word-break: keep-all; }
 html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-wrap: balance; }
@@ -184,12 +188,9 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
   .language-switch { margin-left: auto; }
   main { box-shadow: none; }
   .section { padding: 80px 28px; }
-  .hero { padding: 65px 28px 64px; }
-  .hero-photo { aspect-ratio: 2 / 3; }
 }
 @media (max-width: 430px) {
   .section { padding: 72px 24px; }
-  .hero { padding: 62px 24px 55px; }
   .section-title { font-size: 22px; }
   .invitation-text { font-size: 14px; }
   .gallery-placeholder-label { font-size: 10px; }
