@@ -553,9 +553,11 @@ async function copyText(value) {
   }
 }
 function renderAccounts() {
+  $("#accounts").hidden = currentLang === "ja";
   const container = $("#accountGroups");
-  const side = currentLang === "ja" ? "bride" : "groom";
   container.replaceChildren();
+  if (currentLang === "ja") return;
+  const side = "groom";
   (config.accounts || []).filter((account) => account.side === side).forEach((account) => {
     const { bank, holder, number } = account;
     const details = create("details", "account-details");
