@@ -61,8 +61,8 @@ const translations = {
     groomRole: "GROOM · 신랑", brideRole: "BRIDE · 신부",
     scheduleHeading: "결혼식 날짜", calendarAria: "결혼식 달력",
     weekday0: "일", weekday1: "월", weekday2: "화", weekday3: "수", weekday4: "목", weekday5: "금", weekday6: "토",
-    galleryHeading: "웨딩 갤러리", galleryDescription: "우리의 소중한 순간을 담았습니다.",
-    galleryAria: "웨딩 사진 슬라이드", galleryNote: "좌우로 넘겨 보세요. 사진을 누르면 크게 볼 수 있습니다.",
+    galleryHeading: "웨딩 갤러리",
+    galleryAria: "웨딩 사진 슬라이드",
     galleryPlaceholder: "사진을 추가해 주세요", directionsHeading: "오시는 길",
     mapAria: "예식장 지도", mapLoading: "지도를 불러오는 중입니다.",
     mapUnavailable: "지도를 표시할 수 없습니다. 아래 지도 버튼에서 위치를 확인해 주세요.",
@@ -119,8 +119,8 @@ const translations = {
     groomRole: "GROOM · 新郎", brideRole: "BRIDE · 新婦",
     scheduleHeading: "挙式日時", calendarAria: "挙式日のカレンダー",
     weekday0: "日", weekday1: "月", weekday2: "火", weekday3: "水", weekday4: "木", weekday5: "金", weekday6: "土",
-    galleryHeading: "ウェディングギャラリー", galleryDescription: "私たちの大切な瞬間を集めました。",
-    galleryAria: "ウェディング写真スライド", galleryNote: "左右にスワイプしてご覧ください。写真をタップすると拡大できます。",
+    galleryHeading: "ウェディングギャラリー",
+    galleryAria: "ウェディング写真スライド",
     galleryPlaceholder: "写真を追加してください", directionsHeading: "会場へのアクセス",
     mapAria: "会場の地図", mapLoading: "地図を読み込んでいます。",
     mapUnavailable: "地図を表示できません。下の地図ボタンから会場をご確認ください。",
@@ -221,10 +221,19 @@ function renderContent() {
   put("#brideName", brideName);
   put("#brideIntro", localized(config.bride, "intro"));
   const dateLabel = currentLang === "ja"
-    ? `${year}年${month}月${day}日（${["日", "月", "火", "水", "木", "金", "土"][date.getDay()]}）`
-    : new Intl.DateTimeFormat("ko-KR", { year:"numeric",month:"long",day:"numeric",weekday:"long" }).format(date);
+    ? `${year}年${monthLabel}月${dayLabel}日`
+    : `${year}년 ${monthLabel}월 ${dayLabel}일`;
+  const weekday = new Intl.DateTimeFormat(currentLang === "ja" ? "ja-JP" : "ko-KR", { weekday: "long" }).format(date);
+  let scheduleTime = t("missingTime");
+  if (timeMatch) {
+    const hour = Number(timeMatch[1]);
+    const minute = Number(timeMatch[2]);
+    scheduleTime = currentLang === "ja"
+      ? `${hour >= 12 ? "午後" : "午前"}${hour % 12 || 12}時${minute}分`
+      : `${hour >= 12 ? "오후" : "오전"} ${hour % 12 || 12}시 ${minute}분`;
+  }
   put("#scheduleDate", dateLabel);
-  put("#scheduleDetail", `${config.wedding.time || t("missingTime")}  ·  ${venue}`);
+  put("#scheduleDetail", `${weekday} ${scheduleTime}`);
   put("#venueName", venue);
   put("#venueAddress", localized(config.wedding, "address") || (config.wedding.address || t("missingAddress")));
   put("#transitInfo", localized(config.wedding, "transit"));
