@@ -13,7 +13,7 @@
   --section-bg: #fff5f8;
   --content-width: 720px;
   --radius: 10px;
-  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans JP", "Malgun Gothic", sans-serif;
+  --font: "Gowun Batang", "AppleMyungjo", "Batang", serif;
 }
 
 * { box-sizing: border-box; }
@@ -26,6 +26,10 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .skip-link { position: absolute; z-index: 100; left: 14px; top: -80px; background: var(--surface); padding: 10px 16px; }
 .skip-link:focus { top: 14px; }
 
+@font-face { font-family: "Gowun Batang"; src: url("fonts/GowunBatang-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gowun Batang"; src: url("fonts/GowunBatang-Bold.woff") format("woff"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Shippori Mincho"; src: url("fonts/ShipporiMincho-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Shippori Mincho"; src: url("fonts/ShipporiMincho-SemiBold.woff") format("woff"); font-weight: 600; font-style: normal; font-display: swap; }
 @font-face { font-family: "Dancing Script"; src: url("fonts/DancingScript.ttf") format("truetype"); font-weight: 400 700; font-style: normal; font-display: swap; }
 /* 이미지나 스크립트 로딩과 무관하게 끝나는 첫 화면 인트로 */
 .invitation-intro { position: fixed; z-index: 200; inset: 0; display: grid; place-items: center; background: #fff5f8; animation: introLeave .65s ease-in-out 5.5s forwards; }
@@ -50,7 +54,7 @@ body:has(:focus-visible) .invitation-intro { display: none; }
 .language-button { border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer; font-size: 11px; line-height: 1.5; padding: 5px 7px; white-space: nowrap; }
 .language-button.is-active { color: var(--text); font-weight: 700; background: var(--soft); }
 .language-divider { color: #d5a5b8; font-size: 10px; user-select: none; }
-html[lang="ja"] body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; }
+html[lang="ja"] { --font: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; }
 
 
 main { max-width: var(--content-width); margin: 0 auto; background: var(--surface); box-shadow: 0 4px 32px rgba(112,42,72,.04); }
@@ -86,6 +90,7 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 .scroll-hint span { display: block; font-size: 17px; margin-top: 2px; }
 
 .invitation-text { margin: 0 auto; white-space: pre-line; font-size: 15px; line-height: 2.4; word-break: keep-all; }
+html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-wrap: balance; }
 .invitation-family { display: grid; gap: 16px; max-width: 460px; margin: 56px auto 0; scroll-margin-top: 80px; }
 .family-person { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; column-gap: 12px; row-gap: 3px; margin: 0; }
 .family-intro { color: var(--muted); font-size: 13px; line-height: 1.9; word-break: keep-all; overflow-wrap: anywhere; }
@@ -142,12 +147,12 @@ main > section:nth-of-type(even) { background: var(--section-bg); }
 
 .account-groups { margin: 35px auto 0; max-width: 440px; text-align: left; }
 .account-details { border: 0; border-radius: 10px; overflow: hidden; margin-bottom: 10px; color: #29292d; }
-.account-summary { list-style: none; cursor: pointer; font: 400 18px/1.5 "Noto Serif KR", "AppleMyungjo", "Batang", serif; padding: 21px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; background: transparent; }
+.account-summary { list-style: none; cursor: pointer; font: 400 18px/1.5 var(--font); padding: 21px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; background: transparent; }
 .account-summary::-webkit-details-marker { display: none; }
 .account-summary::after { content: ""; width: 11px; height: 11px; flex-shrink: 0; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; transform: rotate(45deg); margin-right: 3px; }
 .account-details[open] .account-summary::after { transform: translateY(5px) rotate(225deg); }
 .account-content { border-top: 1px solid #e3e5e8; padding: 23px 20px 20px; text-align: center; background: #f7f8fa; }
-.account-holder { margin: 0 0 7px; font: 400 20px/1.5 "Noto Serif KR", "AppleMyungjo", "Batang", serif; }
+.account-holder { margin: 0 0 7px; font: 400 20px/1.5 var(--font); }
 .account-number { margin: 0 0 22px; font-weight: 400; font-size: 17px; letter-spacing: .01em; overflow-wrap: anywhere; }
 .copy-button { width: 100%; min-height: 46px; gap: 8px; border: 0; border-radius: 8px; background: #d98085; color: #fff; font-size: 17px; font-weight: 650; }
 .copy-button:hover { background: #cb6c75; }
