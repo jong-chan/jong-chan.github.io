@@ -124,7 +124,7 @@ const translations = {
     galleryPlaceholder: "写真を追加してください", directionsHeading: "会場へのアクセス",
     mapAria: "会場の地図", mapLoading: "地図を読み込んでいます。",
     mapUnavailable: "地図を表示できません。下の地図ボタンから会場をご確認ください。",
-    mapLinksAria: "地図アプリで見る", transitTitle: "地下鉄のご案内", busTitle: "バスのご案内", parkingTitle: "駐車場のご案内",
+    mapLinksAria: "地図アプリで見る", transitTitle: "地下鉄のご案内", busTitle: "空港からのアクセス", parkingTitle: "駐車場のご案内",
     accountsHeading: "お祝いのお気持ち", accountsDescription: "お祝いのお気持ちだけでも、私たちにとって大きな喜びです。",
     photoDropHeading: "ゲスト写真アップロード",
     photoDropInvitation: "私たちのカメラマンになってください 🩷\n大切な思い出として残したいと思います。\n\n挙式当日から7日間、下のボタンから\n写真をアップロードしてください！\n\n皆さまのご参加をお待ちしています。\nありがとうございます：）",
@@ -238,6 +238,7 @@ function renderContent() {
   put("#venueAddress", localized(config.wedding, "address") || (config.wedding.address || t("missingAddress")));
   put("#transitInfo", localized(config.wedding, "transit"));
   put("#busInfo", localized(config.wedding, "bus"));
+  renderAirportRoutes();
   put("#parkingInfo", localized(config.wedding, "parking"));
   put("#footerNames", `${groomName} & ${brideName}`);
   const mainImage = $("#heroPhoto img");
@@ -568,6 +569,26 @@ async function renderVenueMap() {
       showMapMessage("KAKAO MAP", t("mapUnavailable"));
     }
   }
+}
+
+function renderAirportRoutes() {
+  const container = $("#airportRoutes");
+  const routes = config.wedding.airportRoutesJa || [];
+  const visible = currentLang === "ja" && routes.length > 0;
+  container.hidden = !visible;
+  $("#busInfo").hidden = visible;
+  container.replaceChildren();
+  if (!visible) return;
+  const list = create("ol", "airport-route-list");
+  list.setAttribute("role", "list");
+  routes.forEach((route, index) => {
+    const item = create("li", "airport-route");
+    item.append(create("h4", "airport-route-title", `方法${index + 1}｜${route.title}`));
+    item.append(create("p", "airport-route-steps", route.steps.join("\n")));
+    list.append(item);
+  });
+  container.append(list);
+  container.append(create("p", "airport-route-note", config.wedding.airportNoteJa || ""));
 }
 
 function renderDirections() {

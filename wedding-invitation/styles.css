@@ -147,6 +147,12 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
 .transport-item { padding: 19px 4px; border-bottom: 1px solid var(--line); }
 .transport-item h3 { margin: 0 0 4px; font-size: 13px; font-weight: 650; }
 .transport-item p { margin: 0; color: var(--muted); font-size: 12px; white-space: pre-line; overflow-wrap: anywhere; }
+.airport-route-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.airport-route { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.airport-route:first-child { padding-top: 0; }
+.airport-route-title { margin: 0 0 8px; color: var(--text); font-size: 13px; font-weight: 700; line-height: 1.8; overflow-wrap: anywhere; }
+.transport-item .airport-route-steps { line-height: 1.9; word-break: normal; line-break: strict; }
+.transport-item .airport-route-note { margin-top: 14px; font-size: 11px; line-height: 1.9; }
 
 .account-groups { margin: 35px auto 0; max-width: 440px; text-align: left; }
 .account-details { border: 0; border-radius: 10px; overflow: hidden; margin-bottom: 10px; color: #29292d; }
