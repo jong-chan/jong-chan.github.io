@@ -68,9 +68,8 @@ main > section:nth-child(even of section:not([hidden])) { background: var(--sect
 .section-description { margin: 17px 0 34px; font-size: 13px; color: var(--muted); }
 .small-rule { width: 32px; height: 1px; background: var(--accent); margin: 26px auto; }
 
-.hero { padding: 0 0 52px; text-align: center; }
-.hero-ornament { position: relative; width: 1px; height: 72px; margin: 0 auto 28px; background: #e7828a; }
-.hero-ornament::after { content: ""; position: absolute; left: -3px; bottom: 0; width: 7px; height: 7px; background: #e7828a; transform: rotate(45deg); }
+.hero { padding: 28px 0 52px; text-align: center; }
+.hero-ornament { display: block; width: 172px; height: 46px; margin: 0 auto 20px; color: #d991a5; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
 .hero-eyebrow { margin: 0; font: 600 clamp(24px, 4vw, 30px)/1.4 "Dancing Script", cursive; color: #e7828a; }
 .hero-date { margin: 10px 0 28px; font: 400 clamp(52px, 10vw, 76px)/1.15 Georgia, serif; letter-spacing: .015em; color: #4c515a; }
 .hero-photo-frame { position: relative; isolation: isolate; }
@@ -210,7 +209,7 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
 .photo-drop-upload { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 50px; margin-top: 32px; padding: 10px 16px; border-radius: 28px; background: #d98085; color: #fff; font-size: 16px; text-align: center; }
 .photo-drop-upload[aria-disabled="true"] { background: #f0f2f4; color: #a6afb9; cursor: default; }
 .photo-drop-status { margin: 12px 0 0; font-size: 12px; color: var(--muted); }
-.rsvp-description { max-width: 440px; margin: 18px auto 28px; word-break: keep-all; overflow-wrap: anywhere; }
+.rsvp-description { white-space: pre-line; max-width: 440px; margin: 18px auto 28px; word-break: keep-all; overflow-wrap: anywhere; }
 .action-button { min-height: 47px; width: min(100%, 350px); border: 1px solid var(--accent); border-radius: 6px; background: var(--accent); padding: 11px 18px; color: white; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer; transition: filter .2s; }
 .action-button:hover { filter: brightness(.96); }
 .secondary-button { background: white; color: var(--text); border-color: var(--line); }
