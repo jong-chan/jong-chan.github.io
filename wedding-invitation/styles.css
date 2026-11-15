@@ -147,12 +147,33 @@ html[lang="ja"] .invitation-text { word-break: normal; line-break: strict; text-
 .transport-item { padding: 19px 4px; border-bottom: 1px solid var(--line); }
 .transport-item h3 { margin: 0 0 4px; font-size: 13px; font-weight: 650; }
 .transport-item p { margin: 0; color: var(--muted); font-size: 12px; white-space: pre-line; overflow-wrap: anywhere; }
-.airport-route-list { list-style: none; margin: 12px 0 0; padding: 0; }
-.airport-route { padding: 16px 0; border-bottom: 1px solid var(--line); }
-.airport-route:first-child { padding-top: 0; }
-.airport-route-title { margin: 0 0 8px; color: var(--text); font-size: 13px; font-weight: 700; line-height: 1.8; overflow-wrap: anywhere; }
-.transport-item .airport-route-steps { line-height: 1.9; word-break: normal; line-break: strict; }
-.transport-item .airport-route-note { margin-top: 14px; font-size: 11px; line-height: 1.9; }
+.airport-route-list { list-style: none; display: grid; gap: 16px; margin: 16px 0 0; padding: 0; }
+.airport-route { padding: 20px 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: #37434e; }
+.airport-route-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.transport-item .airport-route-total { display: flex; align-items: baseline; gap: 3px; color: #273540; font-family: var(--font); font-size: 13px; line-height: 1.2; white-space: nowrap; }
+.airport-route-total strong { font-size: 32px; font-weight: 700; }
+.airport-route-approx { margin-right: 3px; color: var(--muted); font-size: 11px; }
+.airport-route-number { padding: 4px 7px; background: var(--section-bg); border-radius: 20px; color: var(--muted); font-size: 10px; white-space: nowrap; }
+.airport-route-title { margin: 8px 0 0; color: #697887; font-size: 11px; font-weight: 400; overflow-wrap: anywhere; }
+.airport-route-bar { display: flex; gap: 2px; height: 7px; margin: 16px 0 20px; border-radius: 8px; overflow: hidden; }
+.route-rail, .route-airport { --route-color: #559ecb; --route-soft: #eef7fc; }
+.route-line4 { --route-color: #169bc5; --route-soft: #edf8fc; }
+.route-line2 { --route-color: #329c59; --route-soft: #eef8f0; }
+.route-bus { --route-color: #416fca; --route-soft: #eef3fc; }
+.route-express { --route-color: #dc646a; --route-soft: #fff0f1; }
+.route-walk { --route-color: #9da7b3; --route-soft: #f2f4f7; }
+.airport-bar-segment { flex-basis: 0; min-width: 5px; background: var(--route-color); }
+.airport-stop { position: relative; color: #37434e; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.airport-start { padding-left: 18px; font-weight: 700; }
+.airport-stop::before { content: ""; position: absolute; left: -23px; top: .55em; width: 7px; height: 7px; border: 2px solid var(--route-color, #559ecb); border-radius: 50%; background: #fff; }
+.airport-start::before { left: -3px; }
+.airport-timeline { list-style: none; margin: 0 0 0 1px; padding: 0 0 0 17px; border-left: 2px solid #e8edf2; }
+.airport-leg { padding: 12px 0 0; }
+.airport-ride { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 8px; margin-bottom: 6px; }
+.airport-transport { padding: 2px 7px; border-radius: 5px; color: var(--route-color); background: var(--route-soft); font-size: 11px; font-weight: 700; }
+.airport-leg-time { color: #697887; font-size: 11px; white-space: nowrap; }
+.transport-item .airport-route-note { margin-top: 14px; font-size: 10px; line-height: 1.8; }
+@media (max-width: 360px) { .airport-route { padding: 18px 12px; } .airport-route-total strong { font-size: 28px; } }
 
 .account-groups { margin: 35px auto 0; max-width: 440px; text-align: left; }
 .account-details { border: 0; border-radius: 10px; overflow: hidden; margin-bottom: 10px; color: #29292d; }
