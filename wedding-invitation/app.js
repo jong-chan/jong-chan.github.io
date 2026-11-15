@@ -584,7 +584,8 @@ function renderAirportRoutes() {
   list.setAttribute("role", "list");
   routes.forEach((route, index) => {
     const item = create("li", "airport-route");
-    const duration = `約${Math.floor(route.totalMinutes / 60)}時間${route.totalMinutes % 60}分`;
+    const minutes = route.totalMinutes % 60;
+    const duration = `約${Math.floor(route.totalMinutes / 60)}時間${minutes ? `${minutes}分` : ""}`;
     item.append(create("h4", "airport-route-title", `${index + 1}. ${route.title}（${duration}）`));
     const path = [route.start, ...route.legs.map(leg => `→ ${leg.label}（${leg.minutes}分）→ ${leg.stop}`)];
     item.append(create("p", "airport-route-path", path.join("\n")));

@@ -35,7 +35,7 @@ window.WEDDING_CONFIG = {
     // 제공된 경로와 이미지를 정리하고 중복 경로는 한 번만 표시합니다.
     airportRoutesJa: [
       {
-        "title": "空港鉄道＋4号線＋2号線",
+        "title": "仁川空港｜空港鉄道＋4号線＋2号線",
         "totalMinutes": 97,
         "start": "仁川空港",
         "legs": [
@@ -60,7 +60,7 @@ window.WEDDING_CONFIG = {
         ]
       },
       {
-        "title": "6009＋2号線",
+        "title": "仁川空港｜6009＋2号線",
         "totalMinutes": 95,
         "start": "仁川空港",
         "legs": [
@@ -79,7 +79,7 @@ window.WEDDING_CONFIG = {
         ]
       },
       {
-        "title": "6103＋徒歩",
+        "title": "仁川空港｜6103＋徒歩",
         "totalMinutes": 101,
         "start": "仁川空港",
         "legs": [
@@ -98,102 +98,27 @@ window.WEDDING_CONFIG = {
         ]
       },
       {
-        "title": "6703＋徒歩",
-        "totalMinutes": 110,
-        "start": "仁川空港",
+        "title": "金浦空港｜9号線急行＋水仁・盆唐線",
+        "totalMinutes": 60,
+        "start": "金浦空港駅",
         "legs": [
           {
-            "type": "airport",
-            "label": "空港バス6703",
-            "minutes": 91,
-            "stop": "宣靖陵駅・ラマダソウルホテル"
+            "type": "line9",
+            "label": "地下鉄9号線・急行（中央報勲病院方面）",
+            "minutes": 33,
+            "stop": "宣靖陵駅"
           },
           {
-            "type": "walk",
-            "label": "徒歩",
-            "minutes": 19,
+            "type": "suin",
+            "label": "水仁・盆唐線（宣陵方面）",
+            "minutes": 1,
             "stop": "宣陵駅"
-          }
-        ]
-      },
-      {
-        "title": "6703＋146",
-        "totalMinutes": 100,
-        "start": "仁川空港",
-        "legs": [
-          {
-            "type": "airport",
-            "label": "空港バス6703",
-            "minutes": 75,
-            "stop": "新論峴駅7番出口・教保タワー交差点"
-          },
-          {
-            "type": "bus",
-            "label": "市内バス146",
-            "minutes": 16,
-            "stop": "ポスコビル・DB金融センター"
-          },
-          {
-            "type": "walk",
-            "label": "徒歩",
-            "minutes": 2,
-            "stop": "La Place"
-          }
-        ]
-      },
-      {
-        "title": "6009＋1100 / 8001",
-        "totalMinutes": 92,
-        "start": "仁川空港",
-        "legs": [
-          {
-            "type": "airport",
-            "label": "空港バス6009",
-            "minutes": 68,
-            "stop": "新沙駅・プルン貯蓄銀行（中央）"
-          },
-          {
-            "type": "express",
-            "label": "直行バス1100 / 8001",
-            "minutes": 17,
-            "stop": "ポスコビル・DB金融センター"
-          },
-          {
-            "type": "walk",
-            "label": "徒歩",
-            "minutes": 2,
-            "stop": "La Place"
-          }
-        ]
-      },
-      {
-        "title": "6020＋360",
-        "totalMinutes": 100,
-        "start": "仁川空港",
-        "legs": [
-          {
-            "type": "airport",
-            "label": "空港バス6020",
-            "minutes": 66,
-            "stop": "旧盤浦駅・世和高校（中央）"
-          },
-          {
-            "type": "bus",
-            "label": "市内バス360",
-            "minutes": 29,
-            "stop": "ポスコビル・DB金融センター"
-          },
-          {
-            "type": "walk",
-            "label": "徒歩",
-            "minutes": 2,
-            "stop": "La Place"
           }
         ]
       }
     ],
     airportContactJa: "詳しい行き方は新婦にお問い合わせください。",
-    airportNoteJa: "宣陵駅1番出口 → La Place：徒歩約3分。\n所要時間は仁川空港T1発の目安です（徒歩・乗換・待ち時間を含む）。",
+    airportNoteJa: "宣陵駅1番出口 → La Place：徒歩約3分。\n所要時間は徒歩・乗換・待ち時間を含む目安です（仁川空港はT1発）。",
     parking: "라플레이스 주차장 (대치타워)\nB2층~B5층, 200대 주차 가능\n하객 3시간 무료 (차량 번호 등록 후 출차)",
     parkingJa: "La Place駐車場（大峙タワー）\n地下2階〜地下5階、200台駐車可能\nご参列の方は3時間無料（出庫前に車両番号の登録が必要です）",
   },
