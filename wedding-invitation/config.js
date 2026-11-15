@@ -154,7 +154,7 @@ window.WEDDING_CONFIG = {
           },
           {
             "type": "express",
-            "label": "1100 / 8001",
+            "label": "直行バス1100 / 8001",
             "minutes": 17,
             "stop": "ポスコビル・DB金融センター"
           },
