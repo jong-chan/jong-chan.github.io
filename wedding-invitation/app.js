@@ -583,40 +583,16 @@ function renderAirportRoutes() {
   list.setAttribute("role", "list");
   routes.forEach((route, index) => {
     const item = create("li", "airport-route");
-    const header = create("div", "airport-route-header");
-    const duration = create("p", "airport-route-total");
-    duration.append(create("span", "airport-route-approx", "約"));
-    duration.append(create("strong", "", String(Math.floor(route.totalMinutes / 60))));
-    duration.append(create("span", "", "時間"));
-    duration.append(create("strong", "", String(route.totalMinutes % 60)));
-    duration.append(create("span", "", "分"));
-    header.append(duration, create("span", "airport-route-number", `ルート${index + 1}`));
-    item.append(header);
-    item.append(create("h4", "airport-route-title", route.title));
-    const bar = create("div", "airport-route-bar");
-    bar.setAttribute("aria-hidden", "true");
-    route.legs.forEach((leg) => {
-      const segment = create("span", `airport-bar-segment route-${leg.type}`);
-      segment.style.flexGrow = String(leg.minutes);
-      bar.append(segment);
-    });
-    item.append(bar);
-    item.append(create("div", "airport-stop airport-start", route.start));
-    const timeline = create("ol", "airport-timeline");
-    timeline.setAttribute("role", "list");
-    route.legs.forEach((leg) => {
-      const row = create("li", `airport-leg route-${leg.type}`);
-      const ride = create("div", "airport-ride");
-      ride.append(create("span", "airport-transport", leg.label));
-      ride.append(create("span", "airport-leg-time", `${leg.minutes}分`));
-      row.append(ride, create("div", "airport-stop", leg.stop));
-      timeline.append(row);
-    });
-    item.append(timeline);
+    const duration = `約${Math.floor(route.totalMinutes / 60)}時間${route.totalMinutes % 60}分`;
+    item.append(create("h4", "airport-route-title", `${index + 1}. ${route.title}（${duration}）`));
+    const path = [route.start, ...route.legs.map(leg => `→ ${leg.label}（${leg.minutes}分）→ ${leg.stop}`)];
+    item.append(create("p", "airport-route-path", path.join("\n")));
     list.append(item);
   });
   container.append(list);
   container.append(create("p", "airport-route-note", config.wedding.airportNoteJa || ""));
+  container.append(create("p", "airport-route-contact", config.wedding.airportContactJa || ""));
+
 }
 
 function renderDirections() {
