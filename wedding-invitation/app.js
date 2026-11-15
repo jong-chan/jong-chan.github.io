@@ -204,8 +204,9 @@ function renderContent() {
   const venue = localized(config.wedding, "venue");
   const monthLabel = String(month).padStart(2, "0");
   const dayLabel = String(day).padStart(2, "0");
-  put("#heroDate", `${monthLabel} · ${dayLabel}`);
-  $("#heroDate").setAttribute("aria-label", `${year}. ${monthLabel}. ${dayLabel}`);
+  const heroWeekday = new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(date).toUpperCase();
+  $("#heroDate").replaceChildren(document.createTextNode(`${monthLabel} · ${dayLabel} `), create("span", "hero-weekday", heroWeekday));
+  $("#heroDate").setAttribute("aria-label", `${year}. ${monthLabel}. ${dayLabel} ${heroWeekday}`);
   put("#heroGroomName", groomName);
   put("#heroBrideName", brideName);
   const timeMatch = /^(\d{1,2}):(\d{2})$/.exec(config.wedding.time || "");

@@ -72,6 +72,7 @@ main > section:nth-child(even of section:not([hidden])) { background: var(--sect
 .hero-ornament { display: block; width: 172px; height: 46px; margin: 0 auto 20px; color: #d991a5; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
 .hero-eyebrow { margin: 0; font: 600 clamp(24px, 4vw, 30px)/1.4 "Dancing Script", cursive; color: #e7828a; }
 .hero-date { margin: 10px 0 28px; font: 400 clamp(52px, 10vw, 76px)/1.15 Georgia, serif; letter-spacing: .015em; color: #4c515a; }
+.hero-weekday { display: inline-block; margin-left: 8px; font-size: .28em; letter-spacing: .08em; vertical-align: middle; }
 .hero-photo-frame { position: relative; isolation: isolate; }
 /* 사진의 세로 비율을 유지하고 윗부분을 반원 아치로 표시합니다. */
 .hero-photo { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 5; border-radius: 50% 50% 0 0 / 40% 40% 0 0; }
